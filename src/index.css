@@ -1,0 +1,556 @@
+:root {
+	font-family: "RSC Caps", Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	color: #fff;
+	color-scheme: light dark;
+	background: transparent;
+
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: 100%;
+
+    --width: 1920px;
+    --height: 1080px;
+
+    --radius: 8px;
+
+    --header: 46px;
+    --mainrow: 90px;
+    --footer: 46px;
+
+    --clock: 166px;
+    --score: 95px;
+    --teamname: 420px;
+
+    /* --team0: #0c88fc;
+    --team1: #fc7c0c; */
+    --team0: #206cff;
+    --team1: #f88521;
+
+    --darkbg: #00253d;
+    --darkbgtranslucent: rgba(0, 37, 61, .7);
+    --mutedbg: #1e3c52;
+    --redbg: #ab2b28;
+    --alttext: #cccccc;
+}
+
+body {
+	position: relative;
+	margin: 0;
+	width: var(--width);
+	height: var(--height);
+}
+
+.teambg0 {
+    background: var(--team0);
+}
+
+.teambg1 {
+    background: var(--team1);
+}
+
+#Header {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1020px;
+    height: var(--header);
+    padding: 0 10px;
+    font-size: 36px;
+    text-transform: uppercase;
+    line-height: var(--header);
+    text-align: center;
+    background: var(--darkbg);
+    border-top-left-radius: var(--radius);
+    border-top-right-radius: var(--radius);
+}
+
+#Clock {
+    position: absolute;
+    left: 50%;
+    top: var(--header);
+    z-index: 20;
+    width: calc(var(--clock) - 20px);
+    height: var(--mainrow);
+    background: var(--mutedbg);
+    transform: translateX(-50%);
+    font-size: 60px;
+    text-align: center;
+    vertical-align: middle;
+    border-left: 10px solid var(--darkbg);
+    border-right: 10px solid var(--darkbg);
+}
+
+#Clock.long {
+    font-size: 38px;
+}
+
+#Clock.overtime {
+    background: var(--redbg);
+}
+
+#Clock .time {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    line-height: 1em;
+}
+
+
+#Clock .plus {
+    font-size: 65%;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+#Footer {
+    position: absolute;
+    top: calc(var(--header) + var(--mainrow));
+    left: 50%;
+    transform: translateX(-50%);
+    width: 520px;
+    height: var(--footer);
+    padding: 0 10px;
+    font-size: 36px;
+    text-transform: uppercase;
+    line-height: var(--footer);
+    text-align: center;
+    background: var(--darkbg);
+    border-bottom-left-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+}
+
+.teamScore {
+    position: absolute;
+    top: var(--header);
+    width: var(--score);
+    height: var(--mainrow);
+    font-size: 86px;
+    line-height: var(--mainrow);
+    text-align: center;
+}
+
+.teamScore.long {
+    font-size: 74px;
+}
+
+#TeamScore0 {
+    left: calc(var(--width)/2 - var(--clock)/2 - var(--score));
+}
+
+#TeamScore1 {
+    left: calc(var(--width)/2 + (var(--clock) /2));
+}
+
+.teamName {
+    position: absolute;
+    top: var(--header);
+    z-index: 5;
+    width: calc(var(--teamname) - 20px);
+    height: calc(var(--mainrow) - 10px);
+    padding: 5px 10px;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.teamName .name {
+    position: absolute;
+    top: 5px;
+    font-size: 64px;
+    line-height: calc(var(--mainrow) - 10px);
+    width: calc(var(--teamname) - 20px);
+}
+
+.teamName .name.hasSecondary {
+    line-height: 50px;
+}
+
+.teamName .name.long {
+    font-size: 48px;
+}
+
+.teamName .secondary {
+    position: absolute;
+    bottom: 5px;
+    text-transform: uppercase;
+    width: calc(var(--teamname) - 20px);
+    font-size: 32px;
+    line-height: 28px;
+}
+
+#TeamName0 {
+    left: calc(var(--width)/2 - var(--clock)/2 - var(--score) - var(--teamname) - 10px);
+    text-align: right;
+    border-right: 10px solid var(--darkbg);
+    border-top-left-radius: var(--radius);
+    border-bottom-left-radius: var(--radius);
+}
+
+#TeamName1 {
+    left: calc(var(--width)/2 + var(--clock)/2 + var(--score));
+    text-align: left;
+    border-left: 10px solid var(--darkbg);
+    border-top-right-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+}
+
+.teamPlayers {
+    position: absolute;
+    top: var(--header);
+}
+
+#teamPlayers0 {
+    left: 15px;
+}
+
+#teamPlayers1 {
+    right: 15px;
+}
+
+.teamPlayers .player {
+    width: calc(var(--width)/2 - var(--clock)/2 - var(--score) - var(--teamname) - 50px );
+    height: 65px;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: 29px 39px;
+    gap: 0 5px;
+    margin-bottom: 10px;
+    border-radius: var(--radius);
+    background: var(--darkbg);
+}
+
+#teamPlayers0 .player {
+    grid-template-columns: 1fr 75px 69px;
+    grid-template-areas:
+        "name name name"
+        "stats effects boost";
+    border-left: 10px solid var(--team0)
+}
+
+#teamPlayers1 .player {
+    grid-template-columns: 69px 75px 1fr;
+    grid-template-areas:
+        "name name name"
+        "boost effects stats";
+    border-right: 10px solid var(--team1)
+}
+
+.teamPlayers .player .name {
+    grid-area: name;
+    max-width: calc(var(--width)/2 - var(--clock)/2 - var(--score) - var(--teamname) - 65px );
+    overflow: hidden;
+    white-space: nowrap;
+    justify-self: left;
+    align-self: top;
+    text-transform: uppercase;
+    padding: 2px 5px;
+    border-top-left-radius: var(--radius);
+    border-top-right-radius: var(--radius);
+    white-space: nowrap;
+    text-transform: uppercase;
+    font-size: 28px;
+    line-height: 28px;
+}
+
+#teamPlayers1 .player .name {
+    justify-self: right;
+}
+
+.teamPlayers .player .name.long {
+    font-size: 20px;
+}
+
+.teamPlayers .player .boost {
+    grid-area: boost;
+    justify-self: right;
+    align-self: end;
+    text-transform: uppercase;
+    vertical-align: baseline;
+    font-size: 42px;
+    padding: 0 5px;
+}
+
+.teamPlayers .player .stats {
+    grid-area: stats;
+    justify-self: left;
+    align-self: end;
+    text-transform: uppercase;
+    text-align: left;
+    vertical-align: baseline;
+    font-size: 32px;
+    padding: 0 5px;
+}
+
+#teamPlayers1 .player .stats {
+    justify-self: right;
+    text-align: right;
+}
+
+.teamPlayers .player .stat .label {
+    margin-right: .5em;
+}
+
+.teamPlayers .player .stats .label {
+    font-size: 24px;
+    margin-left: .25em;
+    color: var(--alttext);
+}
+
+.teamPlayers .player .effects {
+    grid-area: effects;
+    justify-self: center;
+    align-self: end;
+    text-transform: uppercase;
+    text-align: center;
+    vertical-align: baseline;
+    white-space: nowrap;
+    font-size: 27px;
+}
+
+.player .effects .effectIcon {
+    display: inline-block;
+    margin: 5px;
+}
+
+#Watching {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+#Watching .stats {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: calc(var(--width) / 2 - 40px);
+    height: 40px;
+    line-height: 40px;
+    vertical-align: baseline;
+    padding: 5px 20px 5px 10px;
+    background: var(--darkbg);
+    border-top-right-radius: var(--radius);
+    border-left: 10px solid var(--darkbg);
+}
+
+#Watching.watchingTeam0 .stats {
+    border-left-color: var(--team0)
+}
+
+#Watching.watchingTeam1 .stats {
+    border-left-color: var(--team1)
+}
+
+#Watching .stats .name {
+    flex-basis: 60%;
+    height: 40px;
+    overflow: hidden;
+    font-size: 34px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin-right: 1em;
+}
+
+#Watching .stats .name.long {
+    font-size: 28px;
+}
+
+#Watching .stats .statLine {
+    flex-basis: 40%;
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 20px;
+}
+
+#Watching .stats .stat .label {
+    font-size: 26px;
+    color: var(--alttext);
+    text-transform: uppercase;
+    margin-right: 7px;
+}
+
+#Watching .stats .stat .value {
+    font-size: 34px;
+    text-transform: uppercase;
+}
+
+#Watching .boostDisplay {
+    position: absolute;
+    right: 80px;
+    bottom: 90px;
+    width: 180px;
+    height: 180px;
+    background: var(--darkbgtranslucent);
+    border-radius: 50%;
+}
+
+#Watching .boost {
+    position: absolute;
+    /* right: 50%;
+    bottom: 50%;
+    transform: translate(-50%, -50%); */
+    width: 140px;
+    height: 140px;
+    margin: 20px;
+    /* border-radius: 50%; */
+}
+
+#Watching .CircularProgressbar-trail {
+    stroke: var(--darkbg);
+}
+
+#Watching .boost .CircularProgressbar-text {
+    font-size: 46px;
+    fill: var(--alttext);
+}
+
+#Watching.watchingTeam0 .boost .CircularProgressbar-path {
+    stroke: var(--team0);
+}
+
+#Watching.watchingTeam1 .boost .CircularProgressbar-path {
+    stroke: var(--team1);
+}
+
+#Ball {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 350px;
+    height: 40px;
+    line-height: 40px;
+    color: var(--alttext);
+    vertical-align: baseline;
+    padding: 5px 20px 5px 10px;
+    background: var(--mutedbg);
+    border-top-left-radius: var(--radius);
+    border-right: 10px solid var(--alttext);
+}
+
+#Ball .name {
+    flex-basis: 60%;
+    height: 40px;
+    overflow: hidden;
+    font-size: 30px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin-right: 1em;
+}
+
+#Ball .statLine {
+    flex-basis: 40%;
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 20px;
+}
+
+#Ball .stat .label {
+    font-size: 26px;
+    color: var(--alttext);
+    text-transform: uppercase;
+    margin-left: 7px;
+}
+
+#Ball .stat .value {
+    font-size: 34px;
+    text-transform: uppercase;
+}
+
+#Replay {
+    --replayHeight: 75px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: var(--replayHeight);
+    line-height: var(--replayHeight);
+    vertical-align: baseline;
+    background: var(--mutedbg);
+}
+
+#Replay.team0 {
+    border-top: 10px solid var(--team0);
+}
+
+#Replay.team1 {
+    border-top: 10px solid var(--team1);
+}
+
+#Replay .replayLabel {
+    --replayLabelHeight: 38px;
+    position: absolute;
+    top: calc(-10px - var(--replayLabelHeight));
+    z-index: 5;
+    height: var(--replayLabelHeight);
+    font-size: 32px;
+    line-height: var(--replayLabelHeight);
+    text-align: center;
+    letter-spacing: .5em;
+    padding: 5px calc(20px - .5em) 5px 20px;
+    background-color: var(--redbg);
+}
+
+
+#Replay .replayLabelLeft {
+    left: 0;
+    border-top-right-radius: var(--radius);
+}
+
+#Replay .replayLabelRight {
+    right: 0;
+    border-top-left-radius: var(--radius);
+}
+
+#Replay .statLine {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+#Replay .statLine .stat {
+    display: block;
+}
+
+#Replay .stat .value {
+    font-size: 60px;
+    text-transform: uppercase;
+    vertical-align: baseline;
+}
+
+#Replay .value.long {
+    font-size: 52px;
+}
+
+#Replay .stat .label {
+    font-size: 26px;
+    color: var(--alttext);
+    text-transform: uppercase;
+    margin-right: 15px;
+    vertical-align: baseline;
+}
+
+#Replay .stat.speed .value {
+    font-size: 44px;
+    text-transform: uppercase;
+    color: var(--alttext)
+}
+
+#Replay .stat.speed .label {
+    font-size: 24px;
+    color: var(--alttext);
+    text-transform: uppercase;
+    margin-left: 7px;
+    margin-right: 60px;
+}
