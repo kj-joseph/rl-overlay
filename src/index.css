@@ -311,13 +311,12 @@ body {
     grid-template-areas:
         "name name name"
         "boost effects stats";
-    border-right: 10px solid var(--team1fade)
+    border-right: 10px solid var(--team1)
 }
 
 #TeamPlayers0 .playerBox.dead,
 #TeamPlayers1 .playerBox.dead {
     opacity: .6;
-    /* border-color: var(--red) */
 }
 
 .teamPlayers .playerBox .name {
