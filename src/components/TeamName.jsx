@@ -5,13 +5,8 @@ const TeamName = (props) => {
     const longName = 12;
 
     return (
-        <div className={`teamName teambg${props.team}`} id={`TeamName${props.team}`}>
-            <div className={`name ${props.name.length >= longName ? " long" : ""} ${props.secondary ? " hasSecondary" : ""}`}>
-                {props.name}
-            </div>
-            {props.secondary ? (
-                <div className="secondary">{props.secondary}</div>
-            ) : null}
+        <div className={`teamName ${props.name.length >= longName ? " long" : ""}`} id={`TeamName${props.team}`}>
+            {props.name}
         </div>
     )
 

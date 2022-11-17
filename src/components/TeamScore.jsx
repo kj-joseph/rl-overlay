@@ -5,7 +5,7 @@ const TeamScore = (props) => {
     const longScore = 20;
 
     return (
-        <div className={`teamScore teambg${props.team} ${props.score >= longScore ? " long" : ""}`} id={`TeamScore${props.team}`}>
+        <div className={`teamScore ${props.score >= longScore ? " long" : ""}`} id={`TeamScore${props.team}`}>
             {props.score}
         </div>
     )

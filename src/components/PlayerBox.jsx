@@ -2,8 +2,9 @@ import React from 'react';
 
 import PlayerEffects from './PlayerEffects';
 
-const Player = (props) => {
+const PlayerBox = (props) => {
 
+    let dead = false;
     const displayStats = [];
     const longPlayerName = 24;
     const statLimit = 2;
@@ -39,7 +40,10 @@ const Player = (props) => {
     }
 
     return (
-        <div className="player" id={`Team${props.teamIndex}Player${props.playerIndex}`}>
+        <div
+            className={`playerBox ${props.watching ? "watching" : ""} ${props.player.isDead ? "dead" : ""}`}
+            id={`Team${props.teamIndex}Player${props.playerIndex}`}
+        >
 
             <div className={`name ${props.player.name.length >= longPlayerName ? "long" : ""}`}>{props.player.name}</div>
 
@@ -61,4 +65,4 @@ const Player = (props) => {
 
 }
 
-export default Player;
+export default PlayerBox;
