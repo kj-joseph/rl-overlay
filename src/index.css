@@ -280,7 +280,7 @@ body {
 }
 
 .teamPlayers .playerBox {
-    --playerEffects: 80px;
+    --playerEvents: 80px;
     --playerBoost: 65px;
 
     width: var(--playerbox);
@@ -299,18 +299,18 @@ body {
 }
 
 #TeamPlayers0 .playerBox {
-    grid-template-columns: 1fr var(--playerEffects) var(--playerBoost);
+    grid-template-columns: 1fr var(--playerEvents) var(--playerBoost);
     grid-template-areas:
         "name name name"
-        "stats effects boost";
+        "stats events boost";
     border-left: 10px solid var(--team0)
 }
 
 #TeamPlayers1 .playerBox {
-    grid-template-columns:  var(--playerBoost) var(--playerEffects) 1fr;
+    grid-template-columns:  var(--playerBoost) var(--playerEvents) 1fr;
     grid-template-areas:
         "name name name"
-        "boost effects stats";
+        "boost events stats";
     border-right: 10px solid var(--team1)
 }
 
@@ -416,9 +416,8 @@ body {
     margin-left: .5em;
 }
 
-
-.teamPlayers .playerBox .effects {
-    grid-area: effects;
+.teamPlayers .playerBox .events {
+    grid-area: events;
     justify-self: end;
     align-self: end;
     text-transform: uppercase;
@@ -429,24 +428,24 @@ body {
     padding-right: 5px;
 }
 
-#TeamPlayers1 .playerBox .effects {
+#TeamPlayers1 .playerBox .events {
     padding: 0 0 0 5px;
     justify-self: start;
     text-align: left;
 }
 
-.teamPlayers .playerBox .effects .effectIcon {
+.teamPlayers .playerBox .events .eventIcon {
     display: inline-block;
     margin: 5px;
     color: var(--team0);
 }
 
-#TeamPlayers1.teamPlayers .playerBox .effects .effectIcon {
+#TeamPlayers1.teamPlayers .playerBox .events .eventIcon {
     color: var(--team1);
 }
 
-#TeamPlayers0.teamPlayers .playerBox.dead .effects .effectIcon,
-#TeamPlayers1.teamPlayers .playerBox.dead .effects .effectIcon {
+#TeamPlayers0.teamPlayers .playerBox.dead .events .eventIcon,
+#TeamPlayers1.teamPlayers .playerBox.dead .events .eventIcon {
     color: var(--red)
 }
 

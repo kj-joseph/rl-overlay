@@ -18,8 +18,6 @@ import Config from "@/data/config.json";
 const socketUrl = 'ws://localhost:49322';
 let needToSubscribe = false;
 
-const expireEffectInMs = 5000;
-
 const Live = (props) => {
 
 	return (
@@ -49,13 +47,13 @@ const Live = (props) => {
             <TeamPlayers
                 players={Object.values(props.playerData).filter(player => player.team === 0)}
                 team={0}
-                effects={props.playerEffects}
+                playerEvents={props.playerEvents}
                 watching={!props.gameData.isReplay && props.gameData.target && props.playerData.hasOwnProperty(props.gameData.target) ? props.gameData.target : null}
             />
             <TeamPlayers
                 players={Object.values(props.playerData).filter(player => player.team === 1)}
                 team={1}
-                effects={props.playerEffects}
+                playerEvents={props.playerEvents}
                 watching={!props.gameData.isReplay && props.gameData.target && props.playerData.hasOwnProperty(props.gameData.target) ? props.gameData.target : null}
             />
 

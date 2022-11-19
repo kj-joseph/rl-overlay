@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PlayerEffects from './PlayerEffects';
+import PlayerEvents from './PlayerEvents';
 
 const PlayerBox = (props) => {
 
@@ -58,7 +58,7 @@ const PlayerBox = (props) => {
                 ))}
             </div>
 
-            <PlayerEffects effects={props.effects} />
+            <PlayerEvents events={props.playerEvents} />
 
         </div>
     )

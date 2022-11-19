@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import useWebSocket from 'react-use-websocket';
 
 import Live from '@/views/Live';
 
 let needToSubscribe = false;
-const expireEffectInMs = 5000;
+const expireEventsInMs = 5000;
 const socketUrl = 'ws://localhost:49322';
 
 const App = () => {
@@ -17,7 +17,7 @@ const App = () => {
 	});
 	const [lastGoal, setLastGoal] = useState({});
 	const [playerData, setPlayerData] = useState({});
-	const [playerEffects, setPlayerEffects] = useState([]);
+	const [playerEvents, setPlayerEvents] = useState([]);
 
 	const {
 	  sendMessage,
@@ -27,57 +27,48 @@ const App = () => {
 	  readyState,
 	  getWebSocket,
 	} = useWebSocket(socketUrl, {
-	  onOpen: () => (needToSubscribe = true),
+	  onOpen: () => subscribeToFeed(),
 	  onMessage: (msg) => handleData(msg.data),
 	  //Will attempt to reconnect on all close events, such as server shutting down
 	  shouldReconnect: (closeEvent) => true,
 	});
 
-	useEffect(() => {
-		function subscribeToFeed() {
-			sendJsonMessage({
-				event: "wsRelay:register",
-				data: "game:statfeed_event",
-			});
+    function subscribeToFeed() {
+        sendJsonMessage({
+            event: "wsRelay:register",
+            data: "game:statfeed_event",
+        });
 
-			sendJsonMessage({
-				event: "wsRelay:register",
-				data: "game:update_state",
-			});
+        sendJsonMessage({
+            event: "wsRelay:register",
+            data: "game:update_state",
+        });
 
-			sendJsonMessage({
-				event: "wsRelay:register",
-				data: "game:goal_scored",
-			});
+        sendJsonMessage({
+            event: "wsRelay:register",
+            data: "game:goal_scored",
+        });
 
-            sendJsonMessage({
-				event: "wsRelay:register",
-				data: "game:pre_countdown_begin",
-			});
+        sendJsonMessage({
+            event: "wsRelay:register",
+            data: "game:pre_countdown_begin",
+        });
 
-            sendJsonMessage({
-				event: "wsRelay:register",
-				data: "game:clock_started",
-			});
+        sendJsonMessage({
+            event: "wsRelay:register",
+            data: "game:clock_started",
+        });
 
-            sendJsonMessage({
-				event: "wsRelay:register",
-				data: "game:clock_stopped",
-			});
+        sendJsonMessage({
+            event: "wsRelay:register",
+            data: "game:clock_stopped",
+        });
+    }
 
-		}
-		if (needToSubscribe) {
-			needToSubscribe = false;
-			subscribeToFeed();
-		}
-
-	});
 
 	const handleData = d => {
 
 		// console.log(d);
-
-
 		let data, dataParse = {};
 		let event = "";
 
@@ -110,19 +101,19 @@ const App = () => {
 				break;
 
             case "game:pre_countdown_begin":
-                clearAllPlayerEffects();
+                clearAllPlayerEvents();
                 break;
 
 			case "game:statfeed_event":
 				if (data.hasOwnProperty("event_name") && data.hasOwnProperty("main_target")) {
-					const newEffects = [];
+					const newEvents = [];
 
 					switch(data.event_name) {
 						case "Demolish":
-                            clearPlayerEffects(data.secondary_target.id);
-							newEffects.push({
+                            clearPlayerEvents(data.secondary_target.id);
+							newEvents.push({
 								playerId: data.secondary_target.id,
-								effect: "Dead",
+								name: "Dead",
 							});
 
 						case "Assist":
@@ -133,17 +124,17 @@ const App = () => {
 						case "Save":
 						// case "Savior":
 						case "Shot":
-							newEffects.push({
+							newEvents.push({
 								playerId: data.main_target.id,
-								effect: data.event_name,
+								name: data.event_name,
 							});
 
 						break;
 
 					}
 
-					if (newEffects.length) {
-						addPlayerEffect(newEffects);
+					if (newEvents.length) {
+						addPlayerEvent(newEvents);
 					}
 
 				}
@@ -161,7 +152,7 @@ const App = () => {
 					setPlayerData(data.players);
 				}
 				if (data.hasOwnProperty("game")) {
-                    expirePlayerEffects();
+                    expirePlayerEvents();
 					setGameData(data.game);
 				}
 				break;
@@ -170,39 +161,34 @@ const App = () => {
 
 	}
 
-	const addPlayerEffect = (newEffects) => {
-		let effectArray = [...playerEffects];
+	const addPlayerEvent = (newEvents) => {
+		let eventArray = [...playerEvents];
 
-		for (const newEffect of newEffects) {
-			effectArray = [...effectArray.filter(ps => !(ps.playerId === newEffect.playerId && ps.effect === newEffect.effect)),
+		for (const newEvent of newEvents) {
+			eventArray = [...eventArray.filter(ps => !(ps.playerId === newEvent.playerId && ps.name === newEvent.name)),
 				{
-					playerId: newEffect.playerId,
-					effect: newEffect.effect,
-					exp: Date.now() + expireEffectInMs,
+					playerId: newEvent.playerId,
+					name: newEvent.name,
+					exp: Date.now() + expireEventsInMs,
 				},
 			]
 		}
-		setPlayerEffects(effectArray);
+		setPlayerEvents(eventArray);
 	}
 
-	const clearAllPlayerEffects = () => {
-		setPlayerEffects([]);
+	const clearAllPlayerEvents = () => {
+		setPlayerEvents([]);
 	}
 
-	const clearPlayerEffects = (playerId) => {
-		setPlayerEffects(playerEffects.filter(ps => ps.playerId !== playerId))
+	const clearPlayerEvents = (playerId) => {
+		setPlayerEvents(playerEvents.filter(ps => ps.playerId !== playerId))
 	}
 
-	const expirePlayerEffects = () => {
-		if (playerEffects.filter(ps => ps.exp <= Date.now()).length > 0) {
-			setPlayerEffects(playerEffects.filter(ps => ps.exp > Date.now()));
+	const expirePlayerEvents = () => {
+		if (playerEvents.filter(ps => ps.exp <= Date.now()).length > 0) {
+			setPlayerEvents(playerEvents.filter(ps => ps.exp > Date.now()));
 		}
 	}
-
-	const removePlayerEffect = (playerId, effect) => {
-		setPlayerEffects(playerEffects.filter(ps => ps.exp > Date.now()));
-	}
-
 
 	return (
 		<div className="App">
@@ -211,7 +197,7 @@ const App = () => {
                 gameData={gameData}
                 lastGoal={lastGoal}
                 playerData={playerData}
-                playerEffects={playerEffects}
+                playerEvents={playerEvents}
             />
 		</div>
 	)

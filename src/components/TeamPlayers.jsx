@@ -12,7 +12,7 @@ const TeamPlayers = (props) => {
                     teamIndex={props.team}
                     playerIndex={index}
                     key={index}
-                    effects={props.effects.filter(p => p.playerId === player.id)}
+                    playerEvents={props.playerEvents.filter(p => p.playerId === player.id)}
                     watching={props.watching === player.id}
                 />
             ))}
