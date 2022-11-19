@@ -1,13 +1,12 @@
 import React, { Fragment } from 'react';
 
-import useWebSocket from 'react-use-websocket';
-
 import Ball from '@/components/Ball';
 import Clock from '@/components/Clock';
 import Footer from '@/components/Footer';
 import FranchiseName from '@/components/FranchiseName';
 import Header from '@/components/Header';
 import Watching from '@/components/Watching';
+import TeamLogo from '@/components/TeamLogo';
 import TeamName from '@/components/TeamName';
 import TeamPlayers from '@/components/TeamPlayers';
 import TeamScore from '@/components/TeamScore';
@@ -34,6 +33,9 @@ const Live = (props) => {
                     <TeamName name={team.name} team={index} />
                     {Config.showFranchise ? (
                         <FranchiseName name={Config.teams[index].franchise} team={index} />
+                    ) : null}
+                    {Config.showLogos && Config.teams[index].hasOwnProperty("logo") ? (
+                        <TeamLogo team={index} logo={Config.teams[index].logo} />
                     ) : null}
                     <TeamScore score={team.score} team={index} />
                     {Config.showSeriesScore ? (

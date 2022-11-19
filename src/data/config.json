@@ -1,19 +1,19 @@
 {
-    "header": "RSC Season 16 | Match Day 1 | Amateur",
-    "footer": "Game 4 of 4",
-    "showFranchise": true,
+    "header": "Contender All-Star Game",
+    "footer": "Game 1 of 4",
+    "showFranchise": false,
     "showLogos": true,
     "showSeriesScore": true,
     "teams": [
         {
             "franchise": "Test Franchise Name",
-            "logo": "",
-            "seriesScore": 2
+            "logo": "lunar.svg",
+            "seriesScore": 0
         },
         {
             "franchise": "Test Franchise Name",
-            "logo": "",
-            "seriesScore": 1
+            "logo": "solar.svg",
+            "seriesScore": 0
         }
     ]
 

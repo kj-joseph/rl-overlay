@@ -18,7 +18,7 @@
     --radius: 8px;
 
     --header: 32px;
-    --footer: 46px;
+    --footer: 22px;
 
     --clock: 126px;
     --score: 60px;
@@ -127,7 +127,7 @@ body {
 
 #Footer {
     position: absolute;
-    top: 95px;
+    top: 94px;
     left: 50%;
     transform: translateX(-50%);
     width: 520px;
@@ -194,40 +194,75 @@ body {
 /* team name */
 
 .teamName {
+    --teamnamePadding: 10px;
     position: absolute;
     top: var(--header);
-    z-index: 5;
-    width: var(--teamname);
+    z-index: 25;
+    width: calc(var(--teamname) - var(--teamnamePadding));
     height: 36px;
-    padding: 5px 10px;
+    border-width: 5px 10px;
+    border-style: solid;
+    border-color: transparent;
     vertical-align: middle;
     white-space: nowrap;
     overflow: hidden;
+    text-transform: uppercase;
     font-size: 40px;
     line-height: 36px;
 }
 
 .teamName.long {
-    font-size: 34px;
-}
-
-.teamName .secondary {
-    position: absolute;
-    bottom: 5px;
-    text-transform: uppercase;
-    width: calc(var(--teamname) - 20px);
-    font-size: 32px;
-    line-height: 28px;
+    font-size: 30px;
 }
 
 #TeamName0 {
     left: calc(var(--windowWidth)/2 - var(--clock)/2 - var(--score) - var(--teamname) - var(--border)*4);
     text-align: right;
+    border-left-width: calc(10px + var(--teamnamePadding));
 }
 
 #TeamName1 {
     left: calc(var(--windowWidth)/2 + var(--clock)/2 + var(--score) + var(--border)*2);
     text-align: left;
+    border-right-width: calc(10px + var(--teamnamePadding));
+}
+
+
+/* team logo */
+.teamLogo {
+    --teamLogoWidth: 85px;
+    --teamLogoHeight: 85px;
+    position: absolute;
+    top: 0;
+    z-index: 15;
+    width: var(--teamLogoWidth);
+    height: var(--teamLogoHeight);
+    padding: 10px;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 40px;
+    line-height: 36px;
+    background-color: var(--navy);
+}
+
+#TeamLogo0 {
+    left: calc(var(--windowWidth)/2 - var(--clock)/2 - var(--score) - var(--teamname) - var(--teamLogoWidth) - var(--border)*5);
+    text-align: right;
+    padding-right: 20px;
+    border-bottom-left-radius: var(--radius);
+}
+
+#TeamLogo1 {
+    left: calc(var(--windowWidth)/2 + var(--clock)/2 + var(--score) + var(--teamname) + var(--border)*3);
+    text-align: left;
+    padding-left: 20px;
+    border-bottom-right-radius: var(--radius);
+}
+
+.teamLogo img {
+    width: inherit;
+    height: inherit;
 }
 
 
