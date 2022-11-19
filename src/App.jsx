@@ -1,14 +1,22 @@
 import React, { useState } from "react";
-
 import useWebSocket from "react-use-websocket";
 
-import Live from "@/views/Live";
+import Config from "@/data/config.json";
 
-let needToSubscribe = false;
-const expireEventsInMs = 5000;
+import Live from "@/views/Live";
+import Transition from "@/views/Transition";
+
+const expireEventsInMs = 7000;
 const socketUrl = "ws://localhost:49322";
 
 const App = () => {
+
+    const transitionDefault = {
+        class: "",
+        logo: null,
+        show: false,
+        text: "",
+    };
 
     const [clockRunning, setClockRunning] = useState(false);
 	const [gameData, setGameData] = useState({
@@ -18,6 +26,7 @@ const App = () => {
 	const [lastGoal, setLastGoal] = useState({});
 	const [playerData, setPlayerData] = useState({});
 	const [playerEvents, setPlayerEvents] = useState([]);
+    const [transition, setTransition] = useState(transitionDefault);
 
 	const {
 	  sendMessage,
@@ -29,7 +38,6 @@ const App = () => {
 	} = useWebSocket(socketUrl, {
 	  onOpen: () => subscribeToFeed(),
 	  onMessage: (msg) => handleData(msg.data),
-	  //Will attempt to reconnect on all close events, such as server shutting down
 	  shouldReconnect: (closeEvent) => true,
 	});
 
@@ -67,7 +75,6 @@ const App = () => {
 
 
 	const handleData = d => {
-
 		// console.log(d);
 		let data, dataParse = {};
 		let event = "";
@@ -96,9 +103,9 @@ const App = () => {
                 break;
 
 			case "game:goal_scored":
-				// console.log("GOAL", data);
 				setLastGoal(data);
-				break;
+                triggerGoalTransition(data.scorer.teamnum);
+                break;
 
             case "game:pre_countdown_begin":
                 clearAllPlayerEvents();
@@ -143,12 +150,6 @@ const App = () => {
 
 			case "game:update_state":
 				if (data.hasOwnProperty("players")) {
-
-                    // for (const x in data.players) {
-                    //     data.players[x].name = data.players[x].name + " " + data.players[x].name + " " + data.players[x].name + " " + data.players[x].name
-                    // }
-
-
 					setPlayerData(data.players);
 				}
 				if (data.hasOwnProperty("game")) {
@@ -190,6 +191,18 @@ const App = () => {
 		}
 	}
 
+    const triggerGoalTransition = (team) => {
+        setTransition({
+            class: `team${team}`,
+            logo: Config.show.teamLogos && Config.teams[team].logo ? Config.teams[team].logo : "",
+            show: true,
+            text: "GOAL!",
+        });
+        setTimeout(() => {
+            setTransition(transitionDefault);
+        }, 10000);
+    }
+
 	return (
 		<div className="App">
 			<Live
@@ -198,6 +211,9 @@ const App = () => {
                 lastGoal={lastGoal}
                 playerData={playerData}
                 playerEvents={playerEvents}
+            />
+            <Transition
+                transition={transition}
             />
 		</div>
 	)

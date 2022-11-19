@@ -1,0 +1,176 @@
+#Transition {
+    --transitionDelay: 3s;
+    --transitionDuration: 1.5s;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 255;
+	width: var(--windowWidth);
+	height: var(--windowHeight);
+    overflow: hidden;
+    visibility: hidden;
+}
+
+#Transition.show {
+    visibility: visible;
+}
+
+#Transition .bg {
+    /* display: none; */
+    position: absolute;
+    left: var(--windowWidth);
+    top: 0;
+    z-index: 1;
+	width: var(--windowWidth);
+	height: var(--windowHeight);
+    background: var(--navy);
+    /* transition: left 2.5s ease-in-out; */
+}
+
+
+#Transition.show .bg {
+    animation: wipeBackground;
+    animation-duration: var(--transitionDuration);
+    animation-fill-mode: forwards;
+    animation-delay: var(--transitionDelay);
+}
+
+#Transition .bg .logo {
+    --logoSmall: 400px;
+    --logoLarge: 600px;
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    width: var(--logoSmall);
+    height: var(--logoSmall);
+    opacity: 0;
+}
+
+#Transition .bg .logo img {
+    width: inherit;
+    height: inherit;
+}
+
+#Transition.show .logo {
+    animation: revealLogo;
+    animation-duration: var(--transitionDuration);
+    animation-fill-mode: forwards;
+    animation-delay: var(--transitionDelay);
+}
+
+
+#Transition .stripe {
+    --stripeMinWidth: 100px;
+    --stripeMaxWidth: calc(var(--windowWidth) / 2);
+
+    position: absolute;
+    top: 0;
+    left: var(--windowWidth);
+    z-index: 5;
+    width: var(--stripeMinWidth);
+    height: var(--windowHeight);
+    overflow: hidden;
+    background: #ffffff;
+}
+
+#Transition .stripe .text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 6;
+    transform: translate(-50%, -50%) rotate(-90deg);
+    color: var(--navy);
+    font-size: 144px;
+    letter-spacing: 64px;
+    text-align: center;
+}
+
+#Transition.show .stripe {
+    animation: wipeStripe;
+    animation-duration: var(--transitionDuration);
+    animation-fill-mode: forwards;
+    animation-delay: var(--transitionDelay);
+}
+
+#Transition.team0 .stripe {
+    background: var(--team0);
+}
+
+#Transition.team1 .stripe {
+    background: var(--team1);
+}
+
+#Transition.team0 .stripe .text,
+#Transition.team1 .stripe .text {
+    color: #FFFFFF;
+}
+
+@keyframes wipeBackground {
+    0% {
+        left: var(--windowWidth);
+    }
+    20% {
+        left: 0px;
+    }
+    70% {
+        left: 0px;
+    }
+    100% {
+        left: calc(0px - var(--windowWidth));
+    }
+}
+
+@keyframes wipeStripe {
+    0% {
+        left: var(--windowWidth);
+        width: var(--stripeMinWidth);
+    }
+    15% {
+        left: var(--windowWidth);
+        width: var(--stripeMinWidth);
+    }
+    40% {
+        left: calc(var(--windowWidth) / 2 - var(--stripeMaxWidth) / 2);
+        width: var(--stripeMaxWidth);
+    }
+    65% {
+        left: calc(0px - var(--stripeMinWidth));
+        width: var(--stripeMinWidth);
+    }
+    100% {
+        left: calc(0px - var(--stripeMinWidth));
+        width: var(--stripeMinWidth);
+    }
+}
+
+@keyframes revealLogo {
+    0% {
+        opacity: 0;
+        width: var(--logoSmall);
+        height: var(--logoSmall);
+    }
+    39% {
+        opacity: 0;
+        width: var(--logoSmall);
+        height: var(--logoSmall);
+    }
+    40% {
+        opacity: 1;
+        width: var(--logoSmall);
+        height: var(--logoSmall);
+    }
+    65% {
+        opacity: 1;
+        width: var(--logoLarge);
+        height: var(--logoLarge);
+    }
+    100% {
+        opacity: 1;
+        width: var(--logoLarge);
+        height: var(--logoLarge);
+    }
+}
+

@@ -1,18 +1,19 @@
 import React, { Fragment, useEffect, useState } from "react";
 
+import Config from "@/data/config.json";
+
 import Ball from "@/components/Ball";
 import Clock from "@/components/Clock";
 import Footer from "@/components/Footer";
 import FranchiseName from "@/components/FranchiseName";
 import Header from "@/components/Header";
-import Watching from "@/components/Watching";
+import Replay from "@/components/Replay";
 import TeamLogo from "@/components/TeamLogo";
 import TeamName from "@/components/TeamName";
 import TeamPlayerBoxes from "@/components/TeamPlayerBoxes";
 import TeamScore from "@/components/TeamScore";
-import Replay from "@/components/Replay";
 import TeamSeriesScore from "@/components/TeamSeriesScore";
-import Config from "@/data/config.json";
+import Watching from "@/components/Watching";
 
 import "@/style/live/main.css";
 
@@ -40,14 +41,14 @@ const Live = (props) => {
             {props.gameData.teams.map((team, index) => (
                 <Fragment key={index}>
                     <TeamName name={team.name} team={index} />
-                    {Config.showFranchise ? (
+                    {Config.show.franchise ? (
                         <FranchiseName name={Config.teams[index].franchise} team={index} />
                     ) : null}
-                    {Config.showLogos && Config.teams[index].hasOwnProperty("logo") ? (
+                    {Config.show.teamLogos && Config.teams[index].hasOwnProperty("logo") ? (
                         <TeamLogo team={index} logo={Config.teams[index].logo} />
                     ) : null}
                     <TeamScore score={team.score} team={index} long={longScores} />
-                    {Config.showSeriesScore ? (
+                    {Config.show.seriesScore ? (
                         <TeamSeriesScore score={Config.teams[index].seriesScore} team={index} />
 
                     ) : null}

@@ -26,6 +26,10 @@ body {
 }
 
 #LivePlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10;
 	width: var(--windowWidth);
 	height: var(--windowHeight);
     background: url("/src/assets/overlay-bg.svg") no-repeat top center;

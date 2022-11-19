@@ -1,9 +1,11 @@
 {
     "header": "Contender All-Star Game",
     "footer": "Game 1 of 4",
-    "showFranchise": false,
-    "showLogos": true,
-    "showSeriesScore": true,
+    "show": {
+        "franchise": false,
+        "seriesScore": true,
+        "teamLogos": true
+    },
     "teams": [
         {
             "franchise": "Test Franchise Name",
