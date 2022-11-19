@@ -1,0 +1,23 @@
+.teamSeriesScore {
+    --seriesScoreWidth: 32px;
+    --seriesScoreSpace: 13px;
+    position: absolute;
+    top: 122px;
+    width: var(--seriesScoreWidth);
+    height: 23px;
+    font-size: 34px;
+    line-height: 23px;
+    text-align: center;
+}
+
+.teamSeriesScore.long {
+    font-size: 26px;
+}
+
+#TeamSeriesScore0 {
+    left: calc(var(--windowWidth) / 2 - var(--seriesScoreSpace) - var(--seriesScoreWidth));
+}
+
+#TeamSeriesScore1 {
+    left: calc(var(--windowWidth) / 2 + var(--seriesScoreSpace));
+}

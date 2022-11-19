@@ -1,11 +1,9 @@
-import React from 'react';
+import React from "react";
 
 const TeamScore = (props) => {
 
-    const longScore = 20;
-
     return (
-        <div className={`teamScore ${props.score >= longScore ? " long" : ""}`} id={`TeamScore${props.team}`}>
+        <div className={`teamScore ${props.long ? " long" : ""}`} id={`TeamScore${props.team}`}>
             {props.score}
         </div>
     )

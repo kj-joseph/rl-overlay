@@ -1,0 +1,182 @@
+.teamPlayerBoxes {
+    position: absolute;
+    top: 10px;
+}
+
+#Team0PlayerBoxes {
+    left: 10px;
+}
+
+#Team1PlayerBoxes {
+    right: 10px;
+}
+
+.teamPlayerBoxes .playerBox {
+    --playerEvents: 80px;
+    --playerBoost: 65px;
+
+    width: var(--playerbox);
+    height: 69px;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: 36px 33px;
+    gap: 0 25px;
+    margin-bottom: 10px;
+    border-radius: var(--radius);
+    background: var(--navy);
+}
+
+.teamPlayerBoxes .playerBox.watching {
+    background: var(--lightnavy);
+}
+
+#Team0PlayerBoxes .playerBox {
+    grid-template-columns: 1fr var(--playerEvents) var(--playerBoost);
+    grid-template-areas:
+        "name name name"
+        "stats events boost";
+    border-left: 10px solid var(--team0)
+}
+
+#Team1PlayerBoxes .playerBox {
+    grid-template-columns:  var(--playerBoost) var(--playerEvents) 1fr;
+    grid-template-areas:
+        "name name name"
+        "boost events stats";
+    border-right: 10px solid var(--team1)
+}
+
+#Team0PlayerBoxes .playerBox.dead,
+#Team1PlayerBoxes .playerBox.dead {
+    opacity: .6;
+}
+
+.teamPlayerBoxes .playerBox .name {
+    grid-area: name;
+    max-width: calc(var(--windowWidth)/2 - var(--clock)/2 - var(--score) - var(--teamname) - 65px );
+    overflow: hidden;
+    white-space: nowrap;
+    justify-self: left;
+    align-self: top;
+    text-transform: uppercase;
+    padding: 2px 5px;
+    border-top-left-radius: var(--radius);
+    border-top-right-radius: var(--radius);
+    white-space: nowrap;
+    text-transform: uppercase;
+    font-size: 25px;
+    line-height: 25px;
+}
+
+#Team1PlayerBoxes .playerBox .name {
+    justify-self: right;
+    text-align: right;
+}
+
+.teamPlayerBoxes .playerBox .name.long {
+    font-size: 20px;
+}
+
+.teamPlayerBoxes .playerBox .boost {
+    width: calc(var(--playerBoost) - 10px);
+    grid-area: boost;
+    justify-self: right;
+    align-self: end;
+    text-align: right;
+    text-transform: uppercase;
+    vertical-align: baseline;
+    font-size: 36px;
+    padding: 0 5px;
+    background: linear-gradient(var(--navy), var(--lightnavy));
+}
+
+#Team0PlayerBoxes .playerBox .boost {
+    border-top: 2px solid var(--team0);
+    border-left: 2px solid var(--team0);
+    border-radius: var(--radius) 0 var(--radius) 0;
+}
+
+#Team0PlayerBoxes .playerBox.watching .boost {
+    background: linear-gradient(var(--navy), var(--team0));
+}
+
+#Team1PlayerBoxes .playerBox .boost {
+    border-top: 2px solid var(--team1);
+    border-right: 2px solid var(--team1);
+    border-radius: 0 var(--radius) 0 var(--radius);
+}
+
+#Team1PlayerBoxes .playerBox.watching .boost {
+    background: linear-gradient(var(--navy), var(--team1));
+}
+
+#Team0PlayerBoxes .playerBox.dead .boost,
+#Team1PlayerBoxes .playerBox.dead .boost {
+    color: transparent;
+    background: linear-gradient(var(--lightnavy), var(--red));
+    border-color: var(--red);
+}
+
+.teamPlayerBoxes .playerBox .stats {
+    grid-area: stats;
+    justify-self: left;
+    align-self: end;
+    text-transform: uppercase;
+    text-align: left;
+    vertical-align: baseline;
+    font-size: 32px;
+    padding: 0 5px;
+}
+
+#Team1PlayerBoxes .playerBox .stats {
+    justify-self: right;
+    text-align: right;
+}
+
+.teamPlayerBoxes .playerBox .stat {
+    margin-right: .5em;
+}
+
+.teamPlayerBoxes .playerBox .stat .label {
+    font-size: 24px;
+    margin-left: .25em;
+    color: var(--gray);
+}
+
+#Team1PlayerBoxes .playerBox .stat {
+    margin-right: 0;
+    margin-left: .5em;
+}
+
+.teamPlayerBoxes .playerBox .events {
+    grid-area: events;
+    justify-self: end;
+    align-self: end;
+    text-transform: uppercase;
+    text-align: center;
+    vertical-align: baseline;
+    white-space: nowrap;
+    font-size: 27px;
+    padding-right: 5px;
+}
+
+#Team1PlayerBoxes .playerBox .events {
+    padding: 0 0 0 5px;
+    justify-self: start;
+    text-align: left;
+}
+
+.teamPlayerBoxes .playerBox .events .eventIcon {
+    display: inline-block;
+    margin: 5px;
+    color: var(--team0);
+}
+
+#Team1PlayerBoxes.teamPlayerBoxes .playerBox .events .eventIcon {
+    color: var(--team1);
+}
+
+#Team0PlayerBoxes.teamPlayerBoxes .playerBox.dead .events .eventIcon,
+#Team1PlayerBoxes.teamPlayerBoxes .playerBox.dead .events .eventIcon {
+    color: var(--red)
+}

@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import useWebSocket from 'react-use-websocket';
+import useWebSocket from "react-use-websocket";
 
-import Live from '@/views/Live';
+import Live from "@/views/Live";
 
 let needToSubscribe = false;
 const expireEventsInMs = 5000;
-const socketUrl = 'ws://localhost:49322';
+const socketUrl = "ws://localhost:49322";
 
 const App = () => {
 

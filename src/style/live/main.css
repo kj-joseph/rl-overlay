@@ -1,0 +1,68 @@
+@import "ball.css";
+@import "clock.css";
+@import "franchise.css";
+@import "playerBoxes.css";
+@import "replay.css";
+@import "teamLogo.css";
+@import "teamName.css";
+@import "teamScore.css";
+@import "teamSeriesScore.css";
+@import "watching.css";
+
+:root {
+    --clock: 126px;
+    --score: 60px;
+    --teamname: 280px;
+    --playerbox: 320px;
+}
+
+body {
+	position: relative;
+	margin: 0;
+    padding: 0;
+	width: var(--windowWidth);
+	height: var(--windowHeight);
+    overflow: hidden;;
+}
+
+#LivePlay {
+	width: var(--windowWidth);
+	height: var(--windowHeight);
+    background: url("/src/assets/overlay-bg.svg") no-repeat top center;
+}
+
+
+/* header */
+
+#Header {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 880px;
+    padding: 0 10px;
+    font-size: 24px;
+    line-height: 32px;
+    text-transform: uppercase;
+    line-height: var(--header);
+    text-align: center;
+}
+
+/* footer */
+
+#Footer {
+    position: absolute;
+    top: 94px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 520px;
+    height: var(--footer);
+    padding: 0 10px;
+    color: var(--gray);
+    font-size: 20px;
+    text-transform: uppercase;
+    line-height: 20px;
+    text-align: center;
+}
+
+

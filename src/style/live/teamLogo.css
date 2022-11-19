@@ -1,0 +1,35 @@
+.teamLogo {
+    --teamLogoWidth: 85px;
+    --teamLogoHeight: 85px;
+    position: absolute;
+    top: 0;
+    z-index: 15;
+    width: var(--teamLogoWidth);
+    height: var(--teamLogoHeight);
+    padding: 10px;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 40px;
+    line-height: 36px;
+    background: var(--navy);
+}
+
+#TeamLogo0 {
+    left: calc(var(--windowWidth)/2 - var(--clock)/2 - var(--score) - var(--teamname) - var(--teamLogoWidth) - var(--border)*6);
+    text-align: right;
+    padding-right: 20px;
+    border-bottom-left-radius: var(--radius);
+}
+
+#TeamLogo1 {
+    left: calc(var(--windowWidth)/2 + var(--clock)/2 + var(--score) + var(--teamname) + var(--border)*3);
+    text-align: left;
+    padding-left: 20px;
+    border-bottom-right-radius: var(--radius);
+}
+
+.teamLogo img {
+    width: inherit;
+    height: inherit;
+}

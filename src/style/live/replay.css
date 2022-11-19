@@ -1,0 +1,103 @@
+#Replay {
+    --replayHeight: 75px;
+    position: absolute;
+    right: 0;
+    bottom: -300px;
+    width: var(--windowWidth);
+    height: var(--replayHeight);
+    vertical-align: baseline;
+    background: var(--lightnavy);
+    transition: bottom .25s ease-in;
+}
+
+#Replay.showReplay {
+    bottom: 0;
+}
+
+#Replay.team0 {
+    border-top: 10px solid var(--team0);
+}
+
+#Replay.team1 {
+    border-top: 10px solid var(--team1);
+}
+
+#Replay .replayLabel {
+    --replayLabelHeight: 38px;
+    position: absolute;
+    top: calc(-10px - var(--replayLabelHeight));
+    z-index: 5;
+    height: var(--replayLabelHeight);
+    font-size: 32px;
+    line-height: var(--replayLabelHeight);
+    text-align: center;
+    letter-spacing: .5em;
+    padding: 5px calc(20px - .5em) 5px 20px;
+    background: var(--red);
+}
+
+#Replay.team0 .replayLabel {
+    background: var(--team0);
+}
+
+#Replay.team1 .replayLabel {
+    background: var(--team1);
+}
+
+#Replay .replayLabelLeft {
+    left: 0;
+    border-top-right-radius: var(--radius);
+}
+
+#Replay .replayLabelRight {
+    right: 0;
+    border-top-left-radius: var(--radius);
+}
+
+#Replay .statLine {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    width: 100%;
+    line-height: calc(var(--replayHeight) - 13px);
+}
+
+#Replay .statLine .stat:first-child {
+    padding-left: 60px;
+}
+
+#Replay .statLine .stat {
+    display: inline-block;
+}
+
+#Replay .stat .value {
+    font-size: 60px;
+    text-transform: uppercase;
+    vertical-align: baseline;
+}
+
+#Replay .value.long {
+    font-size: 52px;
+}
+
+#Replay .stat .label {
+    font-size: 26px;
+    color: var(--gray);
+    text-transform: uppercase;
+    margin-right: 15px;
+    vertical-align: baseline;
+}
+
+#Replay .stat.speed .value {
+    font-size: 44px;
+    text-transform: uppercase;
+    color: var(--gray)
+}
+
+#Replay .stat.speed .label {
+    font-size: 24px;
+    color: var(--gray);
+    text-transform: uppercase;
+    margin-left: 7px;
+    margin-right: 60px;
+}

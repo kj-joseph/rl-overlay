@@ -1,0 +1,106 @@
+#Watching {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+#Watching .stats {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: calc(var(--windowWidth) / 2 - 50px);
+    height: 40px;
+    line-height: 40px;
+    vertical-align: baseline;
+    padding: 5px 20px 5px 10px;
+    background: var(--navy);
+    border-top-right-radius: var(--radius);
+    border-left: 20px solid var(--navy);
+}
+
+#Watching.watchingTeam0 .stats {
+    border-left-color: var(--team0)
+}
+
+#Watching.watchingTeam1 .stats {
+    border-left-color: var(--team1)
+}
+
+#Watching .stats .name {
+    flex-basis: 60%;
+    height: 40px;
+    overflow: hidden;
+    font-size: 34px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin-right: 1em;
+}
+
+#Watching .stats .name.long {
+    font-size: 28px;
+}
+
+#Watching .stats .statLine {
+    flex-basis: 40%;
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 20px;
+}
+
+#Watching .stats .stat .label {
+    font-size: 26px;
+    color: var(--gray);
+    text-transform: uppercase;
+    margin-right: 7px;
+}
+
+#Watching .stats .stat .value {
+    font-size: 34px;
+    text-transform: uppercase;
+}
+
+#Watching .boostDisplay {
+    position: absolute;
+    right: 80px;
+    bottom: 90px;
+    width: 180px;
+    height: 180px;
+    background: var(--navytranslucent);
+    border-radius: 50%;
+}
+
+#Watching .boost {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    margin: 20px;
+}
+
+#Watching.watchingTeam0 .CircularProgressbar-trail {
+    stroke: var(--team0fade);
+}
+
+#Watching.watchingTeam1 .CircularProgressbar-trail {
+    stroke: var(--team1fade);
+}
+
+#Watching .CircularProgressbar-trail {
+    stroke: var(--navy);
+}
+
+#Watching .boost .CircularProgressbar-text {
+    font-size: 46px;
+    fill: var(--gray);
+}
+
+#Watching.watchingTeam0 .boost .CircularProgressbar-path {
+    stroke: var(--team0);
+}
+
+#Watching.watchingTeam1 .boost .CircularProgressbar-path {
+    stroke: var(--team1);
+}

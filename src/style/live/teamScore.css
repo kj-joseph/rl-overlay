@@ -1,0 +1,23 @@
+.teamScore {
+    position: absolute;
+    top: var(--header);
+    width: var(--score);
+    height: 61px;
+    font-size: 68px;
+    line-height: 61px;
+    text-align: center;
+}
+
+.teamScore.long {
+    height: 51px;
+    line-height: 51px;
+    font-size: 50px;
+}
+
+#TeamScore0 {
+    left: calc(var(--windowWidth)/2 - var(--clock)/2 - var(--border) - var(--score));
+}
+
+#TeamScore1 {
+    left: calc(var(--windowWidth)/2 + var(--border) + (var(--clock) /2));
+}

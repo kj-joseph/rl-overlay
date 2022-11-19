@@ -1,5 +1,5 @@
-import React from 'react';
-import BoostCircle from './BoostCircle';
+import React from "react";
+import BoostCircle from "./BoostCircle";
 
 const Watching = (props) => {
 

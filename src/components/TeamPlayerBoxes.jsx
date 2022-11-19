@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import PlayerBox from './PlayerBox';
+import PlayerBox from "./PlayerBox";
 
 const TeamPlayers = (props) => {
 
     return (
-        <div className="teamPlayers" id={`TeamPlayers${props.team}`}>
+        <div className="teamPlayerBoxes" id={`Team${props.team}PlayerBoxes`}>
             {Object.values(props.players).map((player, index) => (
                 <PlayerBox
                     player={player}
