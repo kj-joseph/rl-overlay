@@ -4,7 +4,6 @@ import Ball from "@/components/Ball";
 import Clock from "@/components/Clock";
 import SeriesInfo from "@/components/SeriesInfo";
 import FranchiseName from "@/components/FranchiseName";
-import GameStats from "@/views/GameStats";
 import Header from "@/components/Header";
 import Replay from "@/components/Replay";
 import TeamLogo from "@/components/TeamLogo";
@@ -15,7 +14,6 @@ import TeamSeriesScore from "@/components/TeamSeriesScore";
 import Watching from "@/components/Watching";
 
 import "@/style/live.css";
-import { config } from "@fortawesome/fontawesome-svg-core";
 
 const longTeamScore = 20;
 

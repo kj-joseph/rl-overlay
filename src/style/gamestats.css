@@ -1,3 +1,10 @@
+@import "components/franchise.css";
+@import "components/teamLogo.css";
+@import "components/teamName.css";
+@import "components/teamScore.css";
+@import "components/teamSeriesScore.css";
+@import "components/textitems.css";
+
 #GameStats {
     position: absolute;
     left: 0;

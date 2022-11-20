@@ -1,13 +1,13 @@
 @import "components/ball.css";
 @import "components/clock.css";
 @import "components/franchise.css";
-/* @import "components/gamestats.css"; */
 @import "components/playerBoxes.css";
 @import "components/replay.css";
 @import "components/teamLogo.css";
 @import "components/teamName.css";
 @import "components/teamScore.css";
 @import "components/teamSeriesScore.css";
+@import "components/textitems.css";
 @import "components/watching.css";
 
 :root {
@@ -34,39 +34,6 @@ body {
 	width: var(--windowWidth);
 	height: var(--windowHeight);
     background: url("/src/assets/overlay-bg.svg") no-repeat top center;
-}
-
-/* header */
-
-#Header {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 880px;
-    padding: 0 10px;
-    font-size: 24px;
-    line-height: 32px;
-    text-transform: uppercase;
-    line-height: var(--header);
-    text-align: center;
-}
-
-/* series info */
-
-#SeriesInfo {
-    position: absolute;
-    top: 94px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 520px;
-    height: var(--footer);
-    padding: 0 10px;
-    color: var(--gray);
-    font-size: 20px;
-    text-transform: uppercase;
-    line-height: 20px;
-    text-align: center;
 }
 
 
