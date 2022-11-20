@@ -1,19 +1,20 @@
-@import "ball.css";
-@import "clock.css";
-@import "franchise.css";
-@import "playerBoxes.css";
-@import "replay.css";
-@import "teamLogo.css";
-@import "teamName.css";
-@import "teamScore.css";
-@import "teamSeriesScore.css";
-@import "watching.css";
+@import "components/ball.css";
+@import "components/clock.css";
+@import "components/franchise.css";
+/* @import "components/gamestats.css"; */
+@import "components/playerBoxes.css";
+@import "components/replay.css";
+@import "components/teamLogo.css";
+@import "components/teamName.css";
+@import "components/teamScore.css";
+@import "components/teamSeriesScore.css";
+@import "components/watching.css";
 
 :root {
     --clock: 126px;
     --score: 60px;
     --teamname: 280px;
-    --playerbox: 320px;
+    --playerbox: 335px;
 }
 
 body {
@@ -34,7 +35,6 @@ body {
 	height: var(--windowHeight);
     background: url("/src/assets/overlay-bg.svg") no-repeat top center;
 }
-
 
 /* header */
 

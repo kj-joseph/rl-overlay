@@ -1,11 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 
-import Config from "@/data/config.json";
-
 import Ball from "@/components/Ball";
 import Clock from "@/components/Clock";
 import Footer from "@/components/Footer";
 import FranchiseName from "@/components/FranchiseName";
+import GameStats from "@/views/GameStats";
 import Header from "@/components/Header";
 import Replay from "@/components/Replay";
 import TeamLogo from "@/components/TeamLogo";
@@ -15,9 +14,9 @@ import TeamScore from "@/components/TeamScore";
 import TeamSeriesScore from "@/components/TeamSeriesScore";
 import Watching from "@/components/Watching";
 
-import "@/style/live/main.css";
+import "@/style/live.css";
 
-const longTeamScore = 29;
+const longTeamScore = 20;
 
 const Live = (props) => {
 
@@ -30,29 +29,28 @@ const Live = (props) => {
     });
 
 	return (
-		<div id="LivePlay">
+		<div id="LivePlay" className={`${props.showGameStats ? "gameStats" : ""}`}>
 
-            <Header message={Config.header} />
+            <Header message={props.config.header} />
 
-			<Clock time={props.gameData.time_seconds} overtime={props.gameData.isOT} />
+            <Clock time={props.gameData.time_seconds} overtime={props.gameData.isOT} />
 
-            <Footer message={Config.footer} />
+            <Footer message={props.config.footer} />
 
             {props.gameData.teams.map((team, index) => (
                 <Fragment key={index}>
                     <TeamName name={team.name} team={index} />
-                    {Config.show.franchise ? (
-                        <FranchiseName name={Config.teams[index].franchise} team={index} />
+                    {props.config.show.franchise ? (
+                        <FranchiseName name={props.config.teams[index].franchise} team={index} />
                     ) : null}
-                    {Config.show.teamLogos && Config.teams[index].hasOwnProperty("logo") ? (
-                        <TeamLogo team={index} logo={Config.teams[index].logo} />
+                    {props.config.show.teamLogos && props.config.teams[index].hasOwnProperty("logo") ? (
+                        <TeamLogo team={index} logo={props.config.teams[index].logo} />
                     ) : null}
                     <TeamScore score={team.score} team={index} long={longScores} />
-                    {Config.show.seriesScore ? (
-                        <TeamSeriesScore score={Config.teams[index].seriesScore} team={index} />
+                    {props.config.show.seriesScore ? (
+                        <TeamSeriesScore score={props.config.teams[index].seriesScore} team={index} />
 
                     ) : null}
-
                 </Fragment>
             ))}
 
@@ -71,11 +69,11 @@ const Live = (props) => {
 
             {!props.gameData.isReplay && props.gameData.target && props.playerData.hasOwnProperty(props.gameData.target) ? (
                 <Watching player={props.playerData[props.gameData.target]} />
-			) : null}
+            ) : null}
 
             {!props.gameData.isReplay && props.clockRunning ? (
                 <Ball ball={props.gameData.ball} />
-			) : null}
+            ) : null}
 
             <Replay
                 lastGoal={props.lastGoal}

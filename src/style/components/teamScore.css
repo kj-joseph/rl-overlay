@@ -1,6 +1,7 @@
 .teamScore {
     position: absolute;
     top: var(--header);
+    z-index: 16;
     width: var(--score);
     height: 61px;
     font-size: 68px;

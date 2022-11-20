@@ -15,6 +15,10 @@
     visibility: visible;
 }
 
+#Transition.noDelay {
+    --transitionDelay: 0s;
+}
+
 #Transition .bg {
     /* display: none; */
     position: absolute;
@@ -63,7 +67,7 @@
 
 
 #Transition .stripe {
-    --stripeMinWidth: 100px;
+    --stripeMinWidth: 150px;
     --stripeMaxWidth: calc(var(--windowWidth) / 2);
 
     position: absolute;
@@ -136,12 +140,16 @@
         left: calc(var(--windowWidth) / 2 - var(--stripeMaxWidth) / 2);
         width: var(--stripeMaxWidth);
     }
-    65% {
-        left: calc(0px - var(--stripeMinWidth));
+    60% {
+        left: 100px;
+        width: var(--stripeMinWidth);
+    }
+    70% {
+        left: 100px;
         width: var(--stripeMinWidth);
     }
     100% {
-        left: calc(0px - var(--stripeMinWidth));
+        left: calc(0px - var(--windowWidth));
         width: var(--stripeMinWidth);
     }
 }
@@ -152,17 +160,17 @@
         width: var(--logoSmall);
         height: var(--logoSmall);
     }
-    39% {
+    29% {
         opacity: 0;
         width: var(--logoSmall);
         height: var(--logoSmall);
     }
-    40% {
+    30% {
         opacity: 1;
         width: var(--logoSmall);
         height: var(--logoSmall);
     }
-    65% {
+    55% {
         opacity: 1;
         width: var(--logoLarge);
         height: var(--logoLarge);

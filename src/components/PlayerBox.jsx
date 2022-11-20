@@ -21,10 +21,10 @@ const PlayerBox = (props) => {
             name: "shots",
             label: "SH",
         },
-        {
-            name: "demos",
-            label: "D",
-        },
+        // {
+        //     name: "demos",
+        //     label: "D",
+        // },
     ];
 
     for (const s of statList) {

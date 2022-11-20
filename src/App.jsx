@@ -4,6 +4,7 @@ import useWebSocket from "react-use-websocket";
 import Config from "@/data/config.json";
 
 import Live from "@/views/Live";
+import GameStats from "@/views/GameStats";
 import Transition from "@/views/Transition";
 
 const expireEventsInMs = 7000;
@@ -12,13 +13,14 @@ const socketUrl = "ws://localhost:49322";
 const App = () => {
 
     const transitionDefault = {
-        class: "",
         logo: null,
         show: false,
+        styleClass: "",
         text: "",
     };
 
     const [clockRunning, setClockRunning] = useState(false);
+	const [endGameData, setEndGameData] = useState({});
 	const [gameData, setGameData] = useState({
 		teams: [],
 		time_seconds: 0,
@@ -26,6 +28,7 @@ const App = () => {
 	const [lastGoal, setLastGoal] = useState({});
 	const [playerData, setPlayerData] = useState({});
 	const [playerEvents, setPlayerEvents] = useState([]);
+	const [showGameStats, setShowGameStats] = useState(false);
     const [transition, setTransition] = useState(transitionDefault);
 
 	const {
@@ -42,6 +45,11 @@ const App = () => {
 	});
 
     function subscribeToFeed() {
+        sendJsonMessage({
+            event: "wsRelay:register",
+            data: "game:initialized",
+        });
+
         sendJsonMessage({
             event: "wsRelay:register",
             data: "game:statfeed_event",
@@ -70,6 +78,11 @@ const App = () => {
         sendJsonMessage({
             event: "wsRelay:register",
             data: "game:clock_stopped",
+        });
+
+        sendJsonMessage({
+            event: "wsRelay:register",
+            data: "game:match_ended",
         });
     }
 
@@ -102,10 +115,40 @@ const App = () => {
                 setClockRunning(true);
                 break;
 
-			case "game:goal_scored":
-				setLastGoal(data);
-                triggerGoalTransition(data.scorer.teamnum);
+            case "game:initialized":
+                setClockRunning(false);
+                triggerTransition(
+                    "noDelay",
+                    "",
+                    Config.show.leagueLogo && Config.leagueLogo ? `${Config.leagueLogo}` : null,
+                );
+                setTimeout(() => setShowGameStats(false), 750);
                 break;
+
+			case "game:goal_scored":
+                setLastGoal(data);
+                triggerTransition(
+                    `team${data.scorer.teamnum}`,
+                    "GOAL!",
+                    Config.show.teamLogos && Config.teams[data.scorer.teamnum].logo ? `/teams/${Config.teams[data.scorer.teamnum].logo}` : null,
+                );
+                break;
+
+            // case "game:podium_start":
+            case "game:match_ended":
+                setClockRunning(false);
+                const winningTeam = gameData.teams[0].score > gameData.teams[1].score ? 0 : 1;
+                setEndGameData({
+                    gameData,
+                    playerData,
+                });
+                setTimeout(() => triggerTransition(
+                    `team${winningTeam}`,
+                    "WINNER!",
+                    Config.show.teamLogos && Config.teams[winningTeam].logo ? `teams/${Config.teams[winningTeam].logo}` : null,
+                ), 1000);
+                setTimeout(() => setShowGameStats(true), 4500);
+            break;
 
             case "game:pre_countdown_begin":
                 clearAllPlayerEvents();
@@ -191,12 +234,12 @@ const App = () => {
 		}
 	}
 
-    const triggerGoalTransition = (team) => {
+    const triggerTransition = (styleClass, text, logo) => {
         setTransition({
-            class: `team${team}`,
-            logo: Config.show.teamLogos && Config.teams[team].logo ? Config.teams[team].logo : "",
+            logo,
             show: true,
-            text: "GOAL!",
+            styleClass,
+            text,
         });
         setTimeout(() => {
             setTransition(transitionDefault);
@@ -205,13 +248,25 @@ const App = () => {
 
 	return (
 		<div className="App">
-			<Live
-                clockRunning={clockRunning}
-                gameData={gameData}
-                lastGoal={lastGoal}
-                playerData={playerData}
-                playerEvents={playerEvents}
-            />
+
+            {showGameStats ? (
+                <GameStats
+                    config={Config}
+                    gameData={endGameData.gameData}
+                    players={endGameData.playerData}
+                />
+            ): (
+                <Live
+                    clockRunning={clockRunning}
+                    config={Config}
+                    gameData={gameData}
+                    lastGoal={lastGoal}
+                    playerData={playerData}
+                    playerEvents={playerEvents}
+                    showGameStats={showGameStats}
+                />
+            )}
+
             <Transition
                 transition={transition}
             />

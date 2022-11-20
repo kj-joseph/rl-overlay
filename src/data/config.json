@@ -1,8 +1,10 @@
 {
     "header": "Contender All-Star Game",
     "footer": "Game 1 of 4",
+    "leagueLogo": "RSC-logo.svg",
     "show": {
         "franchise": false,
+        "leagueLogo": true,
         "seriesScore": true,
         "teamLogos": true
     },

@@ -1,0 +1,85 @@
+#GameStats {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 50;
+	width: var(--windowWidth);
+	height: var(--windowHeight);
+    padding-top: 190px;
+    background-color: var(--lightnavy);
+    background-image: url("/src/assets/overlay-bg.svg"), linear-gradient(var(--navy) 180px, rgba(0, 37, 61, .5) 260px);
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+
+#GameStats .title {
+    font-size: 48px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: .15em;
+    margin: 0 0 30px .15em;
+}
+
+#GameStats .statTable {
+    text-transform: uppercase;
+    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 50px 35px;
+}
+
+#GameStats .statTable th,
+#GameStats .statTable td {
+    width: 200px;
+    text-align: center;
+}
+
+#GameStats .statTable th.separator,
+#GameStats .statTable td.separator {
+    width: 140px;
+}
+
+#GameStats .statTable thead th {
+    vertical-align: bottom;
+    font-size: 32px;
+    padding-bottom: 8px;
+    border-bottom: 6px solid white;
+}
+
+#GameStats .statTable thead th.separator {
+    border-bottom: none;
+}
+
+#GameStats .statTable thead th.team0 {
+    border-color: var(--team0);
+}
+
+#GameStats .statTable thead th.team1 {
+    border-color: var(--team1);
+}
+
+#GameStats .statTable thead th.long {
+    font-size: 28px;
+}
+
+#GameStats .statTable thead th .mvpIcon {
+    display: block;
+    font-size: 30px;
+    color: var(--gold);
+    margin: 0 auto 8px;
+}
+
+#GameStats .statTable tbody th {
+    font-size: 28px;
+    color: var(--gray);
+    vertical-align: middle;
+}
+
+#GameStats .statTable tbody td {
+    vertical-align: middle;
+    font-size: 40px;
+}
+
+#GameStats .statTable tbody tr:first-child th,
+#GameStats .statTable tbody tr:first-child td {
+    padding-top: 10px;
+}
