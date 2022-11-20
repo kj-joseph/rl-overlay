@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import useWebSocket from "react-use-websocket";
 
 import Config from "@/data/config.json";
@@ -12,6 +12,10 @@ const socketUrl = "ws://localhost:49322";
 
 const App = () => {
 
+    const seriesDefault = {
+        game: 0,
+        score: [0, 0],
+    }
     const transitionDefault = {
         logo: null,
         show: false,
@@ -28,6 +32,9 @@ const App = () => {
 	const [lastGoal, setLastGoal] = useState({});
 	const [playerData, setPlayerData] = useState({});
 	const [playerEvents, setPlayerEvents] = useState([]);
+    const [seriesData, setSeriesData] = useState({
+        ...seriesDefault,
+    });
 	const [showGameStats, setShowGameStats] = useState(false);
     const [transition, setTransition] = useState(transitionDefault);
 
@@ -122,7 +129,13 @@ const App = () => {
                     "",
                     Config.show.leagueLogo && Config.leagueLogo ? `${Config.leagueLogo}` : null,
                 );
-                setTimeout(() => setShowGameStats(false), 750);
+                setTimeout(() => {
+                    setShowGameStats(false);
+                    setSeriesData(sd => ({
+                        ...sd,
+                        game: sd.game + 1,
+                    }));
+                    }, 750);
                 break;
 
 			case "game:goal_scored":
@@ -147,7 +160,16 @@ const App = () => {
                     "WINNER!",
                     Config.show.teamLogos && Config.teams[winningTeam].logo ? `teams/${Config.teams[winningTeam].logo}` : null,
                 ), 1000);
-                setTimeout(() => setShowGameStats(true), 4500);
+                setTimeout(() => {
+                    setSeriesData(sd => ({
+                        ...sd,
+                        score: [
+                            sd.score[0] + (winningTeam === 0 ? 1 : 0),
+                            sd.score[1] + (winningTeam === 1 ? 1 : 0),
+                        ],
+                    }));
+                    setShowGameStats(true);
+                }, 4500);
             break;
 
             case "game:pre_countdown_begin":
@@ -254,6 +276,7 @@ const App = () => {
                     config={Config}
                     gameData={endGameData.gameData}
                     players={endGameData.playerData}
+                    series={seriesData}
                 />
             ): (
                 <Live
@@ -263,6 +286,7 @@ const App = () => {
                     lastGoal={lastGoal}
                     playerData={playerData}
                     playerEvents={playerEvents}
+                    series={seriesData}
                     showGameStats={showGameStats}
                 />
             )}

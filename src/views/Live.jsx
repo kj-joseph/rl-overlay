@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 
 import Ball from "@/components/Ball";
 import Clock from "@/components/Clock";
-import Footer from "@/components/Footer";
+import SeriesInfo from "@/components/SeriesInfo";
 import FranchiseName from "@/components/FranchiseName";
 import GameStats from "@/views/GameStats";
 import Header from "@/components/Header";
@@ -15,6 +15,7 @@ import TeamSeriesScore from "@/components/TeamSeriesScore";
 import Watching from "@/components/Watching";
 
 import "@/style/live.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
 
 const longTeamScore = 20;
 
@@ -35,7 +36,9 @@ const Live = (props) => {
 
             <Clock time={props.gameData.time_seconds} overtime={props.gameData.isOT} />
 
-            <Footer message={props.config.footer} />
+            {props.config.show.seriesScore ? (
+                <SeriesInfo series={props.series} config={props.config} />
+            ) : null}
 
             {props.gameData.teams.map((team, index) => (
                 <Fragment key={index}>
@@ -48,8 +51,7 @@ const Live = (props) => {
                     ) : null}
                     <TeamScore score={team.score} team={index} long={longScores} />
                     {props.config.show.seriesScore ? (
-                        <TeamSeriesScore score={props.config.teams[index].seriesScore} team={index} />
-
+                        <TeamSeriesScore score={props.series.score[index]} team={index} />
                     ) : null}
                 </Fragment>
             ))}

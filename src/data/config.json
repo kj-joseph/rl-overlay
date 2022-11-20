@@ -1,12 +1,16 @@
 {
     "header": "Contender All-Star Game",
-    "footer": "Game 1 of 4",
-    "leagueLogo": "RSC-logo.svg",
+    "leagueLogo": "doughboy.svg",
     "show": {
         "franchise": false,
         "leagueLogo": true,
         "seriesScore": true,
         "teamLogos": true
+    },
+    "series": {
+        "type": "bestof",
+        "maxGames": 3,
+        "override": null
     },
     "teams": [
         {

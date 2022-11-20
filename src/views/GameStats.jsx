@@ -3,7 +3,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
-import Footer from "@/components/Footer";
+import SeriesInfo from "@/components/SeriesInfo";
 import FranchiseName from "@/components/FranchiseName";
 import Header from "@/components/Header";
 import TeamLogo from "@/components/TeamLogo";
@@ -67,7 +67,10 @@ const GameStats = (props) => {
 	return (
 		<div id="GameStats">
             <Header message={props.config.header} />
-            <Footer message={props.config.footer} />
+
+            {props.config.show.seriesScore ? (
+                <SeriesInfo series={props.series} config={props.config} />
+            ) : null}
 
             {props.gameData.teams.map((team, index) => (
                 <Fragment key={index}>
@@ -80,8 +83,7 @@ const GameStats = (props) => {
                     ) : null}
                     <TeamScore score={team.score} team={index} long={longScores} />
                     {props.config.show.seriesScore ? (
-                        <TeamSeriesScore score={props.config.teams[index].seriesScore} team={index} />
-
+                        <TeamSeriesScore score={props.series.score[index]} team={index} />
                     ) : null}
                 </Fragment>
             ))}
