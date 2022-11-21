@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment } from "react";
 
 import Ball from "@/components/Ball";
 import Clock from "@/components/Clock";
@@ -19,16 +19,17 @@ const longTeamScore = 20;
 
 const Live = (props) => {
 
-    const [longScores, setLongScores] = useState(false);
-
-    useEffect(() => {
-        if (props.hasOwnProperty("gameData") && props.gameData.hasOwnProperty("teams") && props.gameData.teams.length > 0) {
-            setLongScores(props.gameData.teams[0].score >= longTeamScore || props.gameData.teams[1].score >= longTeamScore);
-        }
-    });
+    const longScores = props.hasOwnProperty("gameData")
+        && props.gameData.hasOwnProperty("teams")
+        && props.gameData.teams.length > 0
+        && (props.gameData.teams[0].score >= longTeamScore
+            || props.gameData.teams[1].score)
+        ? true : false;
 
 	return (
 		<div id="LivePlay">
+
+        {longScores.toString()}{typeof longScores}
 
             <Header message={props.config.header} />
 
