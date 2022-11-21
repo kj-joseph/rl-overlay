@@ -1,4 +1,4 @@
-#Header {
+.header {
     position: absolute;
     top: 0;
     left: 50%;
@@ -12,9 +12,8 @@
     text-align: center;
 }
 
-/* series info */
 
-#SeriesInfo {
+.seriesInfo {
     position: absolute;
     top: 94px;
     left: 50%;
@@ -22,9 +21,17 @@
     width: 520px;
     height: var(--footer);
     padding: 0 10px;
-    color: var(--gray);
     font-size: 20px;
     text-transform: uppercase;
     line-height: 20px;
     text-align: center;
+}
+
+.seriesInfo .small {
+    font-size: 90%;
+    color: var(--gray);
+}
+
+.seriesInfo .pipe {
+    color: var(--gray);
 }

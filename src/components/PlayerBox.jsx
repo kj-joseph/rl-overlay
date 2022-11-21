@@ -50,8 +50,8 @@ const PlayerBox = (props) => {
             <div className="boost">{props.player.boost}</div>
 
             <div className="stats">
-                {displayStats.map((stat, index) => (
-                    <span className="stat" key={index}>
+                {displayStats.map((stat, statIndex) => (
+                    <span className="stat" key={statIndex}>
                         {stat.value}<span className="label">{stat.label}</span>
                     </span>
 

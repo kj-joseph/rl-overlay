@@ -4,12 +4,12 @@
     "show": {
         "franchise": false,
         "leagueLogo": true,
-        "seriesScore": true,
         "teamLogos": true
     },
     "series": {
+        "showScore": true,
         "type": "bestof",
-        "maxGames": 3,
+        "maxGames": 5,
         "override": null
     },
     "teams": [

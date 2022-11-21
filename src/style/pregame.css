@@ -1,0 +1,132 @@
+@import "components/textitems.css";
+
+#Pregame {
+    --midstripe: 40px;
+    --midfade: 50px;
+    --outerstripe: 250px;
+    --outerfade: 150px;
+    --logoSize: 400px;
+    --diagonalOffset: 140px;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 50;
+	width: var(--windowWidth);
+	height: var(--windowHeight);
+    overflow: hidden;
+    background: linear-gradient(
+        /* 90deg, */
+        120deg,
+        var(--team0) calc(0% + var(--outerstripe)),
+        var(--navy) calc(0% + var(--outerfade) + var(--outerstripe)),
+        var(--navy) calc(50% - var(--midstripe) / 2 - var(--midfade)),
+        var(--gray) calc(50% - var(--midstripe) / 2),
+        var(--gray) calc(50% + var(--midstripe) / 2),
+        var(--navy) calc(50% + var(--midstripe) / 2 + var(--midfade)),
+        var(--navy) calc(100% - var(--outerfade) - var(--outerstripe)),
+        var(--team1) calc(100% - var(--outerstripe))
+    );
+}
+
+#Pregame .header {
+    left: 0;
+    z-index: 128;
+    transform: none;
+	width: var(--windowWidth);
+    padding: 30px 0;
+    font-size: 42px;
+    background: var(--navy);
+    border-bottom: 8px solid var(--gray);
+}
+
+#Pregame .seriesInfo {
+    top: auto;
+    bottom: 0;
+    z-index: 128;
+	width: var(--windowWidth);
+    font-size: 250%;
+    padding: 30px 0;
+    background: var(--navy);
+    border-top: 8px solid var(--gray);
+}
+
+#Pregame .vs {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 5;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 92px;
+}
+
+#Pregame .vs:after {
+    content: attr(data-text);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    transform: translate(-50%, -50%);
+    color: var(--navy);
+    -webkit-text-stroke: 20px var(--navy);
+}
+
+#Pregame .team {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#Pregame .team.team0 {
+    left: calc(var(--outerfade) + var(--outerstripe) + (var(--windowWidth) / 2 - var(--midstripe) / 2 - var(--midfade) - var(--outerfade) - var(--outerstripe)) / 2 - var(--diagonalOffset));
+}
+
+#Pregame .team.team1 {
+    right: calc(var(--outerfade) + var(--outerstripe) + (var(--windowWidth) / 2 - var(--midstripe) / 2 - var(--midfade) - var(--outerfade) - var(--outerstripe)) / 2 - var(--diagonalOffset));
+}
+
+#Pregame .team .logo {
+    --logoOffset: 50px;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: var(--logoSize);
+    height: var(--logoSize);
+}
+
+#Pregame .team.team0 .logo {
+    left: calc(0px - var(--logoOffset));
+}
+
+#Pregame .team.team1 .logo {
+    left: var(--logoOffset);
+}
+
+#Pregame .team .logo img {
+    width: inherit;
+    height: inherit;
+}
+
+#Pregame .team .name {
+    --diagonalNameOffset: 72px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(-60deg);
+    font-size: 116px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+#Pregame .team .name.long {
+    font-size: 98px;
+}
+
+#Pregame .team.team0.hasLogo .name {
+    left: calc((var(--windowWidth) / 2 - var(--midstripe) / 2 - var(--midfade) - var(--outerfade) - var(--outerstripe)) / 2 + var(--diagonalNameOffset));
+}
+
+#Pregame .team.team1.hasLogo .name {
+    left: calc(0px - ((var(--windowWidth) / 2 - var(--midstripe) / 2 - var(--midfade) - var(--outerfade) - var(--outerstripe)) / 2 + var(--diagonalNameOffset)));
+}

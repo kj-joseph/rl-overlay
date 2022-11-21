@@ -19,29 +19,29 @@ const PlayerEvents = (props) => {
         <div className="events">
             {props.events.sort((a, b) => a > b ? -1 : a < b ? 1 : 0)
                 .filter((e, i) => i < eventLimit)
-                .map((event, index) => (
-                    <Fragment key={index}>
+                .map((event, eventIndex) => (
+                    <Fragment key={eventIndex}>
                         {
                             event.name === "Assist" ? (
-                                <FontAwesomeIcon className="eventIcon" icon={faHandshake} key={index} />
+                                <FontAwesomeIcon className="eventIcon" icon={faHandshake} key={eventIndex} />
                             )
                             : event.name === "Dead" ? (
-                                <FontAwesomeIcon className="eventIcon" icon={faSkull} key={index} />
+                                <FontAwesomeIcon className="eventIcon" icon={faSkull} key={eventIndex} />
                             )
                             : event.name === "Demolish" ? (
-                                <FontAwesomeIcon className="eventIcon" icon={faBomb} key={index} />
+                                <FontAwesomeIcon className="eventIcon" icon={faBomb} key={eventIndex} />
                             )
                             : event.name === "Goal" ? (
-                                <FontAwesomeIcon className="eventIcon" icon={faCertificate} key={index} />
+                                <FontAwesomeIcon className="eventIcon" icon={faCertificate} key={eventIndex} />
                             )
                             : event.name === "HatTrick" ? (
-                                <FontAwesomeIcon className="eventIcon" icon={faHatWizard} key={index} />
+                                <FontAwesomeIcon className="eventIcon" icon={faHatWizard} key={eventIndex} />
                             )
                             : event.name === "Save" || event.name === "EpicSave" ? (
-                                <FontAwesomeIcon className="eventIcon" icon={faHand} key={index} />
+                                <FontAwesomeIcon className="eventIcon" icon={faHand} key={eventIndex} />
                             )
                             : event.name === "Shot" ? (
-                                <FontAwesomeIcon className="eventIcon" icon={faFutbol} key={index} />
+                                <FontAwesomeIcon className="eventIcon" icon={faFutbol} key={eventIndex} />
                             )
 
 

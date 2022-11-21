@@ -68,22 +68,22 @@ const GameStats = (props) => {
 		<div id="GameStats">
             <Header message={props.config.header} />
 
-            {props.config.show.seriesScore ? (
+            {props.config.series.showScore || props.config.series.override ? (
                 <SeriesInfo series={props.series} config={props.config} />
             ) : null}
 
-            {props.gameData.teams.map((team, index) => (
-                <Fragment key={index}>
-                    <TeamName name={team.name} team={index} />
+            {props.gameData.teams.map((team, teamnum) => (
+                <Fragment key={teamnum}>
+                    <TeamName name={team.name} team={teamnum} />
                     {props.config.show.franchise ? (
-                        <FranchiseName name={props.config.teams[index].franchise} team={index} />
+                        <FranchiseName name={props.config.teams[teamnum].franchise} team={teamnum} />
                     ) : null}
-                    {props.config.show.teamLogos && props.config.teams[index].hasOwnProperty("logo") ? (
-                        <TeamLogo team={index} logo={props.config.teams[index].logo} />
+                    {props.config.show.teamLogos && props.config.teams[teamnum].hasOwnProperty("logo") ? (
+                        <TeamLogo team={teamnum} logo={props.config.teams[teamnum].logo} />
                     ) : null}
-                    <TeamScore score={team.score} team={index} long={longScores} />
-                    {props.config.show.seriesScore ? (
-                        <TeamSeriesScore score={props.series.score[index]} team={index} />
+                    <TeamScore score={team.score} team={teamnum} long={longScores} />
+                    {props.config.series.showScore ? (
+                        <TeamSeriesScore score={props.series.score[teamnum]} team={teamnum} />
                     ) : null}
                 </Fragment>
             ))}

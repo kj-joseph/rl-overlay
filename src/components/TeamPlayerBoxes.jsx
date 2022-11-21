@@ -6,12 +6,12 @@ const TeamPlayers = (props) => {
 
     return (
         <div className="teamPlayerBoxes" id={`Team${props.team}PlayerBoxes`}>
-            {Object.values(props.players).map((player, index) => (
+            {Object.values(props.players).map((player, playerIndex) => (
                 <PlayerBox
                     player={player}
                     teamIndex={props.team}
-                    playerIndex={index}
-                    key={index}
+                    playerIndex={playerIndex}
+                    key={playerIndex}
                     playerEvents={props.playerEvents.filter(p => p.playerId === player.id)}
                     watching={props.watching === player.id}
                 />

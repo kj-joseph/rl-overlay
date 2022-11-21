@@ -5,6 +5,7 @@ import Config from "@/data/config.json";
 
 import Live from "@/views/Live";
 import GameStats from "@/views/GameStats";
+import Pregame from "./views/Pregame";
 import Transition from "@/views/Transition";
 
 const expireEventsInMs = 7000;
@@ -35,8 +36,8 @@ const App = () => {
     const [seriesData, setSeriesData] = useState({
         ...seriesDefault,
     });
-	const [showGameStats, setShowGameStats] = useState(false);
     const [transition, setTransition] = useState(transitionDefault);
+    const [viewState, setViewState] = useState("");
 
 	const {
 	  sendMessage,
@@ -130,7 +131,7 @@ const App = () => {
                     Config.show.leagueLogo && Config.leagueLogo ? `${Config.leagueLogo}` : null,
                 );
                 setTimeout(() => {
-                    setShowGameStats(false);
+                    setViewState("live");
                     setSeriesData(sd => ({
                         ...sd,
                         game: sd.game + 1,
@@ -168,7 +169,7 @@ const App = () => {
                             sd.score[1] + (winningTeam === 1 ? 1 : 0),
                         ],
                     }));
-                    setShowGameStats(true);
+                    setViewState("stats");
                 }, 4500);
             break;
 
@@ -220,6 +221,11 @@ const App = () => {
 				if (data.hasOwnProperty("game")) {
                     expirePlayerEvents();
 					setGameData(data.game);
+                    if (viewState !== "stats" && data.game.time_milliseconds % 1 !== 0) {
+                        setViewState("live");
+                    } else if (viewState === "") {
+                        setViewState("pregame");
+                    }
 				}
 				break;
 
@@ -271,14 +277,20 @@ const App = () => {
 	return (
 		<div className="App">
 
-            {showGameStats ? (
+            {viewState === "stats" ? (
                 <GameStats
                     config={Config}
                     gameData={endGameData.gameData}
                     players={endGameData.playerData}
                     series={seriesData}
                 />
-            ): (
+            ) : viewState ==="pregame" ? (
+                <Pregame
+                    config={Config}
+                    gameData={gameData}
+                    series={seriesData}
+                />
+            ) : (
                 <Live
                     clockRunning={clockRunning}
                     config={Config}
@@ -287,7 +299,6 @@ const App = () => {
                     playerData={playerData}
                     playerEvents={playerEvents}
                     series={seriesData}
-                    showGameStats={showGameStats}
                 />
             )}
 

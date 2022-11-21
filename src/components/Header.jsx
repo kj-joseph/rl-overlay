@@ -3,7 +3,7 @@ import React from "react";
 const Header = (props) => {
 
     return (
-        <div id="Header">
+        <div className="header">
             {props.message}
         </div>
     )
