@@ -18,12 +18,12 @@
     font-size: 16px;
 }
 
-#FranchiseName0 {
+.franchiseName0 {
     text-align: right;
     left: calc(var(--windowWidth)/2 - var(--clock)/2 - var(--score) - var(--teamname) - var(--border)*4);
 }
 
-#FranchiseName1 {
+.franchiseName1 {
     text-align: left;
     left: calc(var(--windowWidth)/2 + var(--clock)/2 + var(--score) + var(--franchiseOffset) + var(--border)*2);
 }

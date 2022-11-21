@@ -15,10 +15,10 @@
     font-size: 50px;
 }
 
-#TeamScore0 {
+.teamScore.team0 {
     left: calc(var(--windowWidth)/2 - var(--clock)/2 - var(--border) - var(--score));
 }
 
-#TeamScore1 {
+.teamScore.team1 {
     left: calc(var(--windowWidth)/2 + var(--border) + (var(--clock) /2));
 }

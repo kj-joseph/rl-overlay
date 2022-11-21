@@ -1,4 +1,4 @@
-#Replay {
+.replay {
     --replayHeight: 75px;
     position: absolute;
     right: 0;
@@ -10,19 +10,19 @@
     transition: bottom .25s ease-in;
 }
 
-#Replay.showReplay {
+.replay.showReplay {
     bottom: 0;
 }
 
-#Replay.team0 {
+.replay.team0 {
     border-top: 10px solid var(--team0);
 }
 
-#Replay.team1 {
+.replay.team1 {
     border-top: 10px solid var(--team1);
 }
 
-#Replay .replayLabel {
+.replay .replayLabel {
     --replayLabelHeight: 38px;
     position: absolute;
     top: calc(-10px - var(--replayLabelHeight));
@@ -36,25 +36,25 @@
     background: var(--red);
 }
 
-#Replay.team0 .replayLabel {
+.replay.team0 .replayLabel {
     background: var(--team0);
 }
 
-#Replay.team1 .replayLabel {
+.replay.team1 .replayLabel {
     background: var(--team1);
 }
 
-#Replay .replayLabelLeft {
+.replay .replayLabelLeft {
     left: 0;
     border-top-right-radius: var(--radius);
 }
 
-#Replay .replayLabelRight {
+.replay .replayLabelRight {
     right: 0;
     border-top-left-radius: var(--radius);
 }
 
-#Replay .statLine {
+.replay .statLine {
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-evenly;
@@ -62,25 +62,25 @@
     line-height: calc(var(--replayHeight) - 13px);
 }
 
-#Replay .statLine .stat:first-child {
+.replay .statLine .stat:first-child {
     padding-left: 60px;
 }
 
-#Replay .statLine .stat {
+.replay .statLine .stat {
     display: inline-block;
 }
 
-#Replay .stat .value {
+.replay .stat .value {
     font-size: 60px;
     text-transform: uppercase;
     vertical-align: baseline;
 }
 
-#Replay .value.long {
+.replay .value.long {
     font-size: 52px;
 }
 
-#Replay .stat .label {
+.replay .stat .label {
     font-size: 26px;
     color: var(--gray);
     text-transform: uppercase;
@@ -88,13 +88,13 @@
     vertical-align: baseline;
 }
 
-#Replay .stat.speed .value {
+.replay .stat.speed .value {
     font-size: 44px;
     text-transform: uppercase;
     color: var(--gray)
 }
 
-#Replay .stat.speed .label {
+.replay .stat.speed .label {
     font-size: 24px;
     color: var(--gray);
     text-transform: uppercase;

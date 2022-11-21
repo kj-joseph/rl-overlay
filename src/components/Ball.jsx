@@ -15,7 +15,7 @@ const Ball = (props) => {
     }
 
     return (
-        <div id="Ball">
+        <div className="ball">
 
             <div className="name">Ball</div>
             <div className="statLine">

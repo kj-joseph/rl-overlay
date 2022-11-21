@@ -14,10 +14,10 @@
     font-size: 26px;
 }
 
-#TeamSeriesScore0 {
+.teamSeriesScore.team0 {
     left: calc(var(--windowWidth) / 2 - var(--seriesScoreSpace) - var(--seriesScoreWidth));
 }
 
-#TeamSeriesScore1 {
+.teamSeriesScore.team1 {
     left: calc(var(--windowWidth) / 2 + var(--seriesScoreSpace));
 }

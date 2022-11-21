@@ -1,4 +1,4 @@
-#Clock {
+.clock {
     position: absolute;
     left: 50%;
     top: var(--header);
@@ -13,28 +13,28 @@
     border-radius: var(--radius);
 }
 
-#Clock.overtime {
+.clock.overtime {
     background: linear-gradient(var(--navy), var(--red));
 }
 
-#Clock .time {
+.clock .time {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     width: 100%;
 }
 
-#Clock .time.long {
+.clock .time.long {
     font-size: 42px;
 }
 
-#Clock .plus {
+.clock .plus {
     font-size: 55%;
     vertical-align: middle;
     margin-right: 1px;
 }
 
-#Clock .overtimeText {
+.clock .overtimeText {
     position: absolute;
     top: 47px;
     left: 50%;

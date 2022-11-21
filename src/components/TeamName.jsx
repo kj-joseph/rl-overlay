@@ -5,7 +5,7 @@ const TeamName = (props) => {
     const longName = 12;
 
     return (
-        <div className={`teamName ${props.name.length >= longName ? " long" : ""}`} id={`TeamName${props.team}`}>
+        <div className={`teamName team${props.team} ${props.name.length >= longName ? " long" : ""}`}>
             {props.name}
         </div>
     )

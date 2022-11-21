@@ -3,11 +3,11 @@
     top: 10px;
 }
 
-#Team0PlayerBoxes {
+.teamPlayerBoxes.team0 {
     left: 10px;
 }
 
-#Team1PlayerBoxes {
+.teamPlayerBoxes.team1 {
     right: 10px;
 }
 
@@ -30,7 +30,7 @@
     background: var(--lightnavy);
 }
 
-#Team0PlayerBoxes .playerBox {
+.teamPlayerBoxes.team0 .playerBox {
     grid-template-columns: 1fr var(--playerEvents) var(--playerBoost);
     grid-template-areas:
         "name name name"
@@ -38,7 +38,7 @@
     border-left: 10px solid var(--team0)
 }
 
-#Team1PlayerBoxes .playerBox {
+.teamPlayerBoxes.team1 .playerBox {
     grid-template-columns:  var(--playerBoost) var(--playerEvents) 1fr;
     grid-template-areas:
         "name name name"
@@ -46,8 +46,8 @@
     border-right: 10px solid var(--team1)
 }
 
-#Team0PlayerBoxes .playerBox.dead,
-#Team1PlayerBoxes .playerBox.dead {
+.teamPlayerBoxes.team0 .playerBox.dead,
+.teamPlayerBoxes.team1 .playerBox.dead {
     opacity: .6;
 }
 
@@ -68,7 +68,7 @@
     line-height: 25px;
 }
 
-#Team1PlayerBoxes .playerBox .name {
+.teamPlayerBoxes.team1 .playerBox .name {
     justify-self: right;
     text-align: right;
 }
@@ -90,28 +90,28 @@
     background: linear-gradient(var(--navy), var(--lightnavy));
 }
 
-#Team0PlayerBoxes .playerBox .boost {
+.teamPlayerBoxes.team0 .playerBox .boost {
     border-top: 2px solid var(--team0);
     border-left: 2px solid var(--team0);
     border-radius: var(--radius) 0 var(--radius) 0;
 }
 
-#Team0PlayerBoxes .playerBox.watching .boost {
+.teamPlayerBoxes.team0 .playerBox.watching .boost {
     background: linear-gradient(var(--navy), var(--team0));
 }
 
-#Team1PlayerBoxes .playerBox .boost {
+.teamPlayerBoxes.team1 .playerBox .boost {
     border-top: 2px solid var(--team1);
     border-right: 2px solid var(--team1);
     border-radius: 0 var(--radius) 0 var(--radius);
 }
 
-#Team1PlayerBoxes .playerBox.watching .boost {
+.teamPlayerBoxes.team1 .playerBox.watching .boost {
     background: linear-gradient(var(--navy), var(--team1));
 }
 
-#Team0PlayerBoxes .playerBox.dead .boost,
-#Team1PlayerBoxes .playerBox.dead .boost {
+.teamPlayerBoxes.team0 .playerBox.dead .boost,
+.teamPlayerBoxes.team1 .playerBox.dead .boost {
     color: transparent;
     background: linear-gradient(var(--lightnavy), var(--red));
     border-color: var(--red);
@@ -128,7 +128,7 @@
     padding: 0 5px;
 }
 
-#Team1PlayerBoxes .playerBox .stats {
+.teamPlayerBoxes.team1 .playerBox .stats {
     justify-self: right;
     text-align: right;
 }
@@ -143,7 +143,7 @@
     color: var(--gray);
 }
 
-#Team1PlayerBoxes .playerBox .stat {
+.teamPlayerBoxes.team1 .playerBox .stat {
     margin-right: 0;
     margin-left: .5em;
 }
@@ -160,7 +160,7 @@
     padding-right: 5px;
 }
 
-#Team1PlayerBoxes .playerBox .events {
+.teamPlayerBoxes.team1 .playerBox .events {
     padding: 0 0 0 5px;
     justify-self: start;
     text-align: left;
@@ -172,11 +172,11 @@
     color: var(--team0);
 }
 
-#Team1PlayerBoxes.teamPlayerBoxes .playerBox .events .eventIcon {
+.teamPlayerBoxes.team1.teamPlayerBoxes .playerBox .events .eventIcon {
     color: var(--team1);
 }
 
-#Team0PlayerBoxes.teamPlayerBoxes .playerBox.dead .events .eventIcon,
-#Team1PlayerBoxes.teamPlayerBoxes .playerBox.dead .events .eventIcon {
+.teamPlayerBoxes.team0.teamPlayerBoxes .playerBox.dead .events .eventIcon,
+.teamPlayerBoxes.team1.teamPlayerBoxes .playerBox.dead .events .eventIcon {
     color: var(--red)
 }

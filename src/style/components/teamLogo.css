@@ -15,14 +15,14 @@
     background: var(--navy);
 }
 
-#TeamLogo0 {
+.teamLogo.team0 {
     left: calc(var(--windowWidth)/2 - var(--clock)/2 - var(--score) - var(--teamname) - var(--teamLogoWidth) - var(--border)*6);
     text-align: right;
     padding-right: 20px;
     border-bottom-left-radius: var(--radius);
 }
 
-#TeamLogo1 {
+.teamLogo.team1 {
     left: calc(var(--windowWidth)/2 + var(--clock)/2 + var(--score) + var(--teamname) + var(--border)*3);
     text-align: left;
     padding-left: 20px;

@@ -20,13 +20,13 @@
     font-size: 30px;
 }
 
-#TeamName0 {
+.teamName.team0 {
     left: calc(var(--windowWidth)/2 - var(--clock)/2 - var(--score) - var(--teamname) - var(--border)*4);
     text-align: right;
     border-left-width: calc(10px + var(--teamnamePadding));
 }
 
-#TeamName1 {
+.teamName.team1 {
     left: calc(var(--windowWidth)/2 + var(--clock)/2 + var(--score) + var(--border)*2);
     text-align: left;
     border-right-width: calc(10px + var(--teamnamePadding));

@@ -1,4 +1,4 @@
-#Ball {
+.ball {
     position: absolute;
     right: 0;
     bottom: 0;
@@ -13,7 +13,7 @@
     border-right: 20px solid var(--gray);
 }
 
-#Ball .name {
+.ball .name {
     position: absolute;
     left: 10px;
     top: 5px;
@@ -26,7 +26,7 @@
     margin-right: 1em;
 }
 
-#Ball .statLine {
+.ball .statLine {
     display: flex;
     flex-grow: 0;
     justify-content: flex-end;
@@ -34,14 +34,14 @@
     padding-left: 150px;
 }
 
-#Ball .stat .label {
+.ball .stat .label {
     font-size: 22px;
     color: var(--gray);
     text-transform: uppercase;
     margin-left: 7px;
 }
 
-#Ball .stat .value {
+.ball .stat .value {
     font-size: 30px;
     text-transform: uppercase;
 }

@@ -9,7 +9,7 @@ const Clock = (props) => {
     const longTimeMinutesOT = 20;
 
     return (
-        <div id="Clock" className={`${props.overtime ? "overtime" : ""}`}>
+        <div className={`clock ${props.overtime ? "overtime" : ""}`}>
             <div className={`time ${minutes >= longTimeMinutes || (props.overtime && minutes >= longTimeMinutesOT) ? "long" : ""}`}>
                 {props.overtime ? (
                     <span className="plus">+</span>

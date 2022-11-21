@@ -40,10 +40,7 @@ const PlayerBox = (props) => {
     }
 
     return (
-        <div
-            className={`playerBox ${props.watching ? "watching" : ""} ${props.player.isDead ? "dead" : ""}`}
-            id={`Team${props.teamIndex}Player${props.playerIndex}`}
-        >
+        <div className={`playerBox ${props.watching ? "watching" : ""} ${props.player.isDead ? "dead" : ""}`}>
 
             <div className={`name ${props.player.name.length >= longPlayerName ? "long" : ""}`}>{props.player.name}</div>
 

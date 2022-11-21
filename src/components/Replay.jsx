@@ -20,7 +20,7 @@ const Replay = (props) => {
             ? props.lastGoal.scorer.teamnum : null;
 
     return (
-        <div id="Replay" className={`team${team} ${props.show ? "showReplay" : ""}`}>
+        <div className={`replay team${team} ${props.show ? "showReplay" : ""}`}>
 
                     <div className="replayLabel replayLabelLeft">REPLAY</div>
 

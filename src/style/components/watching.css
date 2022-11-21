@@ -1,11 +1,11 @@
-#Watching {
+.watchingView {
     position: absolute;
     left: 0;
     bottom: 0;
     width: 100%;
 }
 
-#Watching .stats {
+.watchingView .stats {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -22,15 +22,15 @@
     border-left: 20px solid var(--navy);
 }
 
-#Watching.watchingTeam0 .stats {
+.watchingView.watchingTeam0 .stats {
     border-left-color: var(--team0)
 }
 
-#Watching.watchingTeam1 .stats {
+.watchingView.watchingTeam1 .stats {
     border-left-color: var(--team1)
 }
 
-#Watching .stats .name {
+.watchingView .stats .name {
     flex-basis: 60%;
     height: 40px;
     overflow: hidden;
@@ -40,30 +40,30 @@
     margin-right: 1em;
 }
 
-#Watching .stats .name.long {
+.watchingView .stats .name.long {
     font-size: 28px;
 }
 
-#Watching .stats .statLine {
+.watchingView .stats .statLine {
     flex-basis: 40%;
     display: flex;
     justify-content: flex-end;
     column-gap: 20px;
 }
 
-#Watching .stats .stat .label {
+.watchingView .stats .stat .label {
     font-size: 26px;
     color: var(--gray);
     text-transform: uppercase;
     margin-right: 7px;
 }
 
-#Watching .stats .stat .value {
+.watchingView .stats .stat .value {
     font-size: 34px;
     text-transform: uppercase;
 }
 
-#Watching .boostDisplay {
+.watchingView .boostDisplay {
     position: absolute;
     right: 80px;
     bottom: 90px;
@@ -73,34 +73,34 @@
     border-radius: 50%;
 }
 
-#Watching .boost {
+.watchingView .boost {
     position: absolute;
     width: 140px;
     height: 140px;
     margin: 20px;
 }
 
-#Watching.watchingTeam0 .CircularProgressbar-trail {
+.watchingView.watchingTeam0 .CircularProgressbar-trail {
     stroke: var(--team0fade);
 }
 
-#Watching.watchingTeam1 .CircularProgressbar-trail {
+.watchingView.watchingTeam1 .CircularProgressbar-trail {
     stroke: var(--team1fade);
 }
 
-#Watching .CircularProgressbar-trail {
+.watchingView .CircularProgressbar-trail {
     stroke: var(--navy);
 }
 
-#Watching .boost .CircularProgressbar-text {
+.watchingView .boost .CircularProgressbar-text {
     font-size: 46px;
     fill: var(--gray);
 }
 
-#Watching.watchingTeam0 .boost .CircularProgressbar-path {
+.watchingView.watchingTeam0 .boost .CircularProgressbar-path {
     stroke: var(--team0);
 }
 
-#Watching.watchingTeam1 .boost .CircularProgressbar-path {
+.watchingView.watchingTeam1 .boost .CircularProgressbar-path {
     stroke: var(--team1);
 }

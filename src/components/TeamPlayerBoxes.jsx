@@ -5,7 +5,7 @@ import PlayerBox from "./PlayerBox";
 const TeamPlayers = (props) => {
 
     return (
-        <div className="teamPlayerBoxes" id={`Team${props.team}PlayerBoxes`}>
+        <div className={`teamPlayerBoxes team${props.team}`}>
             {Object.values(props.players).map((player, playerIndex) => (
                 <PlayerBox
                     player={player}
