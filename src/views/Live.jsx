@@ -29,8 +29,6 @@ const Live = (props) => {
 	return (
 		<div id="LivePlay">
 
-        {longScores.toString()}{typeof longScores}
-
             <Header message={props.config.header} />
 
             <Clock time={props.gameData.time_seconds} overtime={props.gameData.isOT} />

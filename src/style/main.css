@@ -1,9 +1,10 @@
 :root {
-	font-family: "RSC", Helvetica, Arial, sans-serif;
+	font-family: RSC, Helvetica, Arial, sans-serif;
 	font-size: 16px;
 	color: #fff;
 	color-scheme: light dark;
 	background: transparent;
+    font-weight: bold;
 
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
@@ -42,4 +43,9 @@ body {
 	width: var(--windowWidth);
 	height: var(--windowHeight);
     overflow: hidden;
+}
+
+@font-face {
+    font-family: "RSC";
+    src: url("./src/assets/fonts/RSC-Bold.ttf");
 }
