@@ -14,7 +14,7 @@
 	height: var(--windowHeight);
     padding-top: 190px;
     background-color: var(--lightnavy);
-    background-image: url("/src/assets/overlay-bg.svg"), linear-gradient(var(--navy) 180px, rgba(0, 37, 61, .5) 260px);
+    background-image: url("/overlay-bg.svg"), linear-gradient(var(--navy) 180px, rgba(0, 37, 61, .5) 260px);
     background-repeat: no-repeat;
     background-position: top center;
 }

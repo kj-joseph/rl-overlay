@@ -47,5 +47,5 @@ body {
 
 @font-face {
     font-family: "RSC";
-    src: url("./src/assets/fonts/RSC-Bold.ttf");
+    src: url("/fonts/RSC-Bold.ttf");
 }

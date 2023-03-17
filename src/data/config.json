@@ -1,5 +1,6 @@
 {
-    "header": "Contender All-Star Game",
+    "style": "rsc",
+    "header": "MEtal",
     "leagueLogo": "doughboy.svg",
     "show": {
         "franchise": false,
@@ -7,8 +8,8 @@
         "teamLogos": true
     },
     "series": {
-        "showScore": true,
-        "type": "bestof",
+        "showScore": false,
+        "type": "none",
         "maxGames": 5,
         "override": null
     },

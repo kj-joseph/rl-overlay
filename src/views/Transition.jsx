@@ -1,6 +1,6 @@
 import React from "react";
 
-import "@/style/transition.css";
+import "@/style/rsc/transition.css";
 
 const Transition = (props) => {
 
@@ -10,7 +10,7 @@ const Transition = (props) => {
             <div className="bg">
                 {props.transition.logo ? (
                     <div className="logo">
-                        <img src={`./src/assets/logos/${props.transition.logo}`}></img>
+                        <img src={`/logos/${props.transition.logo}`}></img>
                     </div>
                 ): null}
             </div>

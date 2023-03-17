@@ -13,7 +13,7 @@ import TeamScore from "@/components/TeamScore";
 import TeamSeriesScore from "@/components/TeamSeriesScore";
 import Watching from "@/components/Watching";
 
-import "@/style/live.css";
+import "@/style/rsc/live.css";
 
 const longTeamScore = 20;
 

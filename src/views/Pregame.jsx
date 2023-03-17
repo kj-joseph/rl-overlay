@@ -3,7 +3,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import Header from "@/components/Header";
 import SeriesInfo from "@/components/SeriesInfo";
 
-import "@/style/pregame.css";
+import "@/style/rsc/pregame.css";
 
 const longTeamName = 16;
 
@@ -22,7 +22,7 @@ const Pregame = (props) => {
                 <div className={`team team${teamnum} ${props.config.show.teamLogos && props.config.teams[teamnum].logo && 1 ? "hasLogo" : ""}`} key={`pregameTeam${teamnum}`}>
                     {props.config.show.teamLogos && props.config.teams[teamnum].logo && 1 ? (
                         <div className="logo">
-                            <img src={`./src/assets/logos/teams/${props.config.teams[teamnum].logo}`}></img>
+                            <img src={`/logos/teams/${props.config.teams[teamnum].logo}`}></img>
                         </div>
                     ) : null }
                     <div className={`name ${team.name.length >= longTeamName ? "long" : ""}`}>{team.name}</div>

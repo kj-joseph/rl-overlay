@@ -33,7 +33,7 @@ body {
     z-index: 10;
 	width: var(--windowWidth);
 	height: var(--windowHeight);
-    background: url("/src/assets/overlay-bg.svg") no-repeat top center;
+    background: url("/overlay-bg.svg") no-repeat top center;
 }
 
 

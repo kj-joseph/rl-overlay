@@ -11,7 +11,7 @@ import TeamName from "@/components/TeamName";
 import TeamScore from "@/components/TeamScore";
 import TeamSeriesScore from "@/components/TeamSeriesScore";
 
-import "@/style/gamestats.css";
+import "@/style/rsc/gamestats.css";
 
 const longPlayerName = 16;
 const longTeamScore = 20;

@@ -8,8 +8,14 @@ import GameStats from "@/views/GameStats";
 import Pregame from "./views/Pregame";
 import Transition from "@/views/Transition";
 
+// import ("@/components/styles/Rsc")
+
+// import Rsc from "@/components/styles/Rsc";
+
+import "@/style/rsc/main.css";
+
 const expireEventsInMs = 7000;
-const socketUrl = "ws://localhost:49322";
+const socketUrl = "ws://localhost:49122";
 
 const App = () => {
 
