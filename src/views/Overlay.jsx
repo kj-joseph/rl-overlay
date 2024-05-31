@@ -16,14 +16,14 @@ import Transition from "@/views/Transition";
 import "@/style/rsc/main.css";
 
 const expireEventsInMs = 7000;
-const rlSocketUrl = "ws://localhost:49122";
-const socketServerUrl = "ws://rlws.kdoughboy.com:8321";
+const gameSocketUrl = "ws://localhost:49122";
+const socketServerUrl = "ws://rl.kdoughboy.com:8321";
+// const socketServerUrl = "ws://localhost:8321";
 
 const Overlay = () => {
 
 	const params = useParams();
-
-//params.clientId
+	const defaultConfig = Config;
 
 	const seriesDefault = {
 		game: 0,
@@ -50,18 +50,19 @@ const Overlay = () => {
 	});
 	const [transition, setTransition] = useState(transitionDefault);
 	const [viewState, setViewState] = useState("");
+	const [activeConfig, setActiveConfig] = useState(defaultConfig);
 
 	const {
-		sendMessage: sendMessageRL,
-		sendJsonMessage: sendJsonMessageRL,
-		lastMessage: lastMessageRL,
-		lastJsonMessage: lastJsonMessageRL,
-		readyState: readyStateRL,
-		getWebSocket: getWebSocketRL,
-	} = useWebSocket(rlSocketUrl, {
-		onOpen: () => subscribeToFeedRL(),
-		onMessage: (msg) => handleDataRL(msg.data),
-		shouldReconnect: (closeEventRL) => true,
+		sendMessage: sendMessageGame,
+		sendJsonMessage: sendJsonMessageGame,
+		lastMessage: lastMessageGame,
+		lastJsonMessage: lastJsonMessageGame,
+		readyState: readyStateGame,
+		getWebSocket: getWebSocketGame,
+	} = useWebSocket(gameSocketUrl, {
+		onOpen: () => subscribeToGameFeed(),
+		onMessage: (msg) => handleGameData(msg.data),
+		shouldReconnect: (closeEventGame) => true,
 	});
 
 	const {
@@ -72,54 +73,54 @@ const Overlay = () => {
 		readyState: readyStateServer,
 		getWebSocket: getWebSocketServer,
 	} = useWebSocket(socketServerUrl, {
-		onOpen: () => subscribeToFeedServer(),
-		onMessage: (msg) => handleDataServer(msg.data),
+		onOpen: () => subscribeToServerFeed(),
+		onMessage: (msg) => handleServerData(msg.data),
 		shouldReconnect: (closeEvent) => true,
 	});
 
-	function subscribeToFeedRL() {
-		sendJsonMessageRL({
+	const subscribeToGameFeed = () => {
+		sendJsonMessageGame({
 			event: "wsRelay:register",
 			data: "game:initialized",
 		});
 
-		sendJsonMessageRL({
+		sendJsonMessageGame({
 			event: "wsRelay:register",
 			data: "game:statfeed_event",
 		});
 
-		sendJsonMessageRL({
+		sendJsonMessageGame({
 			event: "wsRelay:register",
 			data: "game:update_state",
 		});
 
-		sendJsonMessageRL({
+		sendJsonMessageGame({
 			event: "wsRelay:register",
 			data: "game:goal_scored",
 		});
 
-		sendJsonMessageRL({
+		sendJsonMessageGame({
 			event: "wsRelay:register",
 			data: "game:pre_countdown_begin",
 		});
 
-		sendJsonMessageRL({
+		sendJsonMessageGame({
 			event: "wsRelay:register",
 			data: "game:clock_started",
 		});
 
-		sendJsonMessageRL({
+		sendJsonMessageGame({
 			event: "wsRelay:register",
 			data: "game:clock_stopped",
 		});
 
-		sendJsonMessageRL({
+		sendJsonMessageGame({
 			event: "wsRelay:register",
 			data: "game:match_ended",
 		});
 	}
 
-	const handleDataRL = d => {
+	const handleGameData = d => {
 		// console.log(d);
 		let data, dataParse = {};
 		let event = "";
@@ -152,7 +153,7 @@ const Overlay = () => {
 				triggerTransition(
 					"noDelay",
 					"",
-					Config.show.leagueLogo && Config.leagueLogo ? `${Config.leagueLogo}` : null,
+					activeConfig.show.leagueLogo && activeConfig.leagueLogo ? `${activeConfig.leagueLogo}` : null,
 				);
 				setTimeout(() => {
 					setViewState("live");
@@ -160,7 +161,7 @@ const Overlay = () => {
 						...sd,
 						game: sd.game + 1,
 					}));
-					}, 750);
+				}, 750);
 				break;
 
 			case "game:goal_scored":
@@ -168,7 +169,7 @@ const Overlay = () => {
 				triggerTransition(
 					`team${data.scorer.teamnum}`,
 					"GOAL!",
-					Config.show.teamLogos && Config.teams[data.scorer.teamnum].logo ? `/teams/${Config.teams[data.scorer.teamnum].logo}` : null,
+					activeConfig.show.teamLogos && activeConfig.teams[data.scorer.teamnum].logo ? `/teams/${activeConfig.teams[data.scorer.teamnum].logo}` : null,
 				);
 				break;
 
@@ -183,7 +184,7 @@ const Overlay = () => {
 				setTimeout(() => triggerTransition(
 					`team${winningTeam}`,
 					"WINNER!",
-					Config.show.teamLogos && Config.teams[winningTeam].logo ? `teams/${Config.teams[winningTeam].logo}` : null,
+					activeConfig.show.teamLogos && activeConfig.teams[winningTeam].logo ? `teams/${activeConfig.teams[winningTeam].logo}` : null,
 				), 1000);
 				setTimeout(() => {
 					setSeriesData(sd => ({
@@ -255,16 +256,40 @@ const Overlay = () => {
 
 		}
 
+		sendStatsToServer();
+
 	}
 
-	function subscribeToFeedServer() {
+	const sendStatsToServer = () => {
+		// console.log("send");
+/* 		sendJsonMessageServer({
+			clientId: params.clientId,
+			event: "update",
+			data: "fromage",
+		});
+ */
+		sendJsonMessageServer({
+			clientId: params.clientId,
+			event: "game_data",
+			data: {
+				clockRunning,
+				config: activeConfig,
+				gameData,
+				playerData,
+				playerEvents,
+				seriesData
+			}
+		});
+	}
+
+	const subscribeToServerFeed = () => {
 		sendJsonMessageServer({
 			clientId: params.clientId,
 			event: "register",
 		});
 	}
 
-	const handleDataServer = d => {
+	const handleServerData = d => {
 		console.log("got something from server");
 		console.log(d);
 		let data, dataParse = {};
@@ -272,13 +297,21 @@ const Overlay = () => {
 
 		try {
 			dataParse = JSON.parse(d)
-			if (!dataParse.hasOwnProperty("clientId") || !dataParse.hasOwnProperty("event") || !dataParse.hasOwnProperty("data")) {
+			if (!dataParse.hasOwnProperty("clientId") || !dataParse.hasOwnProperty("event") || !dataParse.hasOwnProperty("data") || dataParse.clientId !== params.clientId) {
+				console.log("error");
 				return;
 			}
-			// event = dataParse.event;
-			console.log(dataParse);
-			// data = dataParse.data;
-		// 	// console.log(data);
+			event = dataParse.event;
+			// console.log(dataParse);
+			data = dataParse.data;
+			console.log(event, data);
+
+			// setActiveConfig(data);
+
+
+
+
+
 		} catch(e) {
 			console.error(e);
 			return;
@@ -335,21 +368,21 @@ const Overlay = () => {
 
 			{viewState === "stats" ? (
 				<GameStats
-					config={Config}
+					config={activeConfig}
 					gameData={endGameData.gameData}
 					players={endGameData.playerData}
 					series={seriesData}
 				/>
 			) : viewState ==="pregame" ? (
 				<Pregame
-					config={Config}
+					config={activeConfig}
 					gameData={gameData}
 					series={seriesData}
 				/>
 			) : (
 				<Live
 					clockRunning={clockRunning}
-					config={Config}
+					config={activeConfig}
 					gameData={gameData}
 					lastGoal={lastGoal}
 					playerData={playerData}

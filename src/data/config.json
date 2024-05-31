@@ -1,11 +1,11 @@
 {
     "style": "rsc",
-    "header": "MEtal",
+    "header": "2sday Bracket Reset",
     "leagueLogo": "doughboy.svg",
     "show": {
         "franchise": false,
         "leagueLogo": true,
-        "teamLogos": true
+        "teamLogos": false
     },
     "series": {
         "showScore": false,
