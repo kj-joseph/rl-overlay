@@ -55,6 +55,7 @@ const Statboard = () => {
 		sendJsonMessageServer({
 			clientId: params.clientId,
 			event: "register",
+			data: "overlay:game_data"
 		});
 
 	}

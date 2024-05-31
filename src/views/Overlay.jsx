@@ -261,16 +261,9 @@ const Overlay = () => {
 	}
 
 	const sendStatsToServer = () => {
-		// console.log("send");
-/* 		sendJsonMessageServer({
-			clientId: params.clientId,
-			event: "update",
-			data: "fromage",
-		});
- */
 		sendJsonMessageServer({
 			clientId: params.clientId,
-			event: "game_data",
+			event: "overlay:game_data",
 			data: {
 				clockRunning,
 				config: activeConfig,
