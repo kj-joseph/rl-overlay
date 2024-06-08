@@ -1,6 +1,7 @@
 #Transition {
     --transitionDelay: 3s;
     --transitionDuration: 1.5s;
+	font-family: Hexagle, Helvetica, Arial, sans-serif;
     position: absolute;
     left: 0;
     top: 0;

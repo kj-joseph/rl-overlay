@@ -8,6 +8,7 @@
     --logoSize: 400px;
     --diagonalOffset: 140px;
 
+	font-family: Hexagle, Helvetica, Arial, sans-serif;
     position: absolute;
     left: 0;
     top: 0;

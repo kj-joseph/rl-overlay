@@ -27,6 +27,7 @@ body {
 }
 
 #LivePlay {
+	font-family: Hexagle, Helvetica, Arial, sans-serif;
     position: absolute;
     left: 0;
     top: 0;

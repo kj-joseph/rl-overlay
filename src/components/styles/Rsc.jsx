@@ -1,5 +1,5 @@
 import "@/style/rsc/main.css";
-// import "/fonts/RSC-Bold.ttf";
+// import "/fonts/Hexagle-Bold.ttf";
 
 console.log("outer");
 

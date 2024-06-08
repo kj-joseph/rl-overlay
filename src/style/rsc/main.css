@@ -1,5 +1,5 @@
 :root {
-	font-family: RSC, Helvetica, Arial, sans-serif;
+	font-family: Helvetica, Arial, sans-serif;
 	font-size: 16px;
 	color: #fff;
 	color-scheme: light dark;
@@ -46,6 +46,6 @@ body {
 }
 
 @font-face {
-    font-family: "RSC";
-    src: url("/fonts/RSC-Bold.ttf");
+    font-family: "Hexagle";
+    src: url("/fonts/Hexagle-Bold.ttf");
 }
