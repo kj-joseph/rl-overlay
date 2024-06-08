@@ -55,7 +55,7 @@
 #Statboard tr.teamNameHeader th {
 	text-align: left;
 	font-family: var(--fontHexagle);
-	font-size: 2.5rem;
+	font-size: 2.75rem;
 }
 
 #Statboard thead:nth-of-type(2) tr.teamNameHeader th {

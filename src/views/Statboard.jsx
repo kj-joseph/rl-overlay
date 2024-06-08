@@ -137,10 +137,10 @@ const Statboard = () => {
 
 						<table className="teamStats">
 						{gameData.teams.map((team, teamnum) => (
-							<Fragment>
+							<Fragment key={teamnum}>
 								<thead>
 									<tr className="teamNameHeader" style={{background: hexToRgbA(team.color_primary, 100)}}>
-										<th className="teamName" colSpan={7 - (config.series.showScore ? 1 : 0)}>{team.name}</th>
+										<th className="teamName" colSpan={8}>{team.name}</th>
 										<th className="teamScore" colSpan={2}>{team.score}</th>
 										{ config.series.showScore ?
 											<th className="seriesScore">{seriesData.score[teamnum]}</th>
@@ -154,8 +154,9 @@ const Statboard = () => {
 										<th>Assists</th>
 										<th>Shots</th>
 										<th>Saves</th>
-										<th>Demos</th>
 										<th>Touches</th>
+										<th>Demos</th>
+										<th>Bumps</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -171,8 +172,9 @@ const Statboard = () => {
 											<td>{player.assists}</td>
 											<td>{player.shots}</td>
 											<td>{player.saves}</td>
-											<td>{player.demos}</td>
 											<td>{player.touches}</td>
+											<td>{player.demos}</td>
+											<td>{player.cartouches}</td>
 										</tr>
 									))}
 								</tbody>
@@ -190,5 +192,3 @@ const Statboard = () => {
 }
 
 export default Statboard;
-// series.score[teamnum]
-// {props.config.series.showScore ? (
