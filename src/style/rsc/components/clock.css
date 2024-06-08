@@ -1,4 +1,4 @@
-.clock {
+#LivePlay .clock {
     position: absolute;
     left: 50%;
     top: var(--header);
@@ -13,28 +13,28 @@
     border-radius: var(--radius);
 }
 
-.clock.overtime {
+#LivePlay .clock.overtime {
     background: linear-gradient(var(--navy), var(--red));
 }
 
-.clock .time {
+#LivePlay .clock .time {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     width: 100%;
 }
 
-.clock .time.long {
+#LivePlay .clock .time.long {
     font-size: 42px;
 }
 
-.clock .plus {
+#LivePlay .clock .plus {
     font-size: 55%;
     vertical-align: middle;
     margin-right: 1px;
 }
 
-.clock .overtimeText {
+#LivePlay .clock .overtimeText {
     position: absolute;
     top: 47px;
     left: 50%;

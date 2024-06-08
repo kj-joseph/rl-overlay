@@ -6,7 +6,7 @@
 @import "components/textitems.css";
 
 #GameStats {
-	font-family: Hexagle, Helvetica, Arial, sans-serif;
+	font-family: var(--fontHexagle);
     position: absolute;
     left: 0;
     top: 0;

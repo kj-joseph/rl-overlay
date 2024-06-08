@@ -1,0 +1,101 @@
+@import "components/textitems.css";
+
+#Statboard {
+	/* --pageBackground: var(--navy); */
+	--pageBackground: black;
+
+	font-family: var(--fontRoboto);
+	background: var(--pageBackground);
+	min-height: 100vh;
+}
+
+#Statboard .clock {
+	font-family: var(--fontHexagle);
+	text-align: center;
+	margin-bottom: 1em;
+}
+
+#Statboard .clock .plus {
+    font-size: 55%;
+    vertical-align: middle;
+    margin-right: 1px;
+}
+
+#Statboard .time {
+	font-size: 5rem;
+}
+
+#Statboard .overtimeText {
+	color: red;
+}
+
+#Statboard .seriesInfo {
+	position: static;
+	transform: none;
+	width: auto;
+	margin: 0;
+	padding: 0;
+	text-align: center; font-size: 1.3rem;
+	font-weight: bold;
+}
+
+#Statboard .teamStats {
+	font-size: 1.5rem;
+	width: 75%;
+	margin: 50px auto;
+	padding: 0;
+	border-collapse: collapse;
+}
+
+#Statboard .teamStats th,
+#Statboard .teamStats td {
+	padding: 4px 8px;
+}
+
+#Statboard tr.teamNameHeader th {
+	text-align: left;
+	font-family: var(--fontHexagle);
+	font-size: 2.5rem;
+}
+
+#Statboard thead:nth-of-type(2) tr.teamNameHeader th {
+	border-top: 70px solid var(--pageBackground);
+}
+
+
+#Statboard tr.teamNameHeader th.teamScore {
+	text-align: right;
+	border-left: 8px solid var(--pageBackground);
+}
+
+#Statboard tr.teamNameHeader th.seriesScore {
+	font-family: var(--fontSans);
+	font-size: 2rem;
+	text-align: right;
+	border-left: 8px solid var(--pageBackground);
+	background: var(--pageBackground);
+}
+
+#Statboard tr.teamHeader {
+	font-size: 1.1rem;
+}
+
+#Statboard th,
+#Statboard td {
+	font-weight: bold;
+	text-align: right;
+	border-left: 8px solid var(--pageBackground);
+	border-bottom: 8px solid var(--pageBackground);
+}
+
+#Statboard th.tableAlignText,
+#Statboard td.tableAlignText {
+	text-align: left;
+}
+
+#Statboard .playerBoost,
+#Statboard .playerName {
+	font-size: 1.1em;
+}
+
+

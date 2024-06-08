@@ -11,6 +11,9 @@
 @import "components/watching.css";
 
 :root {
+    --windowWidth: 1920px;
+    --windowHeight: 1080px;
+
     --clock: 126px;
     --score: 60px;
     --teamname: 280px;
@@ -21,13 +24,11 @@ body {
 	position: relative;
 	margin: 0;
     padding: 0;
-	width: var(--windowWidth);
-	height: var(--windowHeight);
-    overflow: hidden;;
+    overflow: hidden;
 }
 
 #LivePlay {
-	font-family: Hexagle, Helvetica, Arial, sans-serif;
+	font-family: var(--fontHexagle);
     position: absolute;
     left: 0;
     top: 0;

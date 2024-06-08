@@ -1,19 +1,7 @@
 :root {
-	font-family: Helvetica, Arial, sans-serif;
-	font-size: 16px;
-	color: #fff;
-	color-scheme: light dark;
-	background: transparent;
-    font-weight: bold;
-
-	font-synthesis: none;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-text-size-adjust: 100%;
-
-    --windowWidth: 1920px;
-    --windowHeight: 1080px;
+	--fontHexagle: Hexagle, Helvetica, Arial, sans-serif;
+	--fontRoboto: "Roboto Flex", Helvetica, Arial, sans-serif;
+	--fontSans: Helvetica, Arial, sans-serif;
 
     --border: 10px;
     --radius: 8px;
@@ -34,14 +22,25 @@
     --red: #ab2b28;
     --gray: #999999;
     --gold: #d4af37;
+
+	font-family: var(--fontRoboto);
+	font-size: 16px;
+	color: #fff;
+	color-scheme: light dark;
+	background: transparent;
+    font-weight: bold;
+
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: 100%;
 }
 
 body {
 	position: relative;
 	margin: 0;
     padding: 0;
-	width: var(--windowWidth);
-	height: var(--windowHeight);
     overflow: hidden;
 }
 

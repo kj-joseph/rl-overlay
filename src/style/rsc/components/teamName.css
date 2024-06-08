@@ -1,4 +1,4 @@
-.teamName {
+.teamNameScoreboard {
     --teamnamePadding: 10px;
     position: absolute;
     top: var(--header);
@@ -16,17 +16,17 @@
     line-height: 36px;
 }
 
-.teamName.long {
+.teamNameScoreboard.long {
     font-size: 30px;
 }
 
-.teamName.team0 {
+.teamNameScoreboard.team0 {
     left: calc(var(--windowWidth)/2 - var(--clock)/2 - var(--score) - var(--teamname) - var(--border)*4);
     text-align: right;
     border-left-width: calc(10px + var(--teamnamePadding));
 }
 
-.teamName.team1 {
+.teamNameScoreboard.team1 {
     left: calc(var(--windowWidth)/2 + var(--clock)/2 + var(--score) + var(--border)*2);
     text-align: left;
     border-right-width: calc(10px + var(--teamnamePadding));

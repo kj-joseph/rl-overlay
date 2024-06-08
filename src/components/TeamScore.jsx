@@ -3,7 +3,7 @@ import React from "react";
 const TeamScore = (props) => {
 
     return (
-        <div className={`teamScore team${props.team} ${props.long ? " long" : ""}`}>
+        <div className={`teamScoreScoreboard team${props.team} ${props.long ? " long" : ""}`}>
             {props.score}
         </div>
     )

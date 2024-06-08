@@ -1,4 +1,4 @@
-.teamScore {
+.teamScoreScoreboard {
     position: absolute;
     top: var(--header);
     z-index: 16;
@@ -9,16 +9,16 @@
     text-align: center;
 }
 
-.teamScore.long {
+.teamScoreScoreboard.long {
     height: 51px;
     line-height: 51px;
     font-size: 50px;
 }
 
-.teamScore.team0 {
+.teamScoreScoreboard.team0 {
     left: calc(var(--windowWidth)/2 - var(--clock)/2 - var(--border) - var(--score));
 }
 
-.teamScore.team1 {
+.teamScoreScoreboard.team1 {
     left: calc(var(--windowWidth)/2 + var(--border) + (var(--clock) /2));
 }

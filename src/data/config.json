@@ -8,10 +8,10 @@
         "teamLogos": false
     },
     "series": {
-        "showScore": false,
-        "type": "none",
+        "showScore": true,
+        "type": "bestof",
         "maxGames": 5,
-        "override": null
+        "override": false
     },
     "teams": [
         {
