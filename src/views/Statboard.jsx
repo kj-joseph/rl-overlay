@@ -83,7 +83,7 @@ const Statboard = () => {
 
 		switch(event) {
 
-			case("game_data"):
+			case("overlay:game_data"):
 				if (data.hasOwnProperty("clockRunning")) {
 					setClockRunning(data.clockRunning);
 				}
