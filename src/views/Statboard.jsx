@@ -117,7 +117,7 @@ const Statboard = () => {
 		<div className="statboard">
 			<div className="timeX">{gameData.isOT ? "OT +" : ""}{timeDisplay(gameData.time_seconds)}</div>
 			{gameData.teams.map((team, teamnum) => (
-				<table id={`teamStats{teamnum}`} key={teamnum}>
+				<table id={`teamStats${teamnum}`} key={teamnum}>
 					<thead>
 						<tr className="teamNameHeader">
 							<th className="teamNameX" colSpan={7}>{team.name}</th>
