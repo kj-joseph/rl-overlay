@@ -29,7 +29,7 @@ const Live = (props) => {
 	return (
 		<div id="LivePlay">
 
-            <Header message={props.config.header} />
+            <Header headers={props.config.general.headers} />
 
             <Clock time={props.gameData.time_seconds} overtime={props.gameData.isOT} />
 
@@ -39,11 +39,11 @@ const Live = (props) => {
 
             {props.gameData.teams.map((team, teamnum) => (
                 <Fragment key={teamnum}>
-                    <TeamName name={team.name} team={teamnum} />
-                    {props.config.show.franchise ? (
+                    <TeamName name={props.config.teams[teamnum].name ? props.config.teams[teamnum].name : team.name} team={teamnum} />
+                    {props.config.teams[teamnum].franchise ? (
                         <FranchiseName name={props.config.teams[teamnum].franchise} team={teamnum} />
                     ) : null}
-                    {props.config.show.teamLogos && props.config.teams[teamnum].hasOwnProperty("logo") ? (
+                    {props.config.general.teamLogos && props.config.teams[teamnum].hasOwnProperty("logo") ? (
                         <TeamLogo team={teamnum} logo={props.config.teams[teamnum].logo} />
                     ) : null}
                     <TeamScore score={team.score} team={teamnum} long={longScores} />

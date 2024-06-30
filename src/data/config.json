@@ -1,29 +1,30 @@
 {
-    "style": "rsc",
-    "header": "2sday Bracket Reset",
-    "leagueLogo": "doughboy.svg",
-    "show": {
-        "franchise": false,
-        "leagueLogo": true,
-        "teamLogos": false
-    },
+	"general": {
+		"style": "rsc",
+		"headers": [
+			"Testing"
+		],
+		"leagueLogo": "doughboy.svg",
+		"teamLogos": true
+	},
     "series": {
-        "showScore": true,
         "type": "bestof",
-        "maxGames": 5,
-        "override": false
+        "maxGames": 5
     },
     "teams": [
         {
-            "franchise": "Test Franchise Name",
+			"name": "Test Team 1",
+            "franchise": null,
             "logo": "lunar.svg",
+			"color": "#00FF00",
             "seriesScore": 0
         },
         {
+			"name": null,
             "franchise": "Test Franchise Name",
             "logo": "solar.svg",
+			"color": null,
             "seriesScore": 0
         }
     ]
-
 }

@@ -66,7 +66,7 @@ const GameStats = (props) => {
 
 	return (
 		<div id="GameStats">
-            <Header message={props.config.header} />
+            <Header headers={props.config.general.headers} />
 
             {props.config.series.showScore || props.config.series.override ? (
                 <SeriesInfo series={props.series} config={props.config} />
@@ -78,7 +78,7 @@ const GameStats = (props) => {
                     {props.config.show.franchise ? (
                         <FranchiseName name={props.config.teams[teamnum].franchise} team={teamnum} />
                     ) : null}
-                    {props.config.show.teamLogos && props.config.teams[teamnum].hasOwnProperty("logo") ? (
+                    {props.config.general.teamLogos && props.config.teams[teamnum].hasOwnProperty("logo") ? (
                         <TeamLogo team={teamnum} logo={props.config.teams[teamnum].logo} />
                     ) : null}
                     <TeamScore score={team.score} team={teamnum} long={longScores} />

@@ -140,7 +140,7 @@ const Statboard = () => {
 							<Fragment key={teamnum}>
 								<thead>
 									<tr className="teamNameHeader" style={{background: hexToRgbA(team.color_primary, 100)}}>
-										<th className="teamName" colSpan={8}>{team.name}</th>
+										<th className="teamName" colSpan={8}>{config.teams[teamnum].name ? config.teams[teamnum].name : team.name}</th>
 										<th className="teamScore" colSpan={2}>{team.score}</th>
 										{ config.series.showScore ?
 											<th className="seriesScore">{seriesData.score[teamnum]}</th>

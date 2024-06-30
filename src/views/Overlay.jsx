@@ -169,7 +169,7 @@ const Overlay = () => {
 				triggerTransition(
 					`team${data.scorer.teamnum}`,
 					"GOAL!",
-					activeConfig.show.teamLogos && activeConfig.teams[data.scorer.teamnum].logo ? `/teams/${activeConfig.teams[data.scorer.teamnum].logo}` : null,
+					activeConfig.general.teamLogos && activeConfig.teams[data.scorer.teamnum].logo ? `/teams/${activeConfig.teams[data.scorer.teamnum].logo}` : null,
 				);
 				break;
 
@@ -184,7 +184,7 @@ const Overlay = () => {
 				setTimeout(() => triggerTransition(
 					`team${winningTeam}`,
 					"WINNER!",
-					activeConfig.show.teamLogos && activeConfig.teams[winningTeam].logo ? `teams/${activeConfig.teams[winningTeam].logo}` : null,
+					activeConfig.general.teamLogos && activeConfig.teams[winningTeam].logo ? `teams/${activeConfig.teams[winningTeam].logo}` : null,
 				), 1000);
 				setTimeout(() => {
 					setSeriesData(sd => ({
