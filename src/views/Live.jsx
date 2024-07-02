@@ -33,7 +33,7 @@ const Live = (props) => {
 
             <Clock time={props.gameData.time_seconds} overtime={props.gameData.isOT} />
 
-            {props.config.series.showScore || props.config.series.override ? (
+            {props.config.series.show || props.config.series.override ? (
                 <SeriesInfo series={props.series} config={props.config} />
             ) : null}
 
@@ -43,34 +43,38 @@ const Live = (props) => {
                     {props.config.teams[teamnum].franchise ? (
                         <FranchiseName name={props.config.teams[teamnum].franchise} team={teamnum} />
                     ) : null}
-                    {props.config.general.teamLogos && props.config.teams[teamnum].hasOwnProperty("logo") ? (
+                    {props.config.teams[teamnum].hasOwnProperty("logo") && props.config.teams[teamnum].logo ? (
                         <TeamLogo team={teamnum} logo={props.config.teams[teamnum].logo} />
                     ) : null}
                     <TeamScore score={team.score} team={teamnum} long={longScores} />
-                    {props.config.series.showScore ? (
+                    {props.config.series.show ? (
                         <TeamSeriesScore score={props.series.score[teamnum]} team={teamnum} />
                     ) : null}
                 </Fragment>
             ))}
 
-            <TeamPlayerBoxes
-                players={Object.values(props.playerData).filter(player => player.team === 0)}
-                team={0}
-                playerEvents={props.playerEvents}
-                watching={!props.gameData.isReplay && props.gameData.target && props.playerData.hasOwnProperty(props.gameData.target) ? props.gameData.target : null}
-            />
-            <TeamPlayerBoxes
-                players={Object.values(props.playerData).filter(player => player.team === 1)}
-                team={1}
-                playerEvents={props.playerEvents}
-                watching={!props.gameData.isReplay && props.gameData.target && props.playerData.hasOwnProperty(props.gameData.target) ? props.gameData.target : null}
-            />
+			{props.config.general.show.players ? (
+				<Fragment>
+					<TeamPlayerBoxes
+						players={Object.values(props.playerData).filter(player => player.team === 0)}
+						team={0}
+						playerEvents={props.playerEvents}
+						watching={!props.gameData.isReplay && props.gameData.target && props.playerData.hasOwnProperty(props.gameData.target) ? props.gameData.target : null}
+					/>
+					<TeamPlayerBoxes
+						players={Object.values(props.playerData).filter(player => player.team === 1)}
+						team={1}
+						playerEvents={props.playerEvents}
+						watching={!props.gameData.isReplay && props.gameData.target && props.playerData.hasOwnProperty(props.gameData.target) ? props.gameData.target : null}
+					/>
+				</Fragment>
+			) : null }
 
             {!props.gameData.isReplay && props.gameData.target && props.playerData.hasOwnProperty(props.gameData.target) ? (
                 <Watching player={props.playerData[props.gameData.target]} />
             ) : null}
 
-            {!props.gameData.isReplay && props.clockRunning ? (
+            {!props.gameData.isReplay && props.clockRunning && props.config.general.show.ball ? (
                 <Ball ball={props.gameData.ball} />
             ) : null}
 

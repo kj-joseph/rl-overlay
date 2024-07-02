@@ -153,7 +153,7 @@ const Overlay = () => {
 				triggerTransition(
 					"noDelay",
 					"",
-					activeConfig.show.leagueLogo && activeConfig.leagueLogo ? `${activeConfig.leagueLogo}` : null,
+					activeConfig.general.hasOwnProperty("leagueLogo") && activeConfig.general.leagueLogo ? `${activeConfig.leagueLogo}` : null,
 				);
 				setTimeout(() => {
 					setViewState("live");
@@ -169,7 +169,7 @@ const Overlay = () => {
 				triggerTransition(
 					`team${data.scorer.teamnum}`,
 					"GOAL!",
-					activeConfig.general.teamLogos && activeConfig.teams[data.scorer.teamnum].logo ? `/teams/${activeConfig.teams[data.scorer.teamnum].logo}` : null,
+					activeConfig.teams[data.scorer.teamnum].hasOwnProperty("logo") ? `/teams/${activeConfig.teams[data.scorer.teamnum].logo}` : null,
 				);
 				break;
 
@@ -184,7 +184,7 @@ const Overlay = () => {
 				setTimeout(() => triggerTransition(
 					`team${winningTeam}`,
 					"WINNER!",
-					activeConfig.general.teamLogos && activeConfig.teams[winningTeam].logo ? `teams/${activeConfig.teams[winningTeam].logo}` : null,
+					activeConfig.teams[winningTeam].hasOwnProperty("logo") && activeConfig.teams[winningTeam].hasOwnProperty("logo") ? `teams/${activeConfig.teams[winningTeam].logo}` : null,
 				), 1000);
 				setTimeout(() => {
 					setSeriesData(sd => ({

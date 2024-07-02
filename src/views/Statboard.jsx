@@ -120,7 +120,7 @@ const Statboard = () => {
 		}
 	}
 
-	// console.log(config.series.showScore);
+	// console.log(config.series.show);
 
 	return (
 		<div id="Statboard">
@@ -131,7 +131,7 @@ const Statboard = () => {
 
 						<Clock time={gameData.time_seconds} overtime={gameData.isOT} />
 
-						{config.series.showScore || config.series.override ? (
+						{config.series.show || config.series.override ? (
 							<SeriesInfo series={seriesData} config={config} />
 						) : null}
 
@@ -142,7 +142,7 @@ const Statboard = () => {
 									<tr className="teamNameHeader" style={{background: hexToRgbA(team.color_primary, 100)}}>
 										<th className="teamName" colSpan={8}>{config.teams[teamnum].name ? config.teams[teamnum].name : team.name}</th>
 										<th className="teamScore" colSpan={2}>{team.score}</th>
-										{ config.series.showScore ?
+										{ config.series.show ?
 											<th className="seriesScore">{seriesData.score[teamnum]}</th>
 										: null}
 									</tr>

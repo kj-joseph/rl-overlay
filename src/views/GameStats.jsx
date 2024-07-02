@@ -68,22 +68,22 @@ const GameStats = (props) => {
 		<div id="GameStats">
             <Header headers={props.config.general.headers} />
 
-            {props.config.series.showScore || props.config.series.override ? (
+            {props.config.series.show || props.config.series.override ? (
                 <SeriesInfo series={props.series} config={props.config} />
             ) : null}
 
             {props.gameData.teams.map((team, teamnum) => (
                 <Fragment key={teamnum}>
                     <TeamName name={team.name} team={teamnum} />
-                    {props.config.show.franchise ? (
+                    {props.config.teams[teamnum].hasOwnProperty("franchise") && props.config.teams[teamnum].franchise ? (
                         <FranchiseName name={props.config.teams[teamnum].franchise} team={teamnum} />
                     ) : null}
-                    {props.config.general.teamLogos && props.config.teams[teamnum].hasOwnProperty("logo") ? (
+                    {props.config.teams[teamnum].hasOwnProperty("logo") && props.config.teams[teamnum].logo ? (
                         <TeamLogo team={teamnum} logo={props.config.teams[teamnum].logo} />
                     ) : null}
                     <TeamScore score={team.score} team={teamnum} long={longScores} />
-                    {props.config.series.showScore ? (
-                        <TeamSeriesScore score={props.series.score[teamnum]} team={teamnum} />
+                    {props.config.series.show ? (
+                        <TeamSeriesScore score={props.series.score[teamnum]} team={teamnum} display={props.series.display} />
                     ) : null}
                 </Fragment>
             ))}

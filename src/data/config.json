@@ -1,30 +1,32 @@
 {
 	"general": {
-		"style": "rsc",
-		"headers": [
-			"Testing"
-		],
-		"leagueLogo": "doughboy.svg",
-		"teamLogos": true
+		"style": null,
+		"headers": [],
+		"leagueLogo": null,
+		"show": {
+			"players": true,
+			"ball": true
+		}
 	},
     "series": {
-        "type": "bestof",
-        "maxGames": 5
+		"show": false,
+        "type": null,
+		"display": "numbers",
+        "maxGames": null,
+		"score": [0,0]
     },
     "teams": [
         {
-			"name": "Test Team 1",
+			"name": null,
             "franchise": null,
-            "logo": "lunar.svg",
-			"color": "#00FF00",
-            "seriesScore": 0
+            "logo": null,
+			"color": null
         },
         {
 			"name": null,
-            "franchise": "Test Franchise Name",
-            "logo": "solar.svg",
-			"color": null,
-            "seriesScore": 0
+            "franchise": null,
+            "logo": null,
+			"color": null
         }
     ]
 }

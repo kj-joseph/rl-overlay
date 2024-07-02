@@ -15,14 +15,14 @@ const Pregame = (props) => {
 		<div id="Pregame">
             <Header headers={props.config.general.headers} />
 
-            {props.config.series.showScore || props.config.series.override ? (
+            {props.config.series.show || props.config.series.override ? (
                 <SeriesInfo series={props.series} config={props.config} pregame={true} />
             ) : null}
 
             <div className="vs" data-text="VS">VS</div>
             {props.gameData.teams.map((team, teamnum) => (
-                <div className={`team team${teamnum} ${props.config.general.teamLogos && props.config.teams[teamnum].logo && 1 ? "hasLogo" : ""}`} key={`pregameTeam${teamnum}`}>
-                    {props.config.general.teamLogos && props.config.teams[teamnum].logo && 1 ? (
+                <div className={`team team${teamnum} ${props.config.teams[teamnum].hasOwnProperty("logo") && props.config.teams[teamnum].logo ? "hasLogo" : ""}`} key={`pregameTeam${teamnum}`}>
+                    {props.config.teams[teamnum].logo ? (
                         <div className="logo">
                             <img src={`/logos/teams/${props.config.teams[teamnum].logo}`}></img>
                         </div>
