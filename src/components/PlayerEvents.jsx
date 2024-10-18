@@ -34,9 +34,10 @@ const PlayerEvents = (props) => {
                             : event.name === "Goal" ? (
                                 <FontAwesomeIcon className="eventIcon" icon={faCertificate} key={eventIndex} />
                             )
-                            : event.name === "HatTrick" ? (
-                                <FontAwesomeIcon className="eventIcon" icon={faHatWizard} key={eventIndex} />
-                            )
+							// leaving out hat trick for now
+                            // : event.name === "HatTrick" ? (
+                            //     <FontAwesomeIcon className="eventIcon" icon={faHatWizard} key={eventIndex} />
+                            // )
                             : event.name === "Save" || event.name === "EpicSave" ? (
                                 <FontAwesomeIcon className="eventIcon" icon={faHand} key={eventIndex} />
                             )

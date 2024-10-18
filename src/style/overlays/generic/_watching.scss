@@ -1,0 +1,142 @@
+.watchingView {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+
+	.stats {
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+		width: $watchingWidth;
+		height: $watchingHeight;
+		line-height: 40px;
+		vertical-align: baseline;
+		padding: $borderSize;
+		background: $backgroundColor;
+		border-top: $borderSize solid;
+		border-right: $borderSize solid;
+
+		.name {
+			flex-basis: 60%;
+			height: 40px;
+			overflow: hidden;
+			font-size: 34px;
+			font-weight: 700;
+			text-transform: uppercase;
+			white-space: nowrap;
+			margin-right: 1em;
+
+			&.long {
+				font-size: 28px;
+			}
+
+		}
+
+		.statLine {
+			flex-basis: 40%;
+			display: flex;
+			justify-content: flex-end;
+			column-gap: 20px;
+
+			.stat {
+
+				.label {
+					font-size: 24px;
+					font-weight: 500;
+					color: $secondaryTextColor;
+					text-transform: uppercase;
+					margin-right: 7px;
+				}
+
+				.value {
+					color: $textColor;
+					font-size: 34px;
+					font-weight: 600;
+					text-transform: uppercase;
+				}
+
+			}
+
+		}
+
+
+	}
+
+	.boostDisplay {
+		position: absolute;
+		right: 80px;
+		bottom: 90px;
+		width: 180px;
+		height: 180px;
+		background: $backgroundTranslucent;
+		border-radius: 50%;
+
+		.boost {
+			position: absolute;
+			width: 140px;
+			height: 140px;
+			margin: 20px;
+
+			.CircularProgressbar-text {
+				font-size: 40px;
+				vertical-align: bottom;
+				font-weight: 700;
+				fill: $secondaryTextColor;
+			}
+
+		}
+
+		.CircularProgressbar-trail {
+			stroke: $backgroundColor;
+		}
+
+	}
+
+	&.team0 {
+
+		.stats {
+			border-color: var(--team0);
+
+			.statLine .stat .label {
+				color: var(--team0);
+			}
+
+
+		}
+
+		.CircularProgressbar-trail {
+			stroke: var(--team0fade);
+		}
+
+		.CircularProgressbar-path {
+			stroke: var(--team0);
+		}
+
+	}
+
+	&.team1 {
+
+		.stats {
+			border-color: var(--team1);
+
+			.statLine .stat .label {
+				color: var(--team1);
+			}
+
+		}
+
+		.CircularProgressbar-trail {
+			stroke: var(--team1fade);
+		}
+
+		.CircularProgressbar-path {
+			stroke: var(--team1);
+		}
+
+	}
+
+}

@@ -11,8 +11,6 @@ import TeamName from "@/components/TeamName";
 import TeamScore from "@/components/TeamScore";
 import TeamSeriesScore from "@/components/TeamSeriesScore";
 
-import "@/style/rsc/gamestats.css";
-
 const longPlayerName = 16;
 const longTeamScore = 20;
 const statList = [
@@ -46,7 +44,7 @@ const statList = [
     },
 ];
 
-const GameStats = (props) => {
+const Postgame = (props) => {
 
     let longScores = false;
     if (props.hasOwnProperty("gameData") && props.gameData.hasOwnProperty("teams") && props.gameData.teams.length > 0) {
@@ -65,7 +63,10 @@ const GameStats = (props) => {
     }
 
 	return (
-		<div id="GameStats">
+		<div className="postgame">
+
+			<div className="clock"><div className="time long">FINAL</div></div>
+
             <Header headers={props.config.general.headers} />
 
             {props.config.series.show || props.config.series.override ? (
@@ -74,19 +75,36 @@ const GameStats = (props) => {
 
             {props.gameData.teams.map((team, teamnum) => (
                 <Fragment key={teamnum}>
-                    <TeamName name={team.name} team={teamnum} />
-                    {props.config.teams[teamnum].hasOwnProperty("franchise") && props.config.teams[teamnum].franchise ? (
-                        <FranchiseName name={props.config.teams[teamnum].franchise} team={teamnum} />
-                    ) : null}
+
+                    <TeamName name={props.config.teams[teamnum].name ? props.config.teams[teamnum].name : team.name} team={teamnum} franchiseName={props.config.teams[teamnum].franchise} />
+
                     {props.config.teams[teamnum].hasOwnProperty("logo") && props.config.teams[teamnum].logo ? (
                         <TeamLogo team={teamnum} logo={props.config.teams[teamnum].logo} />
                     ) : null}
+
                     <TeamScore score={team.score} team={teamnum} long={longScores} />
+
                     {props.config.series.show ? (
-                        <TeamSeriesScore score={props.series.score[teamnum]} team={teamnum} display={props.series.display} />
+                        <TeamSeriesScore score={props.series.score[teamnum]} seriesConfig={props.config.series} team={teamnum} />
                     ) : null}
+
                 </Fragment>
             ))}
+
+			{props.config.general.hasOwnProperty("brandLogo") && props.config.general.brandLogo ?
+
+				<div className="branding">
+					<div className="brandLogo">
+						<img src={`/logos/${props.config.general.brandLogo}`}></img>
+					</div>
+					<div className="brandLogo">
+						<img src={`/logos/${props.config.general.brandLogo}`}></img>
+					</div>
+				</div>
+
+			: null }
+
+
 
             <div className="title">Game Stats</div>
 
@@ -98,16 +116,16 @@ const GameStats = (props) => {
                                 {winningTeam === 0 && playerIndex === 0 ? (
                                     <FontAwesomeIcon className="mvpIcon" icon={faStar} />
                                 ) : null}
-                                {player.name}
+								<span>{player.name}</span>
                             </th>
                         ))}
-                        <th className="separator"></th>
+                        <th className="centerColumn"></th>
                         {teams[1].map((player, playerIndex) => (
                             <th className={`playerName team1 ${player.name.length > longPlayerName ? "long" : ""}`} key={`team1player${playerIndex}`}>
                                 {winningTeam === 1 && playerIndex === 0 ? (
                                     <FontAwesomeIcon className="mvpIcon" icon={faStar} />
                                 ) : null}
-                                {player.name}
+								<span>{player.name}</span>
                             </th>
                         ))}
                     </tr>
@@ -121,7 +139,7 @@ const GameStats = (props) => {
                                     {player[stat.name]}
                                 </td>
                             ))}
-                            <th scope="row" className="separator">{stat.label}</th>
+                            <th scope="row" className="centerColumn">{stat.label}</th>
                             {teams[1].map((player, playerIndex) => (
                                 <td className={`playerName ${winningTeam === 1 && playerIndex === 1 ? "mvp" : ""}`} key={`team1player${playerIndex}stat${statIndex}`}>
                                     {player[stat.name]}
@@ -140,4 +158,4 @@ const GameStats = (props) => {
 
 }
 
-export default GameStats;
+export default Postgame;

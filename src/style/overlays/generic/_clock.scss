@@ -1,0 +1,66 @@
+.clock {
+	position: absolute;
+	top: $headerHeight;
+	left: 50%;
+	z-index: 20;
+    transform: translateX(-50%);
+	width: $clockWidth;
+	height: $mainBarHeight;
+	background: $backgroundColor;
+	border: $borderSize solid;
+	border-image-slice: 1;
+	border-image-source: linear-gradient(
+		to right,
+		var(--team0) $clockWidth * .5 - $gradientCenterWidth * .5,
+		var(--centerColor) $clockWidth * .5,
+		var(--team1) $clockWidth * .5 + $gradientCenterWidth * .5
+	);
+
+	.time {
+		color: $textColor;
+		font-weight: 600;
+		text-align: center;
+		font-size: 40px;
+		line-height: $mainBarHeight + 4px;
+
+		// fix colon being at bottom in Squada One font
+		.colon {
+			position: relative;
+			top: -4px;
+			font-size: 90%;
+			margin-top: -5px;
+		}
+
+		// overtime
+		.plus {
+			font-weight: 500;
+			font-size: 70%;
+			color: $overtimeColor;
+			vertical-align: middle;
+		}
+
+		&.long {
+			font-weight: 500;
+			font-size: 38px;
+
+			.plus {
+				font-weight: 400;
+			}
+		}
+
+		&.longOvertime {
+			font-weight: 500;
+			font-size: 36px;
+
+			.plus {
+				font-weight: 400;
+			}
+		}
+
+	}
+
+	.overtimeText {
+		display: none;
+	}
+
+}

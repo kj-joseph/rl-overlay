@@ -10,7 +10,7 @@ const SeriesInfo = (props) => {
                 <>
                     {props.config.series.override}
                 </>
-            ) : props.config.series.type === "none" ? (
+            ) : props.config.series.type === "none" || props.config.series.type === "unlimited" ? (
                 <>
                     {!props.pregame ? `Game ${props.series.game}` : ""}
                 </>
@@ -21,7 +21,7 @@ const SeriesInfo = (props) => {
                             Game {props.series.game}<span className="pipe"> | </span>
                         </>
                     ) : null}
-                    Best of {props.config.series.maxGames}{props.pregame ? " series" : ""}
+                    Best of {props.config.series.maxGames}
                 </>
             ) : props.config.series.type === "set" ? (
                 <>

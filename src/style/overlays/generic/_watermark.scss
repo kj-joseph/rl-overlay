@@ -1,0 +1,15 @@
+.watermark {
+	position: absolute;
+	left: 80px;
+	bottom: 160px;
+	width: 90px;
+	height: 90px;
+	opacity: .4;
+
+	img {
+		filter: grayscale(.5);
+		width: inherit;
+		height: inherit;
+	}
+
+}

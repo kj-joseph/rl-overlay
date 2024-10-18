@@ -1,0 +1,31 @@
+.teamScore {
+	position: absolute;
+	z-index: 16;
+	top: $headerHeight;
+	width: $teamScoreWidth;
+	height: $mainBarHeight;
+	color: $textColor;
+	font-weight: 700;
+	font-size: 48px;
+	line-height: $mainBarHeight + $borderSize;
+	text-align: center;
+	border: $borderSize solid;
+
+	&.team0 {
+		left: $windowWidth * .5 - $clockWidth * .5 - $borderSize*3 - $teamScoreWidth;
+		background: var(--team0);
+		border-color: var(--team0);
+	}
+
+	&.team1 {
+		left: $windowWidth * .5 + $clockWidth * .5 + $borderSize;
+		background: var(--team1);
+		border-color: var(--team1);
+	}
+
+	&.long {
+		font-weight: 600;
+		font-size: 36px;
+	}
+
+}

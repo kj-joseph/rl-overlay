@@ -1,31 +1,35 @@
 {
 	"general": {
-		"style": null,
-		"headers": [],
-		"leagueLogo": null,
+		"style": "generic",
+		"headers": [
+			"Testing"
+		],
+		"brandLogo": "doughboy.svg",
 		"show": {
 			"players": true,
+			"playerStats": true,
 			"ball": true
 		}
 	},
     "series": {
-		"show": false,
-        "type": null,
-		"display": "numbers",
-        "maxGames": null,
-		"score": [0,0]
+		"show": true,
+        "type": "bestof",
+		"display": "both",
+        "maxGames": 5,
+		"score": [0,0],
+		"override": null
     },
     "teams": [
         {
-			"name": null,
-            "franchise": null,
-            "logo": null,
+			"name": "Lunar Landers",
+            "franchise": "Dark Side of the Moon",
+            "logo": "lunar.svg",
 			"color": null
         },
         {
-			"name": null,
-            "franchise": null,
-            "logo": null,
+			"name": "Solar Flares",
+            "franchise": "Helios Rising",
+            "logo": "solar.svg",
 			"color": null
         }
     ]

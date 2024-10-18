@@ -2,8 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
 
-import Overlay from "@/views/Overlay";
+import Overlay from "@/views/overlay/Overlay";
 import Statboard from "@/views/Statboard";
+
+import ("@/style/app/main.scss");
 
 const router = createBrowserRouter(
     createRoutesFromElements(

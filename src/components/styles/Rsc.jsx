@@ -1,4 +1,4 @@
-import "@/style/rsc/main.css";
+import "@/style/rsc/main.scss";
 // import "/fonts/Hexagle-Bold.ttf";
 
 console.log("outer");

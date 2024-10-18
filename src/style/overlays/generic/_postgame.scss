@@ -1,0 +1,156 @@
+$postgameTopHeight: $headerHeight + $mainBarHeight + $seriesInfoHeight;
+$postgameTitleWidth: $clockWidth + $teamScoreWidth * 2 + $teamNameWidth * 2 + $borderSize * 10;
+
+.postgame {
+	--centerColor: #ffffff;
+
+	position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 50;
+	width: $windowWidth;
+	height: $windowHeight;
+	font-family: var(--fontOxanium);
+	font-weight: 400;
+	padding-top: $postgameTopHeight + 50px;
+	background: $backgroundColor;
+
+	@import "clock";
+	@import "header";
+	@import "seriesInfo";
+	@import "teamlogo";
+	@import "teamName";
+	@import "teamScore";
+	@import "teamSeriesScore";
+
+	.branding {
+
+		.brandLogo {
+			position: absolute;
+			top: $borderSize * 5;
+			width: $postgameTopHeight;
+			height: $postgameTopHeight;
+
+			&:nth-child(1) {
+				left: $borderSize * 5;
+			}
+
+			&:nth-child(2) {
+				right: $borderSize * 5;
+			}
+
+			img {
+				width: inherit;
+				height: inherit;
+				opacity: .6;
+				filter: grayscale(.25)
+			}
+
+		}
+
+	}
+
+
+	.title {
+		// width: $postgameTitleWidth;
+		color: $highlightColor;
+		font-size: 40px;
+		font-weight: 700;
+		line-height: 40px;
+		text-align: center;
+		text-transform: uppercase;
+		padding: $borderSize;
+		margin: 0 auto $borderSize;
+		border-top: 5px solid $highlightColor;
+		border-bottom: 5px solid $highlightColor;
+		border-image-slice: 1;
+		border-image-source: linear-gradient(
+			to right,
+			var(--team0) $windowWidth * .5 - $gradientCenterWidth * .5,
+			var(--centerColor) $windowWidth * .5,
+			var(--team1) $windowWidth * .5 + $gradientCenterWidth * .5
+		);
+	}
+
+	.statTable {
+		text-transform: uppercase;
+		margin: 0 auto;
+		border-collapse: collapse;
+
+		th, td {
+
+			width: 225px;
+			text-align: center;
+			padding: 15px 25px;
+
+			&.centerColumn {
+				width: 140px;
+			}
+
+		}
+
+		thead {
+
+			th {
+				vertical-align: bottom;
+				font-size: 28px;
+				line-height: 1em;
+				font-weight: 600;
+
+				span {
+					display: block;
+					padding-bottom: $borderSize;
+					border-bottom: $borderSize solid;
+				}
+
+				&.team0 span {
+					border-color: var(--team0);
+				}
+
+				&.team1 span {
+					border-color: var(--team1);
+				}
+
+				&.centerColumn {
+					border-bottom: none;
+				}
+
+				&.long {
+					font-size: 24px;
+				}
+
+				.mvpIcon {
+					display: block;
+					font-size: 24px;
+					color: $highlightColor;
+					margin: 0 auto $borderSize * 2;
+				}
+
+			}
+
+		}
+
+		tbody {
+
+			tr:nth-child(even) {
+				background: $backgroundHighlight;
+			}
+
+			th {
+				color: $secondaryTextColor;
+				font-size: 26px;
+				font-weight: 500;
+			}
+
+			td {
+				font-size: 38px;
+				font-weight: 700;
+				vertical-align: middle;
+			}
+
+		}
+
+	}
+
+}
+

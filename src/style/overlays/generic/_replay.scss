@@ -1,0 +1,114 @@
+.replay {
+    position: absolute;
+    right: 0;
+    bottom: -300px;
+    width: $windowWidth;
+    height: $replayHeight;
+    vertical-align: baseline;
+	padding-top: $borderSize;
+    background: $backgroundTranslucent;
+	border-top: $borderSize solid;
+    transition: bottom .25s ease-in;
+
+	&.showReplay {
+		bottom: 0;
+	}
+
+	.replayLabel {
+		position: absolute;
+		top: calc(-10px - $replayLabelHeight);
+		z-index: 5;
+		height: $replayLabelHeight;
+		font-size: 28px;
+		font-weight: 700;
+		line-height: $replayLabelHeight;
+		text-align: center;
+		letter-spacing: .5em;
+		padding: $borderSize calc($borderSize * 2 - .5em) $borderSize $borderSize * 2;
+	}
+
+	.replayLabelLeft {
+		left: 0;
+	}
+
+	.replayLabelRight {
+		right: 0;
+	}
+
+	.statLine {
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: space-evenly;
+		width: 100%;
+		line-height: calc($replayHeight - 13px);
+
+		.stat {
+			display: inline-block;
+
+			&:first-child {
+				padding-left: 60px;
+			}
+
+			.value {
+				font-size: 52px;
+				font-weight: 700;
+				color: $textColor;
+				text-transform: uppercase;
+				vertical-align: baseline;
+
+				&.long {
+					font-size: 52px;
+				}
+
+			}
+
+			.label {
+				font-size: 26px;
+				font-weight: 500;
+				color: $secondaryTextColor;
+				text-transform: uppercase;
+				margin-right: 15px;
+				vertical-align: baseline;
+			}
+
+			&.speed {
+
+				.value {
+					font-size: 44px;
+					text-transform: uppercase;
+					color: $textColor;
+				}
+
+				.label {
+					font-size: 24px;
+					color: $secondaryTextColor;
+					text-transform: uppercase;
+					margin-left: 7px;
+					margin-right: 60px;
+				}
+
+			}
+
+		}
+
+	}
+
+	&.team0 {
+		border-color: var(--team0);
+
+		.replayLabel {
+			background: var(--team0);
+		}
+
+	}
+
+	&.team1 {
+		border-color: var(--team1);
+
+		.replayLabel {
+			background: var(--team1);
+		}
+
+	}
+
+}

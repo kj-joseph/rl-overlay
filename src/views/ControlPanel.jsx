@@ -5,15 +5,11 @@ import useWebSocket from "react-use-websocket";
 import Clock from "@/components/Clock";
 import SeriesInfo from "@/components/SeriesInfo";
 
-import hexToRgba from "@/utils/hexToRgba";
-
 // import ("@/components/styles/Rsc")
 
 // import Rsc from "@/components/styles/Rsc";
 
-import "@/style/app/statboard.scss";
-
-// const expireEventsInMs = 7000;
+const expireEventsInMs = 7000;
 const socketServerUrl = "ws://rl.kdoughboy.com:8321";
 // const socketServerUrl = "ws://localhost:8321";
 
@@ -22,7 +18,7 @@ const seriesDefault = {
 	score: [0, 0],
 }
 
-const Statboard = () => {
+const ControlPanel = () => {
 
 	const params = useParams();
 
@@ -109,8 +105,23 @@ const Statboard = () => {
 		}
 	}
 
+	const hexToRgbA = (hex, alpha) => {
+		let h;
+		let a = (alpha > 100 ? 100 : alpha < 0 ? 0 : alpha) / 100;
+		if (/^([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+			h = hex.split("");
+			if(h.length === 3){
+				h = [h[0], h[0], h[1], h[1], h[2], h[2]];
+			}
+			h = "0x" + h.join("");
+			return `rgba(${[(h>>16)&255, (h>>8)&255, h&255].join(",")},${a})`;
+		}
+	}
+
+	// console.log(config.series.show);
+
 	return (
-		<div id="Statboard">
+		<div id="ControlPanel">
 
 				{dataReceived ?
 
@@ -118,7 +129,7 @@ const Statboard = () => {
 
 						<Clock time={gameData.time_seconds} overtime={gameData.isOT} />
 
-						{config.series.show || config.series.override ? (
+						{config.series.show ? (
 							<SeriesInfo series={seriesData} config={config} />
 						) : null}
 
@@ -126,13 +137,8 @@ const Statboard = () => {
 						{gameData.teams.map((team, teamnum) => (
 							<Fragment key={teamnum}>
 								<thead>
-									<tr className="teamNameHeader" style={{background: hexToRgba(config.teams[teamnum].color ? config.teams[teamnum].color : team.color_primary, 100)}}>
-										<th className="teamIdentification" colSpan={8}>
-											<span className="teamName">{config.teams[teamnum].name ? config.teams[teamnum].name : team.name}</span>
-											{ config.teams[teamnum].franchise ?
-												<span className="franchiseName">{config.teams[teamnum].franchise}</span>
-											: ""}
-										</th>
+									<tr className="teamNameHeader" style={{background: hexToRgbA(team.color_primary, 100)}}>
+										<th className="teamName" colSpan={8}>{config.teams[teamnum].name ? config.teams[teamnum].name : team.name}</th>
 										<th className="teamScore" colSpan={2}>{team.score}</th>
 										{ config.series.show ?
 											<th className="seriesScore">{seriesData.score[teamnum]}</th>
@@ -155,7 +161,7 @@ const Statboard = () => {
 									{Object.values(playerData).filter(player => player.team === teamnum).map((player, playerIndex) => (
 										<tr
 											key={playerIndex}
-											style={{background: hexToRgba(config.teams[teamnum].color ? config.teams[teamnum].color : team.color_primary, 30 + 20 * playerIndex)}}
+											style={{background: hexToRgbA(team.color_primary, 30 + 20 * playerIndex)}}
 										>
 											<td className="playerBoost">{player.boost}</td>
 											<td className="playerName tableAlignText">{player.name}</td>

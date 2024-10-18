@@ -3,7 +3,6 @@ import React, { Fragment } from "react";
 import Ball from "@/components/Ball";
 import Clock from "@/components/Clock";
 import SeriesInfo from "@/components/SeriesInfo";
-import FranchiseName from "@/components/FranchiseName";
 import Header from "@/components/Header";
 import Replay from "@/components/Replay";
 import TeamLogo from "@/components/TeamLogo";
@@ -13,9 +12,7 @@ import TeamScore from "@/components/TeamScore";
 import TeamSeriesScore from "@/components/TeamSeriesScore";
 import Watching from "@/components/Watching";
 
-import "@/style/rsc/live.css";
-
-const longTeamScore = 20;
+const longTeamScore = 100;
 
 const Live = (props) => {
 
@@ -23,11 +20,11 @@ const Live = (props) => {
         && props.gameData.hasOwnProperty("teams")
         && props.gameData.teams.length > 0
         && (props.gameData.teams[0].score >= longTeamScore
-            || props.gameData.teams[1].score)
+            || props.gameData.teams[1].score >= longTeamScore)
         ? true : false;
 
 	return (
-		<div id="LivePlay">
+		<div className={`livePlay ${props.gameData.isOT ? "overtime" : ""}`}>
 
             <Header headers={props.config.general.headers} />
 
@@ -39,16 +36,13 @@ const Live = (props) => {
 
             {props.gameData.teams.map((team, teamnum) => (
                 <Fragment key={teamnum}>
-                    <TeamName name={props.config.teams[teamnum].name ? props.config.teams[teamnum].name : team.name} team={teamnum} />
-                    {props.config.teams[teamnum].franchise ? (
-                        <FranchiseName name={props.config.teams[teamnum].franchise} team={teamnum} />
-                    ) : null}
+                    <TeamName name={props.config.teams[teamnum].name ? props.config.teams[teamnum].name : team.name} team={teamnum} franchiseName={props.config.teams[teamnum].franchise} />
                     {props.config.teams[teamnum].hasOwnProperty("logo") && props.config.teams[teamnum].logo ? (
                         <TeamLogo team={teamnum} logo={props.config.teams[teamnum].logo} />
                     ) : null}
                     <TeamScore score={team.score} team={teamnum} long={longScores} />
                     {props.config.series.show ? (
-                        <TeamSeriesScore score={props.series.score[teamnum]} team={teamnum} />
+                        <TeamSeriesScore score={props.series.score[teamnum]} seriesConfig={props.config.series} team={teamnum} />
                     ) : null}
                 </Fragment>
             ))}
@@ -58,17 +52,25 @@ const Live = (props) => {
 					<TeamPlayerBoxes
 						players={Object.values(props.playerData).filter(player => player.team === 0)}
 						team={0}
+						showStats={props.config.general.show.playerStats}
 						playerEvents={props.playerEvents}
 						watching={!props.gameData.isReplay && props.gameData.target && props.playerData.hasOwnProperty(props.gameData.target) ? props.gameData.target : null}
 					/>
 					<TeamPlayerBoxes
 						players={Object.values(props.playerData).filter(player => player.team === 1)}
 						team={1}
+						showStats={props.config.general.show.playerStats}
 						playerEvents={props.playerEvents}
 						watching={!props.gameData.isReplay && props.gameData.target && props.playerData.hasOwnProperty(props.gameData.target) ? props.gameData.target : null}
 					/>
 				</Fragment>
 			) : null }
+
+			{props.config.general.hasOwnProperty("brandLogo") && props.config.general.brandLogo ?
+				<div className="watermark">
+					<img src={`/logos/${props.config.general.brandLogo}`}></img>
+				</div>
+			: null }
 
             {!props.gameData.isReplay && props.gameData.target && props.playerData.hasOwnProperty(props.gameData.target) ? (
                 <Watching player={props.playerData[props.gameData.target]} />

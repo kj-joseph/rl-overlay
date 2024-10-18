@@ -2,11 +2,19 @@ import React from "react";
 
 const TeamName = (props) => {
 
-    const longName = 12;
+    const longTeamName = 12;
+    const longFranchiseName = 25;
 
     return (
-        <div className={`teamNameScoreboard team${props.team} ${props.name.length >= longName ? " long" : ""}`}>
-            {props.name}
+        <div className={`teamNameBox team${props.team}`}>
+            <div className={`teamName ${props.name.length >= longTeamName ? "long" : ""} ${props.franchiseName ? "withFranchise" : ""}`}>
+				{props.name}
+			</div>
+			{props.franchiseName ?
+	            <div className={`franchiseName ${props.franchiseName.length >= longFranchiseName ? "long" : ""}`}>
+					{props.franchiseName}
+				</div>
+			: ""}
         </div>
     )
 

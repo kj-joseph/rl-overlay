@@ -1,0 +1,27 @@
+.teamLogo {
+	position: absolute;
+	top: 0;
+	z-index: 15;
+	width: $teamLogoSize - $borderSize * 2;
+	height: $teamLogoSize - $borderSize * 2;
+	text-align: center;
+	vertical-align: middle;
+	overflow: hidden;
+	padding: $borderSize * 2;
+	background-color: $backgroundTranslucent;
+
+	&.team0 {
+		left: $windowWidth * .5 - $clockWidth * .5 - $teamScoreWidth - $teamNameWidth - $teamLogoSize - $borderSize * 7;
+	}
+
+	&.team1 {
+		left: $windowWidth * .5 + $clockWidth * .5 + $teamScoreWidth + $teamNameWidth+ $borderSize * 5;
+	}
+
+	img {
+		width: inherit;
+		height: inherit;
+	}
+
+
+}
