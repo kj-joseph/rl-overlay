@@ -30,11 +30,12 @@ $replayLabelHeight: 38px;
 
 $playerBoxWidth: 340px;
 $playerBoxHeight: 60px;
-$playerBoost: 70px;
-$playerEvents: 28px;
-$boxMargin: 10px;
-$boxBorderSize: 3px;
-$boxPaddingSize: 2px;
+$playerBoxBoost: 70px;
+$playerBoxEvents: 28px;
+$playerBoxEventLimit: 3;
+$playerBoxMargin: 10px;
+$playerBoxBorderSize: 3px;
+$playerBoxPadding: 2px;
 
 // colors (team colors use css variables from React component)
 $backgroundColor: #000000;

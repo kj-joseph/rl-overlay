@@ -1,17 +1,17 @@
 .teamPlayerBoxes {
     position: absolute;
-    top: $boxMargin;
+    top: $playerBoxMargin;
 
 	.playerBox {
 		width: $playerBoxWidth;
 		height: $playerBoxHeight;
 		display: grid;
-		grid-template-rows: 32px 28px;
-		grid-gap: 0 $boxMargin;
+		grid-template-rows: ($playerBoxHeight - ($playerBoxEvents + $playerBoxPadding * 2))  ($playerBoxEvents + $playerBoxPadding * 2);
+		gap: 0;
 		justify-content: space-between;
-		margin-bottom: $boxMargin;
+		margin-bottom: $playerBoxMargin;
 		background: $backgroundColor;
-		border: $boxBorderSize solid;
+		border: $playerBoxBorderSize solid;
 
 		.name {
 			grid-area: name;
@@ -19,7 +19,7 @@
 			font-size: 24px;
 			font-weight: 600;
 			text-transform: uppercase;
-			padding: $boxPaddingSize;
+			padding-top: $playerBoxPadding;
 
 			&.long {
 				font-size: 20px;
@@ -34,7 +34,7 @@
 			.stat {
 				font-size: 20px;
 				font-weight: 500;
-				margin: 0 .5em;
+				margin: 0 $playerBoxPadding * 2;
 				line-height: 1em;
 
 				.label {
@@ -49,15 +49,26 @@
 
 		.events {
 			grid-area: events;
-			width: $playerEvents;
-			height: $playerBoxHeight - $boxPaddingSize * 2;
-			padding: $boxPaddingSize;
+			// width: $playerBoxEvents;
+			// height: $playerBoxHeight - $playerBoxPadding * 2;
+			padding: $playerBoxPadding;
 
 			.eventIcon {
-				display: block;
-				height: $playerEvents - $boxBorderSize;
-				font-size: $playerEvents - $boxBorderSize;
-				margin: $boxPaddingSize;
+				display: inline;
+				margin: $playerBoxPadding $playerBoxPadding * .5;
+
+
+				div {
+					display: inline;
+				}
+
+				svg {
+					fill: $textColor;
+					width: $playerBoxEvents - $playerBoxBorderSize;
+					height: $playerBoxEvents - $playerBoxBorderSize;
+					font-size: $playerBoxEvents - $playerBoxBorderSize;
+				}
+
 			}
 
 		}
@@ -65,15 +76,15 @@
 		.boost {
 			grid-area: boost;
 			position: relative;
-			width: $playerBoost - $boxBorderSize;
+			width: $playerBoxBoost - $playerBoxBorderSize;
 			height: $playerBoxHeight;
 			vertical-align: top;
 
 			.boostText {
 				position: absolute;
-				top: $boxBorderSize * 2;
-				left: $boxBorderSize * 2;
-				width: $playerBoost - $boxBorderSize * 4;
+				top: $playerBoxBorderSize * 2;
+				left: $playerBoxBorderSize * 2;
+				width: $playerBoxBoost - $playerBoxBorderSize * 4;
 				font-size: 33px;
 				font-weight: 600;
 			}
@@ -83,7 +94,7 @@
 				left: 0;
 				bottom: 0;
 
-				width: $playerBoost - $boxBorderSize;
+				width: $playerBoxBoost - $playerBoxBorderSize;
 				height: 10px;
 				background: $backgroundHighlight;
 
@@ -101,18 +112,18 @@
 
 
 	&.team0 {
-		left: $boxMargin;
+		left: $playerBoxMargin;
 
 		.playerBox {
-			grid-template-columns: 1fr $playerEvents $playerBoost;
+			grid-template-columns: 1fr calc((#{$playerBoxEvents} + #{$playerBoxPadding}) * var(--playerBoxEventLimit)) $playerBoxBoost;
 			grid-template-areas:
-				"name events boost"
+				"name name boost"
 				"stats events boost";
 				border-color: var(--team0);
 
 			.boost {
 				text-align: right;
-				border-left: $boxBorderSize solid var(--team0);
+				border-left: $playerBoxBorderSize solid var(--team0);
 
 				.boostBar {
 
@@ -123,6 +134,10 @@
 
 				}
 
+			}
+
+			.events {
+				justify-self: end;
 			}
 
 			.stats {
@@ -146,12 +161,12 @@
 	}
 
 	&.team1 {
-		right: $boxMargin;
+		right: $playerBoxMargin;
 
 		.playerBox {
-			grid-template-columns: $playerBoost $playerEvents 1fr;
+			grid-template-columns: $playerBoxBoost calc((#{$playerBoxEvents} + #{$playerBoxPadding}) * var(--playerBoxEventLimit)) 1fr;
 			grid-template-areas:
-				"boost events name"
+				"boost name name"
 				"boost events stats";
 			border-color: var(--team1);
 
@@ -162,7 +177,7 @@
 			.boost {
 				text-align: right;
 				border-color: var(--team1);
-				border-right: $boxBorderSize solid var(--team1);
+				border-right: $playerBoxBorderSize solid var(--team1);
 
 				.boostBar {
 

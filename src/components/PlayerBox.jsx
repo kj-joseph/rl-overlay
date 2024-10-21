@@ -6,9 +6,12 @@ const PlayerBox = (props) => {
 
     let dead = false;
     const displayStats = [];
-    const longPlayerName = 14;
+
     const statLimit = 3;
-    const statList = [
+	const eventLimit = 3;
+	const longPlayerName = 14;
+
+	const statList = [
         {
             name: "goals",
             label: "G",
@@ -40,7 +43,12 @@ const PlayerBox = (props) => {
     }
 
     return (
-        <div className={`playerBox ${props.watching ? "watching" : ""} ${props.player.isDead ? "dead" : ""}`}>
+        <div
+			className={`playerBox ${props.watching ? "watching" : ""} ${props.player.isDead ? "dead" : ""}`}
+			style={{
+				"--playerBoxEventLimit": eventLimit,
+			}}
+		>
 
             <div className={`name ${props.player.name.length >= longPlayerName ? "long" : ""}`}>{props.player.name}</div>
 
@@ -63,7 +71,7 @@ const PlayerBox = (props) => {
 				</div>
 			: ""}
 
-            <PlayerEvents events={props.playerEvents} />
+            <PlayerEvents events={props.playerEvents} limit={eventLimit} />
 
         </div>
     )

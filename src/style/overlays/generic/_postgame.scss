@@ -1,5 +1,6 @@
 $postgameTopHeight: $headerHeight + $mainBarHeight + $seriesInfoHeight;
 $postgameTitleWidth: $clockWidth + $teamScoreWidth * 2 + $teamNameWidth * 2 + $borderSize * 10;
+$mvpIconSize: 36px;
 
 .postgame {
 	--centerColor: #ffffff;
@@ -121,9 +122,14 @@ $postgameTitleWidth: $clockWidth + $teamScoreWidth * 2 + $teamNameWidth * 2 + $b
 
 				.mvpIcon {
 					display: block;
-					font-size: 24px;
-					color: $highlightColor;
 					margin: 0 auto $borderSize * 2;
+
+					svg {
+						height: $mvpIconSize;
+						width: $mvpIconSize;
+						fill: $highlightColor;
+					}
+
 				}
 
 			}

@@ -1,10 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { ReactSVG } from "react-svg";
 
 import SeriesInfo from "@/components/SeriesInfo";
-import FranchiseName from "@/components/FranchiseName";
 import Header from "@/components/Header";
 import TeamLogo from "@/components/TeamLogo";
 import TeamName from "@/components/TeamName";
@@ -114,7 +111,7 @@ const Postgame = (props) => {
                         {teams[0].map((player, playerIndex) => (
                             <th className={`playerName team0 ${player.name.length > longPlayerName ? "long" : ""}`} key={`team0player${playerIndex}`}>
                                 {winningTeam === 0 && playerIndex === 0 ? (
-                                    <FontAwesomeIcon className="mvpIcon" icon={faStar} />
+									<ReactSVG className="mvpIcon" src="/eventIcons/mvp.svg" />
                                 ) : null}
 								<span>{player.name}</span>
                             </th>
@@ -123,7 +120,7 @@ const Postgame = (props) => {
                         {teams[1].map((player, playerIndex) => (
                             <th className={`playerName team1 ${player.name.length > longPlayerName ? "long" : ""}`} key={`team1player${playerIndex}`}>
                                 {winningTeam === 1 && playerIndex === 0 ? (
-                                    <FontAwesomeIcon className="mvpIcon" icon={faStar} />
+									<ReactSVG className="mvpIcon" src="/eventIcons/mvp.svg" />
                                 ) : null}
 								<span>{player.name}</span>
                             </th>
