@@ -41,8 +41,9 @@ $mvpIconSize: 36px;
 			}
 
 			img {
-				width: inherit;
-				height: inherit;
+				display: block;
+				max-width: 100%;
+				max-height: 100%;
 				opacity: .6;
 				filter: grayscale(.25)
 			}

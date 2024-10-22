@@ -5,18 +5,9 @@ import useWebSocket from "react-use-websocket";
 import Clock from "@/components/Clock";
 import SeriesInfo from "@/components/SeriesInfo";
 
-// import ("@/components/styles/Rsc")
-
-// import Rsc from "@/components/styles/Rsc";
-
 const expireEventsInMs = 7000;
 const socketServerUrl = "ws://rl.kdoughboy.com:8321";
 // const socketServerUrl = "ws://localhost:8321";
-
-const seriesDefault = {
-	game: 0,
-	score: [0, 0],
-}
 
 const ControlPanel = () => {
 
@@ -31,9 +22,7 @@ const ControlPanel = () => {
 	});
 	const [playerData, setPlayerData] = useState({});
 	const [playerEvents, setPlayerEvents] = useState([]);
-	const [seriesData, setSeriesData] = useState({
-		...seriesDefault,
-	});
+	const [seriesScore, setSeriesScore] = useState([0,0]);
 
 	const {
 		sendMessage: sendMessageServer,
@@ -97,8 +86,8 @@ const ControlPanel = () => {
 				if (data.hasOwnProperty("playerEvents")) {
 					setPlayerEvents(data.playerEvents);
 				}
-				if (data.hasOwnProperty("seriesData")) {
-					setSeriesData(data.seriesData);
+				if (data.hasOwnProperty("seriesScore")) {
+					setSeriesScore(data.seriesScore);
 				}
 			break;
 
@@ -130,7 +119,7 @@ const ControlPanel = () => {
 						<Clock time={gameData.time_seconds} overtime={gameData.isOT} />
 
 						{config.series.show ? (
-							<SeriesInfo series={seriesData} config={config} />
+							<SeriesInfo seriesScore={seriesScore} seriesConfig={config.series} />
 						) : null}
 
 						<table className="teamStats">
@@ -141,7 +130,7 @@ const ControlPanel = () => {
 										<th className="teamName" colSpan={8}>{config.teams[teamnum].name ? config.teams[teamnum].name : team.name}</th>
 										<th className="teamScore" colSpan={2}>{team.score}</th>
 										{ config.series.show ?
-											<th className="seriesScore">{seriesData.score[teamnum]}</th>
+											<th className="seriesScore">{seriesScore.score[teamnum]}</th>
 										: null}
 									</tr>
 									<tr className="teamHeader">

@@ -17,11 +17,6 @@ import "@/style/app/statboard.scss";
 const socketServerUrl = "ws://rl.kdoughboy.com:8321";
 // const socketServerUrl = "ws://localhost:8321";
 
-const seriesDefault = {
-	game: 0,
-	score: [0, 0],
-}
-
 const Statboard = () => {
 
 	const params = useParams();
@@ -35,9 +30,7 @@ const Statboard = () => {
 	});
 	const [playerData, setPlayerData] = useState({});
 	const [playerEvents, setPlayerEvents] = useState([]);
-	const [seriesData, setSeriesData] = useState({
-		...seriesDefault,
-	});
+	const [seriesScore, setSeriesScore] = useState([0,0]);
 
 	const {
 		sendMessage: sendMessageServer,
@@ -101,8 +94,8 @@ const Statboard = () => {
 				if (data.hasOwnProperty("playerEvents")) {
 					setPlayerEvents(data.playerEvents);
 				}
-				if (data.hasOwnProperty("seriesData")) {
-					setSeriesData(data.seriesData);
+				if (data.hasOwnProperty("seriesScore")) {
+					setSeriesScore(data.seriesScore);
 				}
 			break;
 
@@ -119,7 +112,7 @@ const Statboard = () => {
 						<Clock time={gameData.time_seconds} overtime={gameData.isOT} />
 
 						{config.series.show || config.series.override ? (
-							<SeriesInfo series={seriesData} config={config} />
+							<SeriesInfo seriesScore={seriesScore} seriesConfig={config.series} />
 						) : null}
 
 						<table className="teamStats">
@@ -135,7 +128,7 @@ const Statboard = () => {
 										</th>
 										<th className="teamScore" colSpan={2}>{team.score}</th>
 										{ config.series.show ?
-											<th className="seriesScore">{seriesData.score[teamnum]}</th>
+											<th className="seriesScore">{seriesScore[teamnum]}</th>
 										: null}
 									</tr>
 									<tr className="teamHeader">

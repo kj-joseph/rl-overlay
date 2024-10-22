@@ -31,7 +31,7 @@ const Live = (props) => {
             <Clock time={props.gameData.time_seconds} overtime={props.gameData.isOT} />
 
             {props.config.series.show || props.config.series.override ? (
-                <SeriesInfo series={props.series} config={props.config} />
+                <SeriesInfo seriesScore={props.seriesScore} seriesGame={props.seriesGame} seriesConfig={props.config.series} />
             ) : null}
 
             {props.gameData.teams.map((team, teamnum) => (
@@ -42,7 +42,7 @@ const Live = (props) => {
                     ) : null}
                     <TeamScore score={team.score} team={teamnum} long={longScores} />
                     {props.config.series.show ? (
-                        <TeamSeriesScore score={props.series.score[teamnum]} seriesConfig={props.config.series} team={teamnum} />
+                        <TeamSeriesScore score={props.seriesScore[teamnum]} seriesConfig={props.config.series} team={teamnum} />
                     ) : null}
                 </Fragment>
             ))}

@@ -18,7 +18,7 @@ const Pregame = (props) => {
 				<Header headers={props.config.general.headers} />
 
 				{(props.config.series.show && props.config.series.type !== "unlimited") || props.config.series.override ? (
-					<SeriesInfo series={props.series} config={props.config} pregame={true} />
+					<SeriesInfo seriesScore={props.seriesScore} seriesGame={props.seriesGame} seriesConfig={props.config.series} pregame={true} />
 				) : null}
 
 			</div>

@@ -11,7 +11,7 @@ import Transition from "@/views/overlay/Transition";
 
 import hexToRgba from "@/utils/hexToRgba";
 
-// import "@/style/overlays/rsc/main.scss";
+// TODO: bring in style theme dynamically
 import "@/style/overlays/generic/main.scss";
 
 const expireEventsInMs = 7000;
@@ -24,10 +24,6 @@ const Overlay = () => {
 	const params = useParams();
 	const defaultConfig = Config;
 
-	const seriesDefault = {
-		game: 0,
-		score: [0, 0],
-	}
 	const transitionDefault = {
 		logo: null,
 		show: false,
@@ -45,9 +41,7 @@ const Overlay = () => {
 	const [lastGoal, setLastGoal] = useState({});
 	const [playerData, setPlayerData] = useState({});
 	const [playerEvents, setPlayerEvents] = useState([]);
-	const [seriesData, setSeriesData] = useState({
-		...seriesDefault,
-	});
+	const [seriesScore, setSeriesScore] = useState([0,0]);
 	const [transition, setTransition] = useState(transitionDefault);
 	const [viewState, setViewState] = useState("");
 	const [activeConfig, setActiveConfig] = useState(defaultConfig);
@@ -157,10 +151,6 @@ const Overlay = () => {
 				);
 				setTimeout(() => {
 					setViewState("live");
-					setSeriesData(sd => ({
-						...sd,
-						game: sd.game + 1,
-					}));
 				}, 750);
 				break;
 
@@ -187,13 +177,10 @@ const Overlay = () => {
 					activeConfig.teams[winningTeam].hasOwnProperty("logo") && activeConfig.teams[winningTeam].hasOwnProperty("logo") ? `teams/${activeConfig.teams[winningTeam].logo}` : null,
 				), 1000);
 				setTimeout(() => {
-					setSeriesData(sd => ({
-						...sd,
-						score: [
-							sd.score[0] + (winningTeam === 0 ? 1 : 0),
-							sd.score[1] + (winningTeam === 1 ? 1 : 0),
-						],
-					}));
+					setSeriesScore(sd => ([
+						sd[0] + (winningTeam === 0 ? 1 : 0),
+						sd[1] + (winningTeam === 1 ? 1 : 0),
+					]));
 					setViewState("postgame");
 				}, 4500);
 			break;
@@ -270,7 +257,7 @@ const Overlay = () => {
 				gameData,
 				playerData,
 				playerEvents,
-				seriesData
+				seriesScore: seriesScore
 			}
 		});
 	}
@@ -400,13 +387,15 @@ const Overlay = () => {
 					config={activeConfig}
 					gameData={endGameData.gameData}
 					players={endGameData.playerData}
-					series={seriesData}
+					seriesScore={seriesScore}
+					seriesGame={seriesScore[0] + seriesScore[1]}
 				/>
 			) : viewState ==="pregame" ? (
 				<Pregame
 					config={activeConfig}
 					gameData={gameData}
-					series={seriesData}
+					seriesScore={seriesScore}
+					seriesGame={seriesScore[0] + seriesScore[1] + 1}
 				/>
 			) : (
 				<Live
@@ -416,7 +405,8 @@ const Overlay = () => {
 					lastGoal={lastGoal}
 					playerData={playerData}
 					playerEvents={playerEvents}
-					series={seriesData}
+					seriesScore={seriesScore}
+					seriesGame={seriesScore[0] + seriesScore[1] + 1}
 				/>
 			)}
 

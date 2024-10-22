@@ -4,7 +4,7 @@
 		"headers": [
 			"Testing"
 		],
-		"brandLogo": "doughboy.svg",
+		"brandLogo": "rsc-logo.png",
 		"show": {
 			"players": true,
 			"playerStats": true,
@@ -13,9 +13,9 @@
 	},
     "series": {
 		"show": true,
-        "type": "bestof",
+        "type": "set",
 		"display": "both",
-        "maxGames": 5,
+        "maxGames": 3,
 		"score": [0,0],
 		"override": null
     },
@@ -23,13 +23,13 @@
         {
 			"name": "Lunar Landers",
             "franchise": "Dark Side of the Moon",
-            "logo": "lunar.svg",
+            "logo": "Locals-RL.png",
 			"color": null
         },
         {
 			"name": "Solar Flares",
             "franchise": "Helios Rising",
-            "logo": "solar.svg",
+            "logo": "rsbees.png",
 			"color": null
         }
     ]
