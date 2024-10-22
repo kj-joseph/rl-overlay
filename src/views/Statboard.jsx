@@ -112,7 +112,7 @@ const Statboard = () => {
 						<Clock time={gameData.time_seconds} overtime={gameData.isOT} />
 
 						{config.series.show || config.series.override ? (
-							<SeriesInfo seriesScore={seriesScore} seriesConfig={config.series} />
+							<SeriesInfo seriesScore={seriesScore} seriesGame={seriesScore[0] + seriesScore[1] + 1} seriesConfig={config.series} />
 						) : null}
 
 						<table className="teamStats">

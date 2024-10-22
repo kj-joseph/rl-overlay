@@ -119,7 +119,7 @@ const ControlPanel = () => {
 						<Clock time={gameData.time_seconds} overtime={gameData.isOT} />
 
 						{config.series.show ? (
-							<SeriesInfo seriesScore={seriesScore} seriesConfig={config.series} />
+							<SeriesInfo seriesScore={seriesScore} seriesGame={seriesScore[0] + seriesScore[1] + 1} seriesConfig={config.series} />
 						) : null}
 
 						<table className="teamStats">
