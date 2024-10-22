@@ -6,31 +6,31 @@ const SeriesInfo = (props) => {
 
     return (
         <div className="seriesInfo">
-            {props.config.series.override ? (
+            {props.seriesConfig.override ? (
                 <>
-                    {props.config.series.override}
+                    {props.seriesConfig.override}
                 </>
-            ) : props.config.series.type === "none" ? (
+            ) : props.seriesConfig.type === "none" || props.seriesConfig.type === "unlimited" ? (
                 <>
-                    {!props.pregame ? `Game ${props.series.game}` : ""}
+                    {!props.pregame ? `Game ${props.seriesGame}` : ""}
                 </>
-            ) : props.config.series.type === "bestof" ? (
+            ) : props.seriesConfig.type === "bestof" ? (
                 <>
                     {!props.pregame ? (
                         <>
-                            Game {props.series.game}<span className="pipe"> | </span>
+                            Game {props.seriesGame}<span className="pipe"> | </span>
                         </>
                     ) : null}
-                    Best of {props.config.series.maxGames}{props.pregame ? " series" : ""}
+                    Best of {props.seriesConfig.maxGames}
                 </>
-            ) : props.config.series.type === "set" ? (
+            ) : props.seriesConfig.type === "set" ? (
                 <>
                     {!props.pregame ? (
                         <>
-                            Game {props.series.game} <span className="small"> of </span>
+                            Game {props.seriesGame} <span className="small"> of </span>
                         </>
                     ) : null}
-                    {props.config.series.maxGames}{props.pregame ? " game series" : ""}
+                    {props.seriesConfig.maxGames}{props.pregame ? " game series" : ""}
                 </>
             ) : null}
         </div>

@@ -6,7 +6,7 @@ const Watching = (props) => {
     const longName = 30;
 
     return (
-        <div className={`watchingView watchingTeam${props.player.team}`}>
+        <div className={`watchingView team${props.player.team}`}>
 
             <div className="stats">
                 <div className={`name ${props.player.name.length >= longName ? " long" : ""}`}>{props.player.name}</div>
@@ -28,13 +28,16 @@ const Watching = (props) => {
                         <span className="value">{props.player.saves}</span>
                     </div>
                     <div className="stat">
-                        <span className="label">D</span>
+                        <span className="label">DM</span>
                         <span className="value">{props.player.demos}</span>
                     </div>
-                    <div className="stat">
+
+{/* remove touches for now
+                     <div className="stat">
                         <span className="label">T</span>
                         <span className="value">{props.player.touches}</span>
                     </div>
+*/}
                 </div>
             </div>
 

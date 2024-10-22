@@ -1,29 +1,36 @@
 {
-    "style": "rsc",
-    "header": "2sday Bracket Reset",
-    "leagueLogo": "doughboy.svg",
-    "show": {
-        "franchise": false,
-        "leagueLogo": true,
-        "teamLogos": false
-    },
+	"general": {
+		"style": "generic",
+		"headers": [
+			"Testing"
+		],
+		"brandLogo": "rsc-logo.png",
+		"show": {
+			"players": true,
+			"playerStats": true,
+			"ball": true
+		}
+	},
     "series": {
-        "showScore": true,
-        "type": "bestof",
-        "maxGames": 5,
-        "override": false
+		"show": true,
+        "type": "set",
+		"display": "both",
+        "maxGames": 3,
+		"score": [0,0],
+		"override": null
     },
     "teams": [
         {
-            "franchise": "Test Franchise Name",
-            "logo": "lunar.svg",
-            "seriesScore": 0
+			"name": "Lunar Landers",
+            "franchise": "Dark Side of the Moon",
+            "logo": "Locals-RL.png",
+			"color": null
         },
         {
-            "franchise": "Test Franchise Name",
-            "logo": "solar.svg",
-            "seriesScore": 0
+			"name": "Solar Flares",
+            "franchise": "Helios Rising",
+            "logo": "rsbees.png",
+			"color": null
         }
     ]
-
 }

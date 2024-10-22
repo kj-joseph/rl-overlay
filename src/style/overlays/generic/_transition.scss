@@ -1,0 +1,205 @@
+$logoSmall: 400px;
+$logoLarge: 600px;
+
+$stripeMinWidth: 150px;
+$stripeMaxWidth: $windowWidth * .5;
+
+$transitionDelay: 3s;
+$transitionDuration: 1.5s;
+
+
+#Transition.stripeWipe {
+	--transitionDelay: #{$transitionDelay};
+
+	position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 255;
+	width: $windowWidth;
+	height: $windowHeight;
+    overflow: hidden;
+    visibility: hidden;
+
+	&.noDelay {
+		--transitionDelay: 0s;
+	}
+
+	.bg {
+		/* display: none; */
+		position: absolute;
+		left: $windowWidth;
+		top: 0;
+		z-index: 1;
+		width: $windowWidth;
+		height: $windowHeight;
+		background: $backgroundColor;
+		/* transition: left 2.5s ease-in-out; */
+
+		.logo {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			z-index: 2;
+			transform: translate(-50%, -50%);
+			width: $logoSmall;
+			height: $logoSmall;
+			opacity: 0;
+
+			img {
+				display: block;
+				margin: 0 auto;
+				max-width: 100%;
+				max-height: 100%;
+				width: auto;
+				height: auto;
+
+			}
+
+		}
+
+	}
+
+
+	.stripe {
+
+		position: absolute;
+		top: 0;
+		left: $windowWidth;
+		z-index: 5;
+		width: $stripeMinWidth;
+		height: $windowHeight;
+		overflow: hidden;
+		background: $highlightColor;
+
+		.text {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			z-index: 6;
+			transform: translate(-50%, -50%) rotate(-90deg);
+			color: $textColor;
+			font-family: var(--fontOxanium);
+			font-size: 128px;
+			font-weight: 700;
+			letter-spacing: 64px;
+			text-align: center;
+		}
+
+	}
+
+
+	&.show {
+		visibility: visible;
+
+		.bg {
+			animation: StripeWipeBackground;
+			animation-duration: $transitionDuration;
+			animation-fill-mode: forwards;
+			animation-delay: var(--transitionDelay);
+		}
+
+		.logo {
+			animation: stripeWipeLogo;
+			animation-duration: $transitionDuration;
+			animation-fill-mode: forwards;
+			animation-delay: var(--transitionDelay);
+		}
+
+		.stripe {
+			animation: stripeWipeStripe;
+			animation-duration: $transitionDuration;
+			animation-fill-mode: forwards;
+			animation-delay: var(--transitionDelay);
+		}
+
+	}
+
+
+	&.team0 .stripe {
+		background: var(--team0);
+	}
+
+	&.team1 .stripe {
+		background: var(--team1);
+	}
+
+	&.team0, &.team1 {
+
+		.stripe .text {
+			color: $textColor;
+		}
+
+	}
+
+}
+
+@keyframes StripeWipeBackground {
+    0% {
+        left: $windowWidth;
+    }
+    20% {
+        left: 0px;
+    }
+    70% {
+        left: 0px;
+    }
+    100% {
+        left: calc(0px - $windowWidth);
+    }
+}
+
+@keyframes stripeWipeStripe {
+    0% {
+        left: $windowWidth;
+        width: $stripeMinWidth;
+    }
+    15% {
+        left: $windowWidth;
+        width: $stripeMinWidth;
+    }
+    40% {
+        left: calc($windowWidth * .5 - $stripeMaxWidth * .5);
+        width: $stripeMaxWidth;
+    }
+    60% {
+        left: 100px;
+        width: $stripeMinWidth;
+    }
+    70% {
+        left: 100px;
+        width: $stripeMinWidth;
+    }
+    100% {
+        left: calc(0px - $windowWidth);
+        width: $stripeMinWidth;
+    }
+}
+
+@keyframes stripeWipeLogo {
+    0% {
+        opacity: 0;
+        width: $logoSmall;
+        height: $logoSmall;
+    }
+    29% {
+        opacity: 0;
+        width: $logoSmall;
+        height: $logoSmall;
+    }
+    30% {
+        opacity: 1;
+        width: $logoSmall;
+        height: $logoSmall;
+    }
+    55% {
+        opacity: 1;
+        width: $logoLarge;
+        height: $logoLarge;
+    }
+    100% {
+        opacity: 1;
+        width: $logoLarge;
+        height: $logoLarge;
+    }
+}
+

@@ -1,0 +1,29 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&family=Oxanium:wght@200..800&display=swap");
+
+:root {
+	--windowWidth: 1920px;
+    --windowHeight: 1080px;
+
+	--fontOxanium: Oxanium, Helvetica, Arial, sans-serif;
+	--fontRoboto: "Roboto Flex", Helvetica, Arial, sans-serif;
+	--fontSans: Helvetica, Arial, sans-serif;
+
+	color-scheme: light dark;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: 100%;
+
+	// color: #ffffff;
+	background: transparent;
+
+}
+
+body {
+	position: relative;
+	margin: 0;
+    padding: 0;
+    overflow: hidden;
+}

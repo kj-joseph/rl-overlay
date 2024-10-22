@@ -1,0 +1,19 @@
+.header0 {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: $clockWidth + $teamScoreWidth * 2 + $teamNameWidth * 2 + $borderSize * 6;
+	height: $headerHeight;
+    padding: 0 $borderSize;
+	color: $highlightColor;
+    font-size: 22px;
+	font-weight: 600;
+    line-height: $headerHeight;
+    text-transform: uppercase;
+    line-height: $headerHeight;
+    text-align: center;
+	background-color: $backgroundColor;
+	border-left: $borderSize solid var(--team0);
+	border-right: $borderSize solid var(--team1);
+}

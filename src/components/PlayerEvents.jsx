@@ -1,55 +1,39 @@
 import React, { Fragment } from "react";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faBomb,
-    faCertificate,
-    faFutbol,
-    faHand,
-    faHandshake,
-    faHatWizard,
-    faSkull,
-} from "@fortawesome/free-solid-svg-icons";
-
-const eventLimit = 2;
+import { ReactSVG } from "react-svg";
 
 const PlayerEvents = (props) => {
 
     return (
         <div className="events">
             {props.events.sort((a, b) => a > b ? -1 : a < b ? 1 : 0)
-                .filter((e, i) => i < eventLimit)
+                .filter((e, i) => i < props.limit)
                 .map((event, eventIndex) => (
+
                     <Fragment key={eventIndex}>
                         {
                             event.name === "Assist" ? (
-                                <FontAwesomeIcon className="eventIcon" icon={faHandshake} key={eventIndex} />
+								<ReactSVG className="eventIcon" src="/eventIcons/assist.svg" />
                             )
                             : event.name === "Dead" ? (
-                                <FontAwesomeIcon className="eventIcon" icon={faSkull} key={eventIndex} />
+								<ReactSVG className="eventIcon" src="/eventIcons/dead.svg" />
                             )
                             : event.name === "Demolish" ? (
-                                <FontAwesomeIcon className="eventIcon" icon={faBomb} key={eventIndex} />
+								<ReactSVG className="eventIcon" src="/eventIcons/demo.svg" />
                             )
                             : event.name === "Goal" ? (
-                                <FontAwesomeIcon className="eventIcon" icon={faCertificate} key={eventIndex} />
-                            )
-                            : event.name === "HatTrick" ? (
-                                <FontAwesomeIcon className="eventIcon" icon={faHatWizard} key={eventIndex} />
+								<ReactSVG className="eventIcon" src="/eventIcons/goal.svg" />
                             )
                             : event.name === "Save" || event.name === "EpicSave" ? (
-                                <FontAwesomeIcon className="eventIcon" icon={faHand} key={eventIndex} />
+								<ReactSVG className="eventIcon" src="/eventIcons/save.svg" />
                             )
                             : event.name === "Shot" ? (
-                                <FontAwesomeIcon className="eventIcon" icon={faFutbol} key={eventIndex} />
+								<ReactSVG className="eventIcon" src="/eventIcons/shot.svg" />
                             )
-
-
-                        : null}
-
+						: null}
 
                     </Fragment>
-                ))}
+
+				))}
         </div>
     )
 

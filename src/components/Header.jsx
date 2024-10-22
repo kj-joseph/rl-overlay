@@ -1,11 +1,19 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 const Header = (props) => {
 
     return (
-        <div className="header">
-            {props.message}
-        </div>
+		<Fragment>
+
+			{props.headers.map((text, index) => (
+
+				<div className={`header${index}`} key={index}>
+					{text}
+				</div>
+
+			))}
+
+		</Fragment>
     )
 
 }

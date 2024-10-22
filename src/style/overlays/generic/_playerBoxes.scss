@@ -1,0 +1,221 @@
+.teamPlayerBoxes {
+    position: absolute;
+    top: $playerBoxMargin;
+
+	.playerBox {
+		width: $playerBoxWidth;
+		height: $playerBoxHeight;
+		display: grid;
+		grid-template-rows: ($playerBoxHeight - ($playerBoxEvents + $playerBoxPadding * 2))  ($playerBoxEvents + $playerBoxPadding * 2);
+		gap: 0;
+		justify-content: space-between;
+		margin-bottom: $playerBoxMargin;
+		background: $backgroundColor;
+		border: $playerBoxBorderSize solid;
+
+		.name {
+			grid-area: name;
+			color: $textColor;
+			font-size: 24px;
+			font-weight: 600;
+			text-transform: uppercase;
+			padding-top: $playerBoxPadding;
+
+			&.long {
+				font-size: 20px;
+			}
+
+		}
+
+		.stats {
+			grid-area: stats;
+			padding: $borderSize;
+
+			.stat {
+				font-size: 20px;
+				font-weight: 500;
+				margin: 0 $playerBoxPadding * 2;
+				line-height: 1em;
+
+				.label {
+					color: $secondaryTextColor;
+					font-size: 75%;
+					margin-left: .2em;
+				}
+
+			}
+
+		}
+
+		.events {
+			grid-area: events;
+			// width: $playerBoxEvents;
+			// height: $playerBoxHeight - $playerBoxPadding * 2;
+			padding: $playerBoxPadding;
+
+			.eventIcon {
+				display: inline;
+				margin: $playerBoxPadding $playerBoxPadding * .5;
+
+
+				div {
+					display: inline;
+				}
+
+				svg {
+					fill: $textColor;
+					width: $playerBoxEvents - $playerBoxBorderSize;
+					height: $playerBoxEvents - $playerBoxBorderSize;
+					font-size: $playerBoxEvents - $playerBoxBorderSize;
+				}
+
+			}
+
+		}
+
+		.boost {
+			grid-area: boost;
+			position: relative;
+			width: $playerBoxBoost - $playerBoxBorderSize;
+			height: $playerBoxHeight;
+			vertical-align: top;
+
+			.boostText {
+				position: absolute;
+				top: $playerBoxBorderSize * 2;
+				left: $playerBoxBorderSize * 2;
+				width: $playerBoxBoost - $playerBoxBorderSize * 4;
+				font-size: 33px;
+				font-weight: 600;
+			}
+
+			.boostBar {
+				position: absolute;
+				left: 0;
+				bottom: 0;
+
+				width: $playerBoxBoost - $playerBoxBorderSize;
+				height: 10px;
+				background: $backgroundHighlight;
+
+				.fill {
+					position: absolute;
+					bottom: 0;
+					height: 10px;
+				}
+			}
+		}
+
+
+
+	}
+
+
+	&.team0 {
+		left: $playerBoxMargin;
+
+		.playerBox {
+			grid-template-columns: 1fr calc((#{$playerBoxEvents} + #{$playerBoxPadding}) * var(--playerBoxEventLimit)) $playerBoxBoost;
+			grid-template-areas:
+				"name name boost"
+				"stats events boost";
+				border-color: var(--team0);
+
+			.boost {
+				text-align: right;
+				border-left: $playerBoxBorderSize solid var(--team0);
+
+				.boostBar {
+
+					.fill {
+						left: 0;
+						background: var(--team0);
+					}
+
+				}
+
+			}
+
+			.events {
+				justify-self: end;
+			}
+
+			.stats {
+				text-align: left;
+
+				.stat:first-child {
+					margin-left: 0;
+				}
+			}
+
+			&.watching {
+				border-color: $highlightColor;
+
+				.boost {
+					border-color: $highlightColor;
+				}
+			}
+
+		}
+
+	}
+
+	&.team1 {
+		right: $playerBoxMargin;
+
+		.playerBox {
+			grid-template-columns: $playerBoxBoost calc((#{$playerBoxEvents} + #{$playerBoxPadding}) * var(--playerBoxEventLimit)) 1fr;
+			grid-template-areas:
+				"boost name name"
+				"boost events stats";
+			border-color: var(--team1);
+
+			.name {
+				text-align: right;
+			}
+
+			.boost {
+				text-align: right;
+				border-color: var(--team1);
+				border-right: $playerBoxBorderSize solid var(--team1);
+
+				.boostBar {
+
+					.fill {
+						right: 0;
+						background: var(--team1);
+					}
+
+				}
+
+			}
+
+			.stats {
+				text-align: right;
+
+				.stat:last-child {
+					margin-right: 0;
+				}
+			}
+
+			&.watching {
+				border-color: $highlightColor;
+
+				.boost {
+					border-color: $highlightColor;
+				}
+			}
+
+		}
+
+	}
+
+	.playerBox.dead {
+		opacity: .5;
+
+		.boost .boostText {
+			opacity: 0;
+		}
+	}
+
+}

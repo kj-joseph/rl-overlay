@@ -1,0 +1,205 @@
+$canvasHeight: $windowHeight - ($headerHeight + $borderSize * 3);
+$teamColorHeight: 25px;
+$teamColorFadeHeight: 50px;
+$centerHeight: 25px;
+$brandLogoPadding: 30px;
+$brandLogoSize: ($teamColorHeight + $teamColorFadeHeight + $centerHeight * .5) * 2 - $brandLogoPadding;
+$pregameTeamLogoSize: 250px;
+
+#Pregame {
+	--canvasHeight: #{$canvasHeight};
+
+	font-family: var(--fontOxanium);
+	font-weight: 700;
+	color: $textColor;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 50;
+	width: $windowWidth;
+	height: $windowHeight;
+    overflow: hidden;
+	background: $backgroundColor;
+
+
+	&.hasSeriesInfo {
+		--canvasHeight: #{$canvasHeight - $headerHeight - $borderSize};
+	}
+
+	.pregameHeader {
+		border-bottom: $borderSize solid $secondaryTextColor;
+
+		.header0 {
+			height: $headerHeight;
+			width: $windowWidth;
+			color: $highlightColor;
+			font-size: 28px;
+			font-weight: 600;
+			line-height: $headerHeight;
+			text-align: center;
+			text-transform: uppercase;
+			line-height: $headerHeight;
+			padding-top: $borderSize;
+		}
+
+		.seriesInfo {
+			height: $headerHeight;
+			width: $windowWidth;
+			color: $highlightColor;
+			font-size: 22px;
+			font-weight: 500;
+			line-height: $headerHeight;
+			text-align: center;
+			text-transform: uppercase;
+			line-height: $headerHeight;
+			margin-top: $borderSize;
+			padding-bottom: $borderSize;
+		}
+
+	}
+
+
+	.pregameMatchup {
+		position: relative;
+		width: $windowWidth;
+		height: var(--canvasHeight);
+		background: pink;
+
+		.pregameCenter {
+			position: absolute;
+			z-index: 11;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			height: $brandLogoSize - $brandLogoPadding;
+			width: $brandLogoSize - $brandLogoPadding;
+			padding: $brandLogoPadding;
+			background: $backgroundColor;
+			background: linear-gradient(
+				to right,
+				$backgroundTransparent,
+				$backgroundColor $brandLogoPadding,
+				$backgroundColor $brandLogoSize,
+				$backgroundTransparent 100%
+			);
+
+			.vs {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				z-index: 10;
+				font-size: $brandLogoSize * .5;
+				vertical-align: middle;
+				transform: translate(-50%, -50%);
+				color: $secondaryTextColor;
+				padding: $borderSize * 3 $borderSize * 4 $borderSize * 2;
+			}
+
+			img {
+				display: block;
+				max-width: 100%;
+				max-height: 100%;
+				margin: 0 auto;
+			}
+
+		}
+
+		.team {
+			--teamHeight: calc(var(--canvasHeight) * .5);
+			height: var(--teamHeight);
+
+			.teamText {
+				position: absolute;
+				z-index: 5;
+				top: 50%;
+				left: 50%;
+				width: 100%;
+				transform: translate(-50%, -50%);
+				text-transform: uppercase;
+				text-align: center;
+
+				.name {
+					color: $textColor;
+					font-size: 120px;
+					line-height: 1em;
+				}
+
+				.franchise {
+					color: $textColor;
+					font-weight: 500;
+					font-size: 36px;
+
+				}
+
+			}
+
+			.logo {
+				position: absolute;
+				z-index: 3;
+				top: 50%;
+				left: 50%;
+				height: $pregameTeamLogoSize;
+				width: $pregameTeamLogoSize;
+				transform: translate(-50%, -50%);
+
+				img {
+					display: block;
+					max-width: 100%;
+					max-height: 100%;
+					filter: grayscale(.35);
+					opacity: .35;
+				}
+			}
+
+			&.team0 {
+				position: absolute;
+				top: 0;
+				width: $windowWidth;
+				background: linear-gradient(
+					to bottom,
+					$backgroundColor calc(var(--teamHeight) - #{$centerHeight * .5} - #{$teamColorHeight} - #{$teamColorFadeHeight}),
+					var(--team0) calc(var(--teamHeight) - #{$centerHeight * .5} - #{$teamColorHeight}),
+					var(--team0) calc(var(--teamHeight) - #{$centerHeight * .5}),
+					white calc(var(--teamHeight) - #{$borderSize * .5})
+				);
+
+				.teamText {
+					padding-bottom: $centerHeight;
+
+					.name {
+						color: var(--team0);
+					}
+				}
+
+			}
+
+			&.team1 {
+				position: absolute;
+				top: var(--teamHeight);
+				width: $windowWidth;
+				background: linear-gradient(
+					to top,
+					$backgroundColor calc(var(--teamHeight) - #{$centerHeight * .5} - #{$teamColorHeight} - #{$teamColorFadeHeight}),
+					var(--team1) calc(var(--teamHeight) - #{$centerHeight * .5} - #{$teamColorHeight}),
+					var(--team1) calc(var(--teamHeight) - #{$centerHeight * .5}),
+					white calc(var(--teamHeight) - #{$borderSize * .5})
+				);
+
+				.teamText {
+					padding-top: $centerHeight;
+
+					.name {
+						color: var(--team1);
+					}
+				}
+
+
+			}
+
+
+		}
+
+
+	}
+
+}

@@ -1,0 +1,31 @@
+.livePlay {
+	--centerColor: #ffffff;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10;
+	width: $windowWidth;
+	height: $windowHeight;
+	font-family: var(--fontOxanium);
+	font-weight: 400;
+	background: transparent;
+
+	@import "ball";
+	@import "clock";
+	@import "header";
+	@import "playerBoxes";
+	@import "replay";
+	@import "seriesInfo";
+	@import "teamLogo";
+	@import "teamName";
+	@import "teamScore";
+	@import "teamSeriesScore";
+	@import "watching";
+	@import "watermark";
+
+	&.overtime {
+		--centerColor: #{$overtimeColor};
+	}
+
+}

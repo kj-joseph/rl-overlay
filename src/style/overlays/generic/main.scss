@@ -1,0 +1,62 @@
+// general
+$borderSize: 5px;
+
+// element grid
+$windowWidth: 1920px;
+$windowHeight: 1080px;
+
+$headerHeight: 32px;
+
+$mainBarHeight: 48px;
+$clockWidth: 132px;
+$teamNameWidth: 300px;
+$teamScoreWidth: 65px;
+$teamSeriesScoreWidth: 32px;
+
+$gradientCenterWidth: 120px;
+
+$seriesInfoWidth: $clockWidth + $teamScoreWidth * 2 + $borderSize * 6;
+$seriesInfoHeight: 34px;
+
+$teamLogoSize: $headerHeight + $mainBarHeight + $seriesInfoHeight * .5;
+
+$watchingHeight: 40px;
+$watchingWidth: 800px;
+$ballHeight: 32px;
+$ballWidth: 340px;
+
+$replayHeight: 75px;
+$replayLabelHeight: 38px;
+
+$playerBoxWidth: 340px;
+$playerBoxHeight: 60px;
+$playerBoxBoost: 70px;
+$playerBoxEvents: 28px;
+$playerBoxEventLimit: 3;
+$playerBoxMargin: 10px;
+$playerBoxBorderSize: 3px;
+$playerBoxPadding: 2px;
+
+// colors (team colors use css variables from React component)
+$backgroundColor: #000000;
+$backgroundHighlight: #333333;
+$backgroundTranslucent: rgba(0, 0, 0, .7);
+$backgroundTransparent: rgba(0, 0, 0, 0);
+$overtimeColor: #ff0000;
+$secondaryTextColor: #cccccc;
+$highlightColor: #d2b156;
+$textColor: #ffffff;
+
+
+:root {
+	background: transparent;
+}
+
+#Overlay.generic {
+
+	@import "live";
+	@import "pregame";
+	@import "postgame";
+	@import "transition";
+
+}

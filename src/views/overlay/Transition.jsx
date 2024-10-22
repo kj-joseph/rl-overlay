@@ -1,7 +1,5 @@
 import React from "react";
 
-import "@/style/rsc/transition.css";
-
 const Transition = (props) => {
 
     return (

@@ -4,17 +4,16 @@ const Clock = (props) => {
 
     const minutes = Math.floor(props.time / 60);
     const seconds = props.time - minutes * 60;
-    const displayTime = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`
     const longTimeMinutes = 100;
-    const longTimeMinutesOT = 20;
+    const longTimeMinutesOT = 100;
 
     return (
         <div className={`clock ${props.overtime ? "overtime" : ""}`}>
-            <div className={`time ${minutes >= longTimeMinutes || (props.overtime && minutes >= longTimeMinutesOT) ? "long" : ""}`}>
-                {props.overtime ? (
+            <div className={`time ${minutes >= longTimeMinutes && !props.overtime ? "long" : ""} ${props.overtime && minutes >= longTimeMinutesOT ? "longOvertime" : ""}`}>
+                {props.overtime? (
                     <span className="plus">+</span>
                 ) : null}
-                {displayTime}</div>
+                {minutes}<span className="colon">:</span>{seconds < 10 ? "0" : ""}{seconds}</div>
             {props.overtime ? (
                 <div className="overtimeText">OVERTIME</div>
             ) : null}

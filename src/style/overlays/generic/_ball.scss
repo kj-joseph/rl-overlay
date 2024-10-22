@@ -1,0 +1,59 @@
+@use "sass:math";
+
+.ball {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: $ballWidth;
+    height: $ballHeight;
+    line-height: $ballHeight;
+    color: $secondaryTextColor;
+    vertical-align: baseline;
+    padding: $borderSize;
+    background: $backgroundColor;
+    border-top: math.div($borderSize,3) * 2 solid $secondaryTextColor;
+    border-left: math.div($borderSize,3) * 2 solid $secondaryTextColor;
+
+	.name {
+		position: absolute;
+		left: $borderSize;
+		top: $borderSize * 2;
+		z-index: 4;
+		height: 40px;
+		overflow: hidden;
+		font-size: 22px;
+		font-weight: 500;
+		color: $secondaryTextColor;
+		text-transform: uppercase;
+		white-space: nowrap;
+		margin-right: 1em;
+	}
+
+	.statLine {
+		display: flex;
+		flex-grow: 0;
+		justify-content: flex-end;
+		column-gap: 15px;
+		padding-left: 150px;
+
+		.stat {
+
+			.label {
+				color: $secondaryTextColor;
+				font-size: 22px;
+				font-weight: 500;
+				text-transform: uppercase;
+				margin-left: 7px;
+			}
+
+			.value {
+				color: $textColor;
+				font-size: 30px;
+				font-weight: 600;
+				text-transform: uppercase;
+			}
+		}
+
+	}
+
+}

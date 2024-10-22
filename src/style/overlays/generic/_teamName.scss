@@ -1,0 +1,61 @@
+.teamNameBox {
+    position: absolute;
+    top: $headerHeight;
+    z-index: 25;
+    width: $teamNameWidth;
+    height: $mainBarHeight + $seriesInfoHeight * .5;
+    vertical-align: top;
+    white-space: nowrap;
+    overflow: hidden;
+	color: $textColor;
+    text-transform: uppercase;
+	line-height: $mainBarHeight + $borderSize;
+	background-color: $backgroundColor;
+    border: $borderSize solid;
+
+	&.team0 {
+		border-color: var(--team0);
+		left: $windowWidth * .5 - $clockWidth * .5 - $borderSize*5 - $teamScoreWidth - $teamNameWidth;
+		text-align: right;
+	}
+
+	&.team1 {
+		border-color: var(--team1);
+		left: $windowWidth * .5 + $clockWidth * .5 + $borderSize*3 + $teamScoreWidth;
+		text-align: left;
+	}
+
+	.teamName {
+		position: absolute;
+		top: $borderSize * 1.5;
+		left: $borderSize;
+		width: $teamNameWidth - $borderSize * 2;
+		height: $mainBarHeight - $borderSize * 2;
+		font-size: 36px;
+		font-weight: 700;
+		line-height: 1em;
+		vertical-align: top;
+
+		&.long {
+			font-size: 28px;
+		}
+
+	}
+
+	.franchiseName {
+		position: absolute;
+		left: $borderSize;
+		bottom: 0;
+		width: $teamNameWidth - $borderSize * 2;
+		height: $seriesInfoHeight;
+		color: $secondaryTextColor;
+		font-size: 18px;
+		font-weight: 500;
+		padding-bottom: $borderSize;
+
+		&.long {
+			font-size: 15px;
+		}
+	}
+
+}

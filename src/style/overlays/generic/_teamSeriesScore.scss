@@ -1,0 +1,98 @@
+.teamSeriesScore {
+    position: absolute;
+    top: $headerHeight + $mainBarHeight + $seriesInfoHeight * .5 + $borderSize * 2;
+	height: $seriesInfoHeight * .5 + $borderSize;
+	z-index: 25;
+	width: $teamNameWidth + $borderSize;
+	background: $backgroundColor;
+
+	.number {
+		position: absolute;
+		top: 0 - $borderSize * .5;
+		width: $teamSeriesScoreWidth;
+		height: $seriesInfoHeight * .5 + $borderSize * 1.5;
+		font-size: 20px;
+		font-weight: 600;
+		background: yellowgreen;
+	}
+
+	.icons {
+		position: absolute;
+		top: $borderSize;
+		width: $teamNameWidth - $borderSize;
+		height: $seriesInfoHeight * .5 - $borderSize;
+		display: flex;
+		column-gap: $borderSize;
+
+		.gameIcon {
+			display: block;
+			flex-grow: 1;
+			background: green;
+		}
+
+	}
+
+	&.team0 {
+		left: $windowWidth * .5 - $clockWidth * .5 - $borderSize * 5 - $teamScoreWidth - $teamNameWidth;
+
+		.number {
+			text-align: right;
+			right: 0;
+			background: var(--team0);
+		}
+
+		.icons {
+			right: $borderSize;
+			flex-direction: row-reverse;
+
+			.gameIcon {
+				background: var(--team0fade);
+
+				&.on {
+					background: var(--team0);
+				}
+
+			}
+
+		}
+
+		&.showboth .icons {
+			right: $teamSeriesScoreWidth + $borderSize;
+		}
+
+	}
+
+	&.team1 {
+		left: $windowWidth * .5 + $clockWidth * .5 + $borderSize * 4 + $teamScoreWidth;
+
+		.number {
+			text-align: left;;
+			left: 0;
+			background: var(--team1);
+		}
+
+		.icons {
+			left: $borderSize;
+			flex-direction: row;
+
+			.gameIcon {
+				background: var(--team1fade);
+
+				&.on {
+					background: var(--team1);
+				}
+			}
+		}
+
+		&.showboth .icons {
+			left: $teamSeriesScoreWidth + $borderSize;
+		}
+
+	}
+
+	&.showboth .icons {
+		width: $teamNameWidth - $teamSeriesScoreWidth - $borderSize;
+	}
+
+
+}

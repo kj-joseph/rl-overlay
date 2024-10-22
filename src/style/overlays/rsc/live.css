@@ -11,9 +11,6 @@
 @import "components/watching.css";
 
 :root {
-    --windowWidth: 1920px;
-    --windowHeight: 1080px;
-
     --clock: 126px;
     --score: 60px;
     --teamname: 280px;

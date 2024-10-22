@@ -4,16 +4,15 @@ import useWebSocket from "react-use-websocket";
 
 import Config from "@/data/config.json";
 
-import Live from "@/views/Live";
-import GameStats from "@/views/GameStats";
-import Pregame from "@/views/Pregame";
-import Transition from "@/views/Transition";
+import Live from "@/views/overlay/Live";
+import Postgame from "@/views/overlay/Postgame";
+import Pregame from "@/views/overlay/Pregame";
+import Transition from "@/views/overlay/Transition";
 
-// import ("@/components/styles/Rsc")
+import hexToRgba from "@/utils/hexToRgba";
 
-// import Rsc from "@/components/styles/Rsc";
-
-import "@/style/rsc/main.css";
+// TODO: bring in style theme dynamically
+import "@/style/overlays/generic/main.scss";
 
 const expireEventsInMs = 7000;
 const gameSocketUrl = "ws://localhost:49122";
@@ -25,33 +24,28 @@ const Overlay = () => {
 	const params = useParams();
 	const defaultConfig = Config;
 
-	const seriesDefault = {
-		game: 0,
-		score: [0, 0],
-	}
 	const transitionDefault = {
 		logo: null,
 		show: false,
-		styleClass: "",
+		styleClass: "stripeWipe",
 		text: "",
 	};
+	const teamColorsDefault = ["206cff", "f88521"];
 
 	const [clockRunning, setClockRunning] = useState(false);
 	const [endGameData, setEndGameData] = useState({});
 	const [gameData, setGameData] = useState({
-		teams: [],
+		teams: [{name: ""}, {name: ""}],
 		time_seconds: 0,
 	});
 	const [lastGoal, setLastGoal] = useState({});
 	const [playerData, setPlayerData] = useState({});
 	const [playerEvents, setPlayerEvents] = useState([]);
-	const [seriesData, setSeriesData] = useState({
-		...seriesDefault,
-	});
+	const [seriesScore, setSeriesScore] = useState([0,0]);
 	const [transition, setTransition] = useState(transitionDefault);
 	const [viewState, setViewState] = useState("");
 	const [activeConfig, setActiveConfig] = useState(defaultConfig);
-
+7
 	const {
 		sendMessage: sendMessageGame,
 		sendJsonMessage: sendJsonMessageGame,
@@ -151,25 +145,21 @@ const Overlay = () => {
 			case "game:initialized":
 				setClockRunning(false);
 				triggerTransition(
-					"noDelay",
-					"",
-					activeConfig.show.leagueLogo && activeConfig.leagueLogo ? `${activeConfig.leagueLogo}` : null,
+					"stripeWipe noDelay",
+					"GO!",
+					activeConfig.general.hasOwnProperty("brandLogo") && activeConfig.general.brandLogo ? `${activeConfig.general.brandLogo}` : null,
 				);
 				setTimeout(() => {
 					setViewState("live");
-					setSeriesData(sd => ({
-						...sd,
-						game: sd.game + 1,
-					}));
 				}, 750);
 				break;
 
 			case "game:goal_scored":
 				setLastGoal(data);
 				triggerTransition(
-					`team${data.scorer.teamnum}`,
+					`stripeWipe team${data.scorer.teamnum}`,
 					"GOAL!",
-					activeConfig.show.teamLogos && activeConfig.teams[data.scorer.teamnum].logo ? `/teams/${activeConfig.teams[data.scorer.teamnum].logo}` : null,
+					activeConfig.teams[data.scorer.teamnum].hasOwnProperty("logo") && activeConfig.teams[data.scorer.teamnum].logo ? `teams/${activeConfig.teams[data.scorer.teamnum].logo}` : activeConfig.general.hasOwnProperty("brandLogo") && activeConfig.general.brandLogo ? `${activeConfig.general.brandLogo}` : null,
 				);
 				break;
 
@@ -182,19 +172,16 @@ const Overlay = () => {
 					playerData,
 				});
 				setTimeout(() => triggerTransition(
-					`team${winningTeam}`,
+					`stripeWipe team${winningTeam}`,
 					"WINNER!",
-					activeConfig.show.teamLogos && activeConfig.teams[winningTeam].logo ? `teams/${activeConfig.teams[winningTeam].logo}` : null,
+					activeConfig.teams[winningTeam].hasOwnProperty("logo") && activeConfig.teams[winningTeam].hasOwnProperty("logo") ? `teams/${activeConfig.teams[winningTeam].logo}` : null,
 				), 1000);
 				setTimeout(() => {
-					setSeriesData(sd => ({
-						...sd,
-						score: [
-							sd.score[0] + (winningTeam === 0 ? 1 : 0),
-							sd.score[1] + (winningTeam === 1 ? 1 : 0),
-						],
-					}));
-					setViewState("stats");
+					setSeriesScore(sd => ([
+						sd[0] + (winningTeam === 0 ? 1 : 0),
+						sd[1] + (winningTeam === 1 ? 1 : 0),
+					]));
+					setViewState("postgame");
 				}, 4500);
 			break;
 
@@ -246,7 +233,7 @@ const Overlay = () => {
 				if (data.hasOwnProperty("game")) {
 					expirePlayerEvents();
 					setGameData(data.game);
-					if (viewState !== "stats" && data.game.time_milliseconds % 1 !== 0) {
+					if (viewState !== "postgame" && data.game.time_milliseconds % 1 !== 0) {
 						setViewState("live");
 					} else if (viewState === "") {
 						setViewState("pregame");
@@ -270,7 +257,7 @@ const Overlay = () => {
 				gameData,
 				playerData,
 				playerEvents,
-				seriesData
+				seriesScore: seriesScore
 			}
 		});
 	}
@@ -289,7 +276,7 @@ const Overlay = () => {
 		let event = "";
 
 		try {
-			dataParse = JSON.parse(d)
+			dataParse = JSON.parse(d);
 			if (!dataParse.hasOwnProperty("clientId") || !dataParse.hasOwnProperty("event") || !dataParse.hasOwnProperty("data") || dataParse.clientId !== params.clientId) {
 				console.log("error");
 				return;
@@ -357,20 +344,58 @@ const Overlay = () => {
 	}
 
 	return (
-		<div className="App">
+		<div
+		className={`App ${activeConfig.general.style}`}
+		id="Overlay"
+		style={{
+			"--team0": hexToRgba(
+				activeConfig.teams[0].color ? activeConfig.teams[0].color
+					: gameData.hasOwnProperty("teams")
+						&& Array.isArray(gameData.teams)
+						&& gameData.teams[0].hasOwnProperty("color_primary")
+						? gameData.teams[0].color_primary
+					: teamColorsDefault[0]
+			, 100),
+			"--team0fade": hexToRgba(
+				activeConfig.teams[0].color ? activeConfig.teams[0].color
+					: gameData.hasOwnProperty("teams")
+						&& Array.isArray(gameData.teams)
+						&& gameData.teams[0].hasOwnProperty("color_primary")
+						? gameData.teams[0].color_primary
+					: teamColorsDefault[0]
+			, 25),
+			"--team1": hexToRgba(
+				activeConfig.teams[1].color ? activeConfig.teams[1].color
+					: gameData.hasOwnProperty("teams")
+						&& Array.isArray(gameData.teams)
+						&& gameData.teams[1].hasOwnProperty("color_primary")
+						? gameData.teams[1].color_primary
+					: teamColorsDefault[1]
+			, 100),
+			"--team1fade": hexToRgba(
+				activeConfig.teams[1].color ? activeConfig.teams[1].color
+					: gameData.hasOwnProperty("teams")
+						&& Array.isArray(gameData.teams)
+						&& gameData.teams[1].hasOwnProperty("color_primary")
+						? gameData.teams[1].color_primary
+					: teamColorsDefault[1]
+			, 25),
+		}}>
 
-			{viewState === "stats" ? (
-				<GameStats
+			{viewState === "postgame" ? (
+				<Postgame
 					config={activeConfig}
 					gameData={endGameData.gameData}
 					players={endGameData.playerData}
-					series={seriesData}
+					seriesScore={seriesScore}
+					seriesGame={seriesScore[0] + seriesScore[1]}
 				/>
 			) : viewState ==="pregame" ? (
 				<Pregame
 					config={activeConfig}
 					gameData={gameData}
-					series={seriesData}
+					seriesScore={seriesScore}
+					seriesGame={seriesScore[0] + seriesScore[1] + 1}
 				/>
 			) : (
 				<Live
@@ -380,7 +405,8 @@ const Overlay = () => {
 					lastGoal={lastGoal}
 					playerData={playerData}
 					playerEvents={playerEvents}
-					series={seriesData}
+					seriesScore={seriesScore}
+					seriesGame={seriesScore[0] + seriesScore[1] + 1}
 				/>
 			)}
 
