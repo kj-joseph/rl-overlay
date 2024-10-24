@@ -22,13 +22,13 @@
         {
 			"name": "Legionnaires",
             "franchise": "The Legion",
-            "logo": "Locals-RL.png",
+            "logo": "Legion.jpg",
 			"color": null
         },
         {
 			"name": "Stencil Society",
             "franchise": "Art Club",
-            "logo": "rsbees.png",
+            "logo": "art-club.png",
 			"color": null
         }
     ]
