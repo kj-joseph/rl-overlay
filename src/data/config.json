@@ -8,7 +8,7 @@
 		"show": {
 			"players": true,
 			"playerStats": true,
-			"ball": true
+			"ball": false
 		}
 	},
     "series": {
