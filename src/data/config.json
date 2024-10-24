@@ -2,9 +2,9 @@
 	"general": {
 		"style": "generic",
 		"headers": [
-			"Testing"
+			"RSC 2s League | Season 7 Matchday 8 | Contender"
 		],
-		"brandLogo": "rsc-logo.png",
+		"brandLogo": "rsc-2s.png",
 		"show": {
 			"players": true,
 			"playerStats": true,
@@ -16,19 +16,18 @@
         "type": "set",
 		"display": "both",
         "maxGames": 3,
-		"score": [0,0],
 		"override": null
     },
     "teams": [
         {
-			"name": "Lunar Landers",
-            "franchise": "Dark Side of the Moon",
+			"name": "Legionnaires",
+            "franchise": "The Legion",
             "logo": "Locals-RL.png",
 			"color": null
         },
         {
-			"name": "Solar Flares",
-            "franchise": "Helios Rising",
+			"name": "Stencil Society",
+            "franchise": "Art Club",
             "logo": "rsbees.png",
 			"color": null
         }
