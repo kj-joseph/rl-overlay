@@ -5,7 +5,7 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import Overlay from "@/views/overlay/Overlay";
 import Statboard from "@/views/Statboard";
 
-import ("@/style/app/main.scss");
+import ("@/style/appMain.scss");
 
 const router = createBrowserRouter(
     createRoutesFromElements(

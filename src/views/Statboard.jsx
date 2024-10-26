@@ -11,7 +11,7 @@ import hexToRgba from "@/utils/hexToRgba";
 
 // import Rsc from "@/components/styles/Rsc";
 
-import "@/style/app/statboard.scss";
+import "@/style/statboard.scss";
 
 // const expireEventsInMs = 7000;
 const socketServerUrl = "ws://rl.kdoughboy.com:8321";

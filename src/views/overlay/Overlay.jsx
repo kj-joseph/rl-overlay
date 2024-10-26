@@ -11,9 +11,6 @@ import Transition from "@/views/overlay/Transition";
 
 import hexToRgba from "@/utils/hexToRgba";
 
-// TODO: bring in style theme dynamically
-import "@/style/overlays/generic/main.scss";
-
 const expireEventsInMs = 7000;
 const gameSocketUrl = "ws://localhost:49122";
 const socketServerUrl = "ws://rl.kdoughboy.com:8321";
