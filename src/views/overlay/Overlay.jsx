@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import useWebSocket from "react-use-websocket";
 
-import Config from "@/data/config.json";
+import defaultConfig from "@/data/config.json";
 
 import Live from "@/views/overlay/Live";
 import Postgame from "@/views/overlay/Postgame";
@@ -19,8 +19,6 @@ const socketServerUrl = "ws://rl.kdoughboy.com:8321";
 // const socketServerUrl = "ws://localhost:8321";
 
 const Overlay = () => {
-
-	const defaultConfig = Config;
 
 	const transitionDefault = {
 		logo: null,
@@ -47,7 +45,7 @@ const Overlay = () => {
 
 	useEffect(() => {
 
-		/* on start, check for existing items in localstorage; if not, send default */
+		// on start, check for existing items in localstorage; if not, send default
 
 		if (localStorage.hasOwnProperty("clientId")) {
 			setClientId(localStorage.getItem("clientId"));
@@ -69,20 +67,29 @@ const Overlay = () => {
 			localStorage.setItem("seriesScore", JSON.stringify(seriesScore));
 		}
 
-		/* listen for localstorage updates from control panel */
+		// listen for localstorage updates from control panel
 		window.onstorage = (event) => {
-			// console.log(event);
 			switch(event.key) {
 				case "clientId":
-					setSeriesScore(event.newValue);
+					setClientId(event.newValue);
 					break;
 
 				case "config":
-					setActiveConfig(JSON.parse(event.newValue));
+					if(event.newValue !== null) {
+						setActiveConfig(JSON.parse(event.newValue));
+					} else {
+						setActiveConfig(defaultConfig);
+						localStorage.setItem("config", JSON.stringify(defaultConfig));
+					}
 					break;
 
 				case "seriesScore":
-					setSeriesScore(JSON.parse(event.newValue));
+					if(event.newValue !== null) {
+						setSeriesScore(JSON.parse(event.newValue));
+					} else {
+						setSeriesScore([0,0]);
+						localStorage.setItem("seriesScore", JSON.stringify([0,0]));
+					}
 					break;
 				}
 		};
@@ -90,7 +97,7 @@ const Overlay = () => {
 	}, []);
 
 
-	/* websocket from Rocket League / BakkesMod */
+	// websocket from Rocket League / BakkesMod
 	const {
 		sendMessage: sendMessageGame,
 		sendJsonMessage: sendJsonMessageGame,
@@ -104,7 +111,7 @@ const Overlay = () => {
 		shouldReconnect: (closeEventGame) => true,
 	});
 
-	/* my websocket server for updating stats page */
+	// my websocket server for updating stats page
 	const {
 		sendMessage: sendMessageServer,
 		sendJsonMessage: sendJsonMessageServer,
@@ -160,7 +167,7 @@ const Overlay = () => {
 		});
 	}
 
-	/* handle data from BakkesMod websocket */
+	// handle data from BakkesMod websocket
 	const handleGameData = d => {
 		// console.log(d);
 		let data, dataParse = {};
@@ -293,7 +300,7 @@ const Overlay = () => {
 
 	}
 
-	/* send game data to websocket server and local storage */
+	// send game data to websocket server and local storage
 	const sendDataToExternalSources = () => {
 		sendJsonMessageServer({
 			clientId,
@@ -313,7 +320,7 @@ const Overlay = () => {
 
 	const subscribeToServerFeed = () => {}
 
-	/* player point events */
+	// player point events
 	const addPlayerEvent = (newEvents) => {
 		let eventArray = [...playerEvents];
 
@@ -343,7 +350,7 @@ const Overlay = () => {
 		}
 	}
 
-	/* visual transitions */
+	// visual transitions
 	const triggerTransition = (styleClass, text, logo) => {
 		setTransition({
 			logo,
@@ -358,7 +365,7 @@ const Overlay = () => {
 
 	return (
 		<div
-			className={`App ${activeConfig.general.theme}`}
+			className={`App ${activeConfig.general.theme || "default"}`}
 			id="Overlay"
 			style={{
 				"--team0": hexToRgba(
@@ -393,7 +400,10 @@ const Overlay = () => {
 							? gameData.teams[1].color_primary
 						: teamColorsDefault[1]
 				, 25),
-			}}>
+			}}
+		>
+
+			<div>{clientId}</div>
 
 			{viewState === "postgame" ? (
 				<Postgame
