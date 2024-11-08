@@ -1,10 +1,8 @@
 {
 	"general": {
 		"theme": "generic",
-		"headers": [
-			"RSC 2s League | Season 7 Matchday 8 | Contender"
-		],
-		"brandLogo": "rsc-2s.png",
+		"headers": [],
+		"brandLogo": null,
 		"show": {
 			"players": true,
 			"playerStats": true,
@@ -12,23 +10,23 @@
 		}
 	},
     "series": {
-		"show": true,
-        "type": "set",
-		"display": "both",
-        "maxGames": 3,
+		"show": false,
+        "type": null,
+		"display": null,
+        "maxGames": null,
 		"override": null
     },
     "teams": [
         {
-			"name": "Legionnaires",
-            "franchise": "The Legion",
-            "logo": "Legion.jpg",
+			"name": null,
+            "franchise": null,
+            "logo": null,
 			"color": null
         },
         {
-			"name": "Stencil Society",
-            "franchise": "Art Club",
-            "logo": "art-club.png",
+			"name": null,
+            "franchise": null,
+            "logo": null,
 			"color": null
         }
     ]

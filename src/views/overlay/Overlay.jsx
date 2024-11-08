@@ -10,15 +10,16 @@ import Pregame from "@/views/overlay/Pregame";
 import Transition from "@/views/overlay/Transition";
 
 import hexToRgba from "@/utils/hexToRgba";
+import { v4 as uuidv4 } from "uuid";
 
 const expireEventsInMs = 7000;
 const gameSocketUrl = "ws://localhost:49122";
+// const socketServerUrl = "http://rl.kdoughboy.com/ws";
 const socketServerUrl = "ws://rl.kdoughboy.com:8321";
 // const socketServerUrl = "ws://localhost:8321";
 
 const Overlay = () => {
 
-	const params = useParams();
 	const defaultConfig = Config;
 
 	const transitionDefault = {
@@ -29,6 +30,7 @@ const Overlay = () => {
 	};
 	const teamColorsDefault = ["206cff", "f88521"];
 
+	const [clientId, setClientId] = useState("");
 	const [clockRunning, setClockRunning] = useState(false);
 	const [endGameData, setEndGameData] = useState({});
 	const [gameData, setGameData] = useState({
@@ -42,7 +44,53 @@ const Overlay = () => {
 	const [transition, setTransition] = useState(transitionDefault);
 	const [viewState, setViewState] = useState("");
 	const [activeConfig, setActiveConfig] = useState(defaultConfig);
-7
+
+	useEffect(() => {
+
+		/* on start, check for existing items in localstorage; if not, send default */
+
+		if (localStorage.hasOwnProperty("clientId")) {
+			setClientId(localStorage.getItem("clientId"));
+		} else {
+			const newClientId = uuidv4();
+			localStorage.setItem("clientId", newClientId);
+			setClientId(newClientId);
+		}
+
+		if (localStorage.hasOwnProperty("config")) {
+			setActiveConfig(JSON.parse(localStorage.getItem("config")));
+		} else {
+			localStorage.setItem("config", JSON.stringify(activeConfig));
+		}
+
+		if (localStorage.hasOwnProperty("seriesScore")) {
+			setSeriesScore(JSON.parse(localStorage.getItem("seriesScore")));
+		} else {
+			localStorage.setItem("seriesScore", JSON.stringify(seriesScore));
+		}
+
+		/* listen for localstorage updates from control panel */
+		window.onstorage = (event) => {
+			// console.log(event);
+			switch(event.key) {
+				case "clientId":
+					setSeriesScore(event.newValue);
+					break;
+
+				case "config":
+					setActiveConfig(JSON.parse(event.newValue));
+					break;
+
+				case "seriesScore":
+					setSeriesScore(JSON.parse(event.newValue));
+					break;
+				}
+		};
+
+	}, []);
+
+
+	/* websocket from Rocket League / BakkesMod */
 	const {
 		sendMessage: sendMessageGame,
 		sendJsonMessage: sendJsonMessageGame,
@@ -56,6 +104,7 @@ const Overlay = () => {
 		shouldReconnect: (closeEventGame) => true,
 	});
 
+	/* my websocket server for updating stats page */
 	const {
 		sendMessage: sendMessageServer,
 		sendJsonMessage: sendJsonMessageServer,
@@ -111,6 +160,7 @@ const Overlay = () => {
 		});
 	}
 
+	/* handle data from BakkesMod websocket */
 	const handleGameData = d => {
 		// console.log(d);
 		let data, dataParse = {};
@@ -160,7 +210,6 @@ const Overlay = () => {
 				);
 				break;
 
-			// case "game:podium_start":
 			case "game:match_ended":
 				setClockRunning(false);
 				const winningTeam = gameData.teams[0].score > gameData.teams[1].score ? 0 : 1;
@@ -240,13 +289,14 @@ const Overlay = () => {
 
 		}
 
-		sendStatsToServer();
+		sendDataToExternalSources();
 
 	}
 
-	const sendStatsToServer = () => {
+	/* send game data to websocket server and local storage */
+	const sendDataToExternalSources = () => {
 		sendJsonMessageServer({
-			clientId: params.clientId,
+			clientId,
 			event: "overlay:game_data",
 			data: {
 				clockRunning,
@@ -257,48 +307,13 @@ const Overlay = () => {
 				seriesScore: seriesScore
 			}
 		});
+
+		localStorage.setItem("seriesScore", JSON.stringify(seriesScore));
 	}
 
-	const subscribeToServerFeed = () => {
-		sendJsonMessageServer({
-			clientId: params.clientId,
-			event: "register",
-		});
-	}
+	const subscribeToServerFeed = () => {}
 
-	const handleServerData = d => {
-		console.log("got something from server");
-		console.log(d);
-		let data, dataParse = {};
-		let event = "";
-
-		try {
-			dataParse = JSON.parse(d);
-			if (!dataParse.hasOwnProperty("clientId") || !dataParse.hasOwnProperty("event") || !dataParse.hasOwnProperty("data") || dataParse.clientId !== params.clientId) {
-				console.log("error");
-				return;
-			}
-			event = dataParse.event;
-			// console.log(dataParse);
-			data = dataParse.data;
-			console.log(event, data);
-
-			// setActiveConfig(data);
-
-
-
-
-
-		} catch(e) {
-			console.error(e);
-			return;
-		}
-
-		// switch(event) {
-		// }
-	}
-
-
+	/* player point events */
 	const addPlayerEvent = (newEvents) => {
 		let eventArray = [...playerEvents];
 
@@ -328,6 +343,7 @@ const Overlay = () => {
 		}
 	}
 
+	/* visual transitions */
 	const triggerTransition = (styleClass, text, logo) => {
 		setTransition({
 			logo,
@@ -342,42 +358,42 @@ const Overlay = () => {
 
 	return (
 		<div
-		className={`App ${activeConfig.general.style}`}
-		id="Overlay"
-		style={{
-			"--team0": hexToRgba(
-				activeConfig.teams[0].color ? activeConfig.teams[0].color
-					: gameData.hasOwnProperty("teams")
-						&& Array.isArray(gameData.teams)
-						&& gameData.teams[0].hasOwnProperty("color_primary")
-						? gameData.teams[0].color_primary
-					: teamColorsDefault[0]
-			, 100),
-			"--team0fade": hexToRgba(
-				activeConfig.teams[0].color ? activeConfig.teams[0].color
-					: gameData.hasOwnProperty("teams")
-						&& Array.isArray(gameData.teams)
-						&& gameData.teams[0].hasOwnProperty("color_primary")
-						? gameData.teams[0].color_primary
-					: teamColorsDefault[0]
-			, 25),
-			"--team1": hexToRgba(
-				activeConfig.teams[1].color ? activeConfig.teams[1].color
-					: gameData.hasOwnProperty("teams")
-						&& Array.isArray(gameData.teams)
-						&& gameData.teams[1].hasOwnProperty("color_primary")
-						? gameData.teams[1].color_primary
-					: teamColorsDefault[1]
-			, 100),
-			"--team1fade": hexToRgba(
-				activeConfig.teams[1].color ? activeConfig.teams[1].color
-					: gameData.hasOwnProperty("teams")
-						&& Array.isArray(gameData.teams)
-						&& gameData.teams[1].hasOwnProperty("color_primary")
-						? gameData.teams[1].color_primary
-					: teamColorsDefault[1]
-			, 25),
-		}}>
+			className={`App ${activeConfig.general.theme}`}
+			id="Overlay"
+			style={{
+				"--team0": hexToRgba(
+					activeConfig.teams[0].color ? activeConfig.teams[0].color
+						: gameData.hasOwnProperty("teams")
+							&& Array.isArray(gameData.teams)
+							&& gameData.teams[0].hasOwnProperty("color_primary")
+							? gameData.teams[0].color_primary
+						: teamColorsDefault[0]
+				, 100),
+				"--team0fade": hexToRgba(
+					activeConfig.teams[0].color ? activeConfig.teams[0].color
+						: gameData.hasOwnProperty("teams")
+							&& Array.isArray(gameData.teams)
+							&& gameData.teams[0].hasOwnProperty("color_primary")
+							? gameData.teams[0].color_primary
+						: teamColorsDefault[0]
+				, 25),
+				"--team1": hexToRgba(
+					activeConfig.teams[1].color ? activeConfig.teams[1].color
+						: gameData.hasOwnProperty("teams")
+							&& Array.isArray(gameData.teams)
+							&& gameData.teams[1].hasOwnProperty("color_primary")
+							? gameData.teams[1].color_primary
+						: teamColorsDefault[1]
+				, 100),
+				"--team1fade": hexToRgba(
+					activeConfig.teams[1].color ? activeConfig.teams[1].color
+						: gameData.hasOwnProperty("teams")
+							&& Array.isArray(gameData.teams)
+							&& gameData.teams[1].hasOwnProperty("color_primary")
+							? gameData.teams[1].color_primary
+						: teamColorsDefault[1]
+				, 25),
+			}}>
 
 			{viewState === "postgame" ? (
 				<Postgame

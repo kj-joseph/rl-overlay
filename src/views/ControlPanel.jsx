@@ -178,4 +178,4 @@ const ControlPanel = () => {
 
 }
 
-export default Statboard;
+export default ControlPanel;
