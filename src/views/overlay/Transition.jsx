@@ -6,7 +6,7 @@ const Transition = (props) => {
         <div id="Transition" className={`${props.transition.styleClass} ${props.transition.show ? "show" : ""}`}>
 
             <div className="bg">
-                {props.transition.logo ? (
+                {props.transition.logo && props.transition.logo !== null && props.transition.logo !== "" ? (
                     <div className="logo">
                         <img src={`/logos/${props.transition.logo}`}></img>
                     </div>

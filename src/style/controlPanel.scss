@@ -1,6 +1,63 @@
 #ControlPanel {
+	font-size: .75rem;
+	// color: #ffffff;
+
+	h1 {
+		font-size: .75rem;
+		text-align: center;
+		margin: 0 0 .2rem 0;
+		padding: .2rem;
+		background-color: #333333;
+		border-bottom: 1px solid #999999;
+	}
+
 	.MuiButton-root {
+		font-size: .75rem;
 		margin: 3px;
+		padding: .1rem .2rem;
+	}
+
+	.team {
+		border: 1px solid #999999;
+	}
+
+	.idGrid {
+		margin-bottom: 15px;
+		background: #222222;
+		border: 1px solid #999999;
+	}
+
+
+	.mainPanelGrid {
+		padding: 2px;
+
+		.MuiFormControl-root {
+			margin: 3px 3px 8px;
+		}
+
+
+	}
+
+	.buttons {
+		text-align: center;
+		margin-bottom: 10px;
+	}
+
+	.gridRow {
+		margin-bottom: 5px;
+	}
+
+	.changedField fieldset {
+		border-color: yellow;
+	}
+
+	// checkbox
+	.changedField svg {
+		fill: yellow;
+	}
+
+	em {
+		font-style: italic;
 	}
 
 }

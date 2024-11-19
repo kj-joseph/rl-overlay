@@ -10,7 +10,7 @@ const SeriesInfo = (props) => {
                 <>
                     {props.seriesConfig.override}
                 </>
-            ) : props.seriesConfig.type === "none" || props.seriesConfig.type === "unlimited" ? (
+            ) : props.seriesConfig.type === "unlimited" ? (
                 <>
                     {!props.pregame ? `Game ${props.seriesGame}` : ""}
                 </>

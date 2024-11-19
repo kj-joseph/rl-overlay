@@ -1,8 +1,8 @@
 {
 	"general": {
 		"theme": "default",
-		"headers": [],
-		"brandLogo": null,
+		"headers": [""],
+		"brandLogo": "",
 		"show": {
 			"players": true,
 			"playerStats": true,
@@ -11,21 +11,21 @@
 	},
     "series": {
 		"show": false,
-        "type": null,
-		"display": null,
-        "maxGames": null,
-		"override": null
+        "type": "unlimited",
+		"display": "",
+        "maxGames": 1,
+		"override": ""
     },
     "teams": [
         {
-			"name": null,
-            "franchise": null,
+			"name": "",
+            "franchise": "",
             "logo": null,
 			"color": null
         },
         {
-			"name": null,
-            "franchise": null,
+			"name": "",
+            "franchise": "",
             "logo": null,
 			"color": null
         }

@@ -14,8 +14,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const expireEventsInMs = 7000;
 const gameSocketUrl = "ws://localhost:49122";
-// const socketServerUrl = "http://rl.kdoughboy.com/ws";
-const socketServerUrl = "ws://rl.kdoughboy.com:8321";
+const socketServerUrl = "ws://rlws.kdoughboy.com:8321";
 // const socketServerUrl = "ws://localhost:8321";
 
 const Overlay = () => {
@@ -39,6 +38,7 @@ const Overlay = () => {
 	const [playerData, setPlayerData] = useState({});
 	const [playerEvents, setPlayerEvents] = useState([]);
 	const [seriesScore, setSeriesScore] = useState([0,0]);
+	const [teamDataSent, setTeamDataSent] = useState(false);
 	const [transition, setTransition] = useState(transitionDefault);
 	const [viewState, setViewState] = useState("");
 	const [activeConfig, setActiveConfig] = useState(defaultConfig);
@@ -106,7 +106,7 @@ const Overlay = () => {
 		readyState: readyStateGame,
 		getWebSocket: getWebSocketGame,
 	} = useWebSocket(gameSocketUrl, {
-		onOpen: () => subscribeToGameFeed(),
+		onOpen: () => {},
 		onMessage: (msg) => handleGameData(msg.data),
 		shouldReconnect: (closeEventGame) => true,
 	});
@@ -126,7 +126,7 @@ const Overlay = () => {
 	});
 
 	const subscribeToGameFeed = () => {
-		sendJsonMessageGame({
+/* 		sendJsonMessageGame({
 			event: "wsRelay:register",
 			data: "game:initialized",
 		});
@@ -165,7 +165,7 @@ const Overlay = () => {
 			event: "wsRelay:register",
 			data: "game:match_ended",
 		});
-	}
+ */	}
 
 	// handle data from BakkesMod websocket
 	const handleGameData = d => {
@@ -181,7 +181,7 @@ const Overlay = () => {
 			event = dataParse.event;
 			// console.log(dataParse.event);
 			data = dataParse.data;
-			// console.log(data);
+			// console.log(event, data);
 		} catch(e) {
 			console.error(e);
 			return;
@@ -227,7 +227,7 @@ const Overlay = () => {
 				setTimeout(() => triggerTransition(
 					`stripeWipe team${winningTeam}`,
 					"WINNER!",
-					activeConfig.teams[winningTeam].hasOwnProperty("logo") && activeConfig.teams[winningTeam].hasOwnProperty("logo") ? `teams/${activeConfig.teams[winningTeam].logo}` : null,
+					activeConfig.teams[winningTeam].hasOwnProperty("logo") && activeConfig.teams[winningTeam].logo ? `teams/${activeConfig.teams[winningTeam].logo}` : activeConfig.general.hasOwnProperty("brandLogo") && activeConfig.general.brandLogo ? `${activeConfig.general.brandLogo}` : null,
 				), 1000);
 				setTimeout(() => {
 					setSeriesScore(sd => ([
@@ -291,8 +291,25 @@ const Overlay = () => {
 					} else if (viewState === "") {
 						setViewState("pregame");
 					}
+
+					// on first load of game data, send team data to local storage for control panel to see
+					if (!teamDataSent) {
+						localStorage.setItem("teamData", JSON.stringify(data.game.teams));
+						setTeamDataSent(true);
+					}
 				}
 				break;
+
+			case "match:created":
+
+				break;
+
+
+			default:
+				// console.log(event, data);
+				break;
+
+
 
 		}
 
@@ -316,6 +333,7 @@ const Overlay = () => {
 		});
 
 		localStorage.setItem("seriesScore", JSON.stringify(seriesScore));
+
 	}
 
 	const subscribeToServerFeed = () => {}
@@ -403,7 +421,7 @@ const Overlay = () => {
 			}}
 		>
 
-			<div>{clientId}</div>
+			{/* <div>{clientId}</div> */}
 
 			{viewState === "postgame" ? (
 				<Postgame
