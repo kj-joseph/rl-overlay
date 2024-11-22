@@ -79,6 +79,7 @@ const ControlPanel = () => {
 	const [seriesLengthOverride, setSeriesLengthOverride] = useState(0);
 	const [teamNameOverride, setTeamNameOverride] = useState(["", ""]);
 	const [franchiseOverride, setFranchiseOverride] = useState(["", ""]);
+	const [teamLogoOverride, setTeamLogoOverride] = useState(["", ""]);
 	const [seriesScoreOverride, setSeriesScoreOverride] = useState(defaultSeriesScore);
 
 	const statsUrlPrefix = "http://rl.kdoughboy.com/stats/";
@@ -141,6 +142,9 @@ const ControlPanel = () => {
 				if (franchiseOverride[teamnum] !== config.teams[teamnum].franchise) {
 					tempFieldsWithChanges.push(`franchiseOverride${teamnum}`);
 				}
+				if (teamLogoOverride[teamnum] !== config.teams[teamnum].logo) {
+					tempFieldsWithChanges.push(`teamLogoOverride${teamnum}`);
+				}
 				if (seriesScoreOverride[teamnum] !== seriesScore[teamnum]) {
 					tempFieldsWithChanges.push(`seriesScoreOverride${teamnum}`);
 				}
@@ -164,7 +168,7 @@ const ControlPanel = () => {
 			setFieldsWithChanges(tempFieldsWithChanges);
 		}
 
-	}, [teamNameOverride, franchiseOverride, seriesScoreOverride, headerOverride, seriesTypeOverride, seriesLengthOverride, showSeriesOverride, logoOverride]);
+	}, [teamNameOverride, franchiseOverride, teamLogoOverride, seriesScoreOverride, headerOverride, seriesTypeOverride, seriesLengthOverride, showSeriesOverride, logoOverride]);
 
 	const fieldHasChanges = (fieldName) => fieldsWithChanges.indexOf(fieldName) > -1;
 
@@ -258,6 +262,12 @@ const ControlPanel = () => {
 		setFranchiseOverride(tempFranchiseOverride);
 	}
 
+	const changeTeamLogoOverride = (logo, team) => {
+		const tempTeamLogoOverride = [... teamLogoOverride];
+		tempTeamLogoOverride[team]= logo;
+		setTeamLogoOverride(tempTeamLogoOverride);
+	}
+
 	const changeShowSeriesOverride = (value) => {
 		setShowSeriesOverride(value);
 	}
@@ -277,6 +287,7 @@ const ControlPanel = () => {
 		setConfig(loadedConfig);
 		setTeamNameOverride([loadedConfig.teams[0].name, loadedConfig.teams[1].name]);
 		setFranchiseOverride([loadedConfig.teams[0].franchise, loadedConfig.teams[1].franchise]);
+		setTeamLogoOverride([loadedConfig.teams[0].logo, loadedConfig.teams[1].logo]);
 		setSeriesTypeOverride(loadedConfig.series.type);
 		setSeriesLengthOverride(loadedConfig.series.maxGames);
 		setShowSeriesOverride(loadedConfig.series.show);
@@ -343,11 +354,13 @@ const ControlPanel = () => {
 					...config.teams[0],
 					name: teamNameOverride[0],
 					franchise: franchiseOverride[0],
+					logo: teamLogoOverride[0],
 				},
 				{
 					...config.teams[1],
 					name: teamNameOverride[1],
 					franchise: franchiseOverride[1],
+					logo: teamLogoOverride[1],
 				},
 			],
 		};
@@ -658,6 +671,17 @@ const ControlPanel = () => {
 												className={fieldHasChanges(`franchiseOverride${teamnum}`) ? "changedField" : ""}
 											/>
 										</FormControl>
+										<FormControl variant="outlined" size="small" fullWidth>
+											<InputLabel shrink htmlFor={`teamLogoOverride${teamnum}`}>Team Logo</InputLabel>
+											<OutlinedInput
+												notched
+												id={`teamLogoOverride${teamnum}`}
+												label="Team Logo"
+												onChange={(e) => changeTeamLogoOverride(e.target.value, teamnum)}
+												value={teamLogoOverride[teamnum]}
+												className={fieldHasChanges(`teamLogoOverride${teamnum}`) ? "changedField" : ""}
+											/>
+										</FormControl><br />
 									</Item>
 								</Grid>
 
