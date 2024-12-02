@@ -14,8 +14,8 @@ import { v4 as uuidv4 } from "uuid";
 
 const expireEventsInMs = 7000;
 const gameSocketUrl = "ws://localhost:49122";
-const socketServerUrl = "ws://rlws.kdoughboy.com:8321";
-// const socketServerUrl = "ws://localhost:8321";
+const socketServerUrl = "wss://rlws.kdoughboy.com:8321";
+// const socketServerUrl = "wss://localhost:8321";
 
 const Overlay = () => {
 
