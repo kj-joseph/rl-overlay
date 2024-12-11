@@ -80,7 +80,7 @@ const ControlPanel = () => {
 	const [logoField, setLogoField] = useState("");
 	const [headerField, setHeaderField] = useState(""); // TODO: handle multiple headers? or send season/matchday/tier data separately?
 	const [seasonNumberField, setSeasonNumberField] = useState(22); // TODO: pull default from elsewhere?
-	const [matchdayNumberField, setmatchdayNumberField] = useState(1);
+	const [matchdayNumberField, setMatchdayNumberField] = useState(1);
 	const [tierField, setTierField] = useState(""); // TODO: pull default from elsewhere?
 	const [showSeriesField, setShowSeriesField] = useState(false);
 	const [seriesTypeField, setSeriesTypeField] = useState("");
@@ -278,6 +278,16 @@ const ControlPanel = () => {
 				.then((loadedTierList) => {
 					currentTierLists[league] = loadedTierList;
 					setTierLists(currentTierLists);
+
+					// set tier loaded from config when first loading tier
+					if (tierField === "" && config.general.tier) {
+						console.log(config.general.tier);
+						const filteredTier = loadedTierList.filter((tier) => tier.name === config.general.tier);
+						console.log(loadedTierList, filteredTier[0]);
+						if (filteredTier.length === 1) {
+							setTierField(filteredTier[0].id.toString());
+						}
+					}
 					closeDialog();
 				})
 				.catch((error) => {
@@ -333,7 +343,7 @@ const ControlPanel = () => {
 	}
 
 	const changeMatchdayNumberField = (matchday) => {
-		setmatchdayNumberField(matchday);
+		setMatchdayNumberField(matchday);
 	}
 
 	const changeTierField = (tier) => {
@@ -351,6 +361,8 @@ const ControlPanel = () => {
 		setShowSeriesField(loadedConfig.series.show);
 		setHeaderField(loadedConfig.general.headers[0]);
 		setLogoField(loadedConfig.general.brandLogo);
+		setSeasonNumberField(loadedConfig.general.season);
+		setMatchdayNumberField(loadedConfig.general.matchday);
 		changeStreamTypeField(loadedConfig.general.streamType);
 	}
 
@@ -390,6 +402,7 @@ const ControlPanel = () => {
 		setStreamTypeField(streamType);
 
 		// TODO: If another league happens, clear tier selection when switching leagues
+		// TODO: set style based on stream type
 		switch(streamType) {
 			case "RSC3-regular":
 				setSeriesTypeField("set");
@@ -698,8 +711,6 @@ const ControlPanel = () => {
 											</FormControl>
 										</Item>
 									</Grid>
-
-									<div>{tierField}</div>
 
 								</>
 
