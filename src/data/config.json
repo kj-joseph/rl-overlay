@@ -1,6 +1,10 @@
 {
 	"general": {
 		"theme": "default",
+		"streamType": "RSC3-regular",
+		"season": 22,
+		"matchday": 1,
+		"tier": "",
 		"headers": [""],
 		"brandLogo": "",
 		"show": {

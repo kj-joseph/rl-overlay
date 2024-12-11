@@ -1,8 +1,9 @@
-import React, { Fragment, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { v4 as uuidv4 } from "uuid";
 
+import { getTierList } from "@/services/tierService";
 
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -71,18 +72,25 @@ const ControlPanel = () => {
 	const [snackbarIsOpen, setSnackbarIsOpen] = useState(false);
 	const [snackbarMessage, setSnackbarMessage] = useState("");
 
-	const [fieldsWithChanges, setFieldsWithChanges] = useState([]);
-	const [logoOverride, setLogoOverride] = useState("");
-	const [headerOverride, setHeaderOverride] = useState(""); // TODO: handle multiple headers
-	const [showSeriesOverride, setShowSeriesOverride] = useState(false);
-	const [seriesTypeOverride, setSeriesTypeOverride] = useState("");
-	const [seriesLengthOverride, setSeriesLengthOverride] = useState(0);
-	const [teamNameOverride, setTeamNameOverride] = useState(["", ""]);
-	const [franchiseOverride, setFranchiseOverride] = useState(["", ""]);
-	const [teamLogoOverride, setTeamLogoOverride] = useState(["", ""]);
-	const [seriesScoreOverride, setSeriesScoreOverride] = useState(defaultSeriesScore);
+	const [leagueId, setLeagueId] = useState(-1);
+	const [tierLists, setTierLists] = useState({});
 
-	const statsUrlPrefix = "http://rl.kdoughboy.com/stats/";
+	const [fieldsWithChanges, setFieldsWithChanges] = useState([]);
+	const [streamTypeField, setStreamTypeField] = useState("RSC3-regular"); // default to regular season if not already set
+	const [logoField, setLogoField] = useState("");
+	const [headerField, setHeaderField] = useState(""); // TODO: handle multiple headers? or send season/matchday/tier data separately?
+	const [seasonNumberField, setSeasonNumberField] = useState(22); // TODO: pull default from elsewhere?
+	const [matchdayNumberField, setmatchdayNumberField] = useState(1);
+	const [tierField, setTierField] = useState(""); // TODO: pull default from elsewhere?
+	const [showSeriesField, setShowSeriesField] = useState(false);
+	const [seriesTypeField, setSeriesTypeField] = useState("");
+	const [seriesLengthField, setSeriesLengthField] = useState(0);
+	const [teamNameField, setTeamNameField] = useState(["", ""]);
+	const [franchiseField, setFranchiseField] = useState(["", ""]);
+	const [teamLogoField, setTeamLogoField] = useState(["", ""]);
+	const [seriesScoreField, setSeriesScoreField] = useState(defaultSeriesScore);
+
+	const statsUrlPrefix = "https://rl.kdoughboy.com/stats/";
 
  	useEffect(() => {
 
@@ -125,7 +133,7 @@ const ControlPanel = () => {
 				case "seriesScore":
 					const seriesScoreIn = JSON.parse(localStorage.getItem("seriesScore"));
 					setSeriesScore(seriesScoreIn);
-					setSeriesScoreOverride(seriesScoreIn);
+					setSeriesScoreField(seriesScoreIn);
 					break;
 			}
 		};
@@ -136,39 +144,59 @@ const ControlPanel = () => {
 		if (config.hasOwnProperty("teams")) {
 			const tempFieldsWithChanges = [];
 			for (let teamnum in config.teams) {
-				if (teamNameOverride[teamnum] !== config.teams[teamnum].name) {
-					tempFieldsWithChanges.push(`teamNameOverride${teamnum}`);
+				if (teamNameField[teamnum] !== config.teams[teamnum].name) {
+					tempFieldsWithChanges.push(`teamNameField${teamnum}`);
 				}
-				if (franchiseOverride[teamnum] !== config.teams[teamnum].franchise) {
-					tempFieldsWithChanges.push(`franchiseOverride${teamnum}`);
+				if (franchiseField[teamnum] !== config.teams[teamnum].franchise) {
+					tempFieldsWithChanges.push(`franchiseField${teamnum}`);
 				}
-				if (teamLogoOverride[teamnum] !== config.teams[teamnum].logo) {
-					tempFieldsWithChanges.push(`teamLogoOverride${teamnum}`);
+				if (teamLogoField[teamnum] !== config.teams[teamnum].logo) {
+					tempFieldsWithChanges.push(`teamLogoField${teamnum}`);
 				}
-				if (seriesScoreOverride[teamnum] !== seriesScore[teamnum]) {
-					tempFieldsWithChanges.push(`seriesScoreOverride${teamnum}`);
+				if (seriesScoreField[teamnum] !== seriesScore[teamnum]) {
+					tempFieldsWithChanges.push(`seriesScoreField${teamnum}`);
 				}
 				// TODO: handle multiple headers
-				if (headerOverride !== config.general.headers[0]) {
-					tempFieldsWithChanges.push("headerOverride");
+				if (headerField !== config.general.headers[0]) {
+					tempFieldsWithChanges.push("headerField");
 				}
-				if (seriesTypeOverride !== config.series.type) {
-					tempFieldsWithChanges.push("seriesTypeOverride");
+				if (seriesTypeField !== config.series.type) {
+					tempFieldsWithChanges.push("seriesTypeField");
 				}
-				if (seriesLengthOverride !== config.series.maxGames) {
-					tempFieldsWithChanges.push("seriesLengthOverride");
+				if (seriesLengthField !== config.series.maxGames) {
+					tempFieldsWithChanges.push("seriesLengthField");
 				}
-				if (showSeriesOverride !== config.series.show) {
-					tempFieldsWithChanges.push("showSeriesOverride");
+				if (showSeriesField !== config.series.show) {
+					tempFieldsWithChanges.push("showSeriesField");
 				}
-				if (logoOverride !== config.general.brandLogo) {
-					tempFieldsWithChanges.push("logoOverride");
+				if (logoField !== config.general.brandLogo) {
+					tempFieldsWithChanges.push("logoField");
+				}
+				if (streamTypeField !== config.general.streamType) {
+					tempFieldsWithChanges.push("streamTypeField");
+				}
+				if (seasonNumberField !== config.general.season) {
+					tempFieldsWithChanges.push("seasonNumberField");
+				}
+				if (matchdayNumberField !== config.general.matchday) {
+					tempFieldsWithChanges.push("matchdayNumberField");
+				}
+				if (tierField !== config.general.tier) {
+					tempFieldsWithChanges.push("tierField");
 				}
 			}
+
 			setFieldsWithChanges(tempFieldsWithChanges);
 		}
 
-	}, [teamNameOverride, franchiseOverride, teamLogoOverride, seriesScoreOverride, headerOverride, seriesTypeOverride, seriesLengthOverride, showSeriesOverride, logoOverride]);
+	}, [teamNameField, franchiseField, teamLogoField, seriesScoreField, headerField, seriesTypeField, seriesLengthField, showSeriesField, logoField, streamTypeField, seasonNumberField, matchdayNumberField, tierField]);
+
+	// load tiers on league change
+	useEffect(() => {
+		if(leagueId > -1) {
+			loadTierList(leagueId);
+		}
+	}, [leagueId]);
 
 	const fieldHasChanges = (fieldName) => fieldsWithChanges.indexOf(fieldName) > -1;
 
@@ -242,57 +270,88 @@ const ControlPanel = () => {
 		}
 	}
 
-	const changeSeriesScoreOverride = (score, team) => {
+	const loadTierList = (league) => {
+		const currentTierLists = {...tierLists};
+		if(!Array.isArray(tierLists[league]) || tierLists[league].length < 1 ) {
+			openDialog("loading");
+			getTierList(league)
+				.then((loadedTierList) => {
+					currentTierLists[league] = loadedTierList;
+					setTierLists(currentTierLists);
+					closeDialog();
+				})
+				.catch((error) => {
+					closeDialog();
+					console.error(error);
+					openSnackbar("Error getting tier list from API");
+				});
+		}
+	}
+
+	const changeSeriesScoreField = (score, team) => {
 		if (Number.isInteger(Number(score))) {
-			const tempSeriesScoreOverride = [... seriesScoreOverride];
-			tempSeriesScoreOverride[team]= Number(score);
-			setSeriesScoreOverride(tempSeriesScoreOverride);
+			const tempSeriesScoreField = [... seriesScoreField];
+			tempSeriesScoreField[team]= Number(score);
+			setSeriesScoreField(tempSeriesScoreField);
 		}
 	}
 
-	const changeTeamNameOverride = (name, team) => {
-		const tempTeamNameOverride = [... teamNameOverride];
-		tempTeamNameOverride[team]= name;
-		setTeamNameOverride(tempTeamNameOverride);
+	const changeTeamNameField = (name, team) => {
+		const tempTeamNameField = [... teamNameField];
+		tempTeamNameField[team]= name;
+		setTeamNameField(tempTeamNameField);
 	}
 
-	const changeFranchiseOverride = (name, team) => {
-		const tempFranchiseOverride = [... franchiseOverride];
-		tempFranchiseOverride[team]= name;
-		setFranchiseOverride(tempFranchiseOverride);
+	const changeFranchiseField = (name, team) => {
+		const tempFranchiseField = [... franchiseField];
+		tempFranchiseField[team]= name;
+		setFranchiseField(tempFranchiseField);
 	}
 
-	const changeTeamLogoOverride = (logo, team) => {
-		const tempTeamLogoOverride = [... teamLogoOverride];
-		tempTeamLogoOverride[team]= logo;
-		setTeamLogoOverride(tempTeamLogoOverride);
+	const changeTeamLogoField = (logo, team) => {
+		const tempTeamLogoField = [... teamLogoField];
+		tempTeamLogoField[team]= logo;
+		setTeamLogoField(tempTeamLogoField);
 	}
 
-	const changeShowSeriesOverride = (value) => {
-		setShowSeriesOverride(value);
+	const changeShowSeriesField = (value) => {
+		setShowSeriesField(value);
 	}
 
-	const changeSeriesTypeOverride = (type) => {
-		setSeriesTypeOverride(type);
+	const changeSeriesTypeField = (type) => {
+		setSeriesTypeField(type);
 	}
 
-	const changeSeriesLengthOverride = (length) => {
+	const changeSeriesLengthField = (length) => {
 		if (Number.isInteger(Number(length))) {
-			setSeriesLengthOverride(Number(length));
+			setSeriesLengthField(Number(length));
 		}
+	}
+
+	const changeSeasonNumberField = (season) => {
+		setSeasonNumberField(season);
+	}
+
+	const changeMatchdayNumberField = (matchday) => {
+		setmatchdayNumberField(matchday);
+	}
+
+	const changeTierField = (tier) => {
+		setTierField(tier);
 	}
 
 	const setConfigValuesFromLocalStorage = () => {
 		const loadedConfig = JSON.parse(localStorage.getItem("config"));
 		setConfig(loadedConfig);
-		setTeamNameOverride([loadedConfig.teams[0].name, loadedConfig.teams[1].name]);
-		setFranchiseOverride([loadedConfig.teams[0].franchise, loadedConfig.teams[1].franchise]);
-		setTeamLogoOverride([loadedConfig.teams[0].logo, loadedConfig.teams[1].logo]);
-		setSeriesTypeOverride(loadedConfig.series.type);
-		setSeriesLengthOverride(loadedConfig.series.maxGames);
-		setShowSeriesOverride(loadedConfig.series.show);
-		setHeaderOverride(loadedConfig.general.headers[0]);
-		setLogoOverride(loadedConfig.general.brandLogo);
+		setTeamNameField([loadedConfig.teams[0].name, loadedConfig.teams[1].name]);
+		setFranchiseField([loadedConfig.teams[0].franchise, loadedConfig.teams[1].franchise]);
+		setTeamLogoField([loadedConfig.teams[0].logo, loadedConfig.teams[1].logo]);
+		setSeriesTypeField(loadedConfig.series.type);
+		setSeriesLengthField(loadedConfig.series.maxGames);
+		setShowSeriesField(loadedConfig.series.show);
+		setHeaderField(loadedConfig.general.headers[0]);
+		setLogoField(loadedConfig.general.brandLogo);
+		changeStreamTypeField(loadedConfig.general.streamType);
 	}
 
 	const setConfigValuesToDefault = () => {
@@ -302,7 +361,7 @@ const ControlPanel = () => {
 
 	const setSeriesScoreToDefault = () => {
 		setSeriesScore(defaultSeriesScore);
-		setSeriesScoreOverride(defaultSeriesScore);
+		setSeriesScoreField(defaultSeriesScore);
 		localStorage.setItem("seriesScore", JSON.stringify(defaultSeriesScore))
 	}
 
@@ -315,16 +374,41 @@ const ControlPanel = () => {
 	const setSeriesScoreFromLocalStorage = () => {
 		const seriesScoreIn = JSON.parse(localStorage.getItem("seriesScore"));
 		setSeriesScore(seriesScoreIn);
-		setSeriesScoreOverride(seriesScoreIn);
+		setSeriesScoreField(seriesScoreIn);
 	}
 
 	// TODO: handle multiple headers
-	const changeHeaderOverride = (text) => {
-		setHeaderOverride(text);
+	const changeHeaderField = (text) => {
+		setHeaderField(text);
 	}
 
-	const changeLogoOverride = (logo) => {
-		setLogoOverride(logo);
+	const changeLogoField = (logo) => {
+		setLogoField(logo);
+	}
+
+	const changeStreamTypeField = (streamType) => {
+		setStreamTypeField(streamType);
+
+		// TODO: If another league happens, clear tier selection when switching leagues
+		switch(streamType) {
+			case "RSC3-regular":
+				setSeriesTypeField("set");
+				setSeriesLengthField(4);
+				setShowSeriesField(true);
+				setLeagueId(1);
+				break;
+
+			case "RSC3-final":
+				setSeriesTypeField("bestof");
+				setSeriesLengthField(7);
+				setShowSeriesField(true);
+				setLeagueId(1);
+
+			default:
+				setLeagueId(-1);
+				break;
+		}
+
 	}
 
 	const resetFieldValues = () => {
@@ -333,34 +417,43 @@ const ControlPanel = () => {
 	}
 
 	const saveToLocalStorage = () => {
-		setSeriesScore(seriesScoreOverride);
-		localStorage.setItem("seriesScore", JSON.stringify(seriesScoreOverride));
+		setSeriesScore(seriesScoreField);
+		localStorage.setItem("seriesScore", JSON.stringify(seriesScoreField));
+
+		let tierName = "";
+		// TODO: handle multiple leagues
+		if(tierField !== "" && leagueId > -1 && Array.isArray(tierLists[leagueId]) && tierLists[leagueId].length > 0) {
+			tierName = tierLists[leagueId].filter((tier) => tier.id == Number(tierField))[0].name;
+		}
 
 		const newConfig = {
 			general: {
 				...config.general,
-				headers: [headerOverride],
-				brandLogo: logoOverride,
+				headers: [headerField],
+				season: seasonNumberField,
+				matchday: matchdayNumberField,
+				tier: tierName,
+				brandLogo: logoField,
 			},
 			series: {
-				show: showSeriesOverride,
-				type: seriesTypeOverride,
+				show: showSeriesField,
+				type: seriesTypeField,
 				display: "both",
-				maxGames: seriesLengthOverride,
+				maxGames: seriesLengthField,
 				override: "",
 			},
 			teams: [
 				{
 					...config.teams[0],
-					name: teamNameOverride[0],
-					franchise: franchiseOverride[0],
-					logo: teamLogoOverride[0],
+					name: teamNameField[0],
+					franchise: franchiseField[0],
+					logo: teamLogoField[0],
 				},
 				{
 					...config.teams[1],
-					name: teamNameOverride[1],
-					franchise: franchiseOverride[1],
-					logo: teamLogoOverride[1],
+					name: teamNameField[1],
+					franchise: franchiseField[1],
+					logo: teamLogoField[1],
 				},
 			],
 		};
@@ -414,6 +507,15 @@ const ControlPanel = () => {
 				</DialogActions>
 			</Dialog>
 
+			<Dialog
+				open={currentDialog === "loading"}
+				onClose={closeDialog}
+			>
+				<DialogContent>
+					<p>Loading...</p>
+				</DialogContent>
+			</Dialog>
+
 			<Snackbar
 				autoHideDuration={4000}
 				open={snackbarIsOpen}
@@ -421,20 +523,12 @@ const ControlPanel = () => {
 				message={snackbarMessage}
 			/>
 
-			<h1>Overlay control panel</h1>
+			<h1>RSC overlay control panel</h1>
 
 			<ThemeProvider theme={panelTheme}>
 
 				<Container>
 					<Grid container spacing={0} className="idGrid">
-
-{/*
- 						<Grid size={{xs: 12, md: 3}}>
-							<Item >
-								<strong>Client ID:</strong><br />{clientId}
-							</Item>
-						</Grid>
-*/}
 
 						<Grid size={{xs: 12, md: 5}}>
 							<Item >
@@ -509,37 +603,21 @@ const ControlPanel = () => {
 							<Grid size={{xs: 12, md: 3}}>
 								<Item>
 									<FormControl size="small" fullWidth>
-										<InputLabel id="logoLabel" shrink>Logo</InputLabel>
+										<InputLabel id="streamTypeLabel" shrink>Stream Type</InputLabel>
 										<Select
 											notched
-											labelId="logoLabel"
-											id="logo"
-											value={logoOverride}
-											label="Logo"
-											className={fieldHasChanges("logoOverride") ? "changedField" : ""}
-											onChange={(e) => changeLogoOverride(e.target.value)}
+											labelId="streamTypeLabel"
+											id="streanType"
+											value={streamTypeField}
+											label="Stream Type"
+											className={fieldHasChanges("streamTypeField") ? "changedField" : ""}
+											onChange={(e) => changeStreamTypeField(e.target.value)}
 										>
-											<MenuItem value="">None</MenuItem>
-											<MenuItem value="RSC-3s.png">RSC 3s</MenuItem>
-											<MenuItem value="RSC-2s.png">RSC 2s</MenuItem>
-
+											<MenuItem value="RSC3-regular">RSC 3s Regular Season</MenuItem>
+											<MenuItem value="RSC3-final">RSC 3s Finals</MenuItem>
+											<MenuItem value="RSC3-event">RSC 3s Other Event</MenuItem>
+											<MenuItem value="other">No RSC branding</MenuItem>
 										</Select>
-									</FormControl>
-								</Item>
-							</Grid>
-
-							<Grid size={{xs: 12, md: 9}}>
-								<Item>
-									<FormControl variant="outlined" size="small" fullWidth>
-										<InputLabel shrink htmlFor={`header`}>Header</InputLabel>
-										<OutlinedInput
-											notched
-											id="header"
-											label="Header"
-											onChange={(e) => changeHeaderOverride(e.target.value)}
-											value={headerOverride}
-											className={fieldHasChanges(`headerOverride`) ? "changedField" : ""}
-										/>
 									</FormControl>
 								</Item>
 							</Grid>
@@ -548,83 +626,180 @@ const ControlPanel = () => {
 
 						<Grid container size={12} spacing={0} className="gridRow">
 
+							{streamTypeField === "RSC3-regular" || streamTypeField === "RSC3-final" ?
+
+								<>
+
+									<Grid size={3}>
+										<Item>
+											<TextField
+												fullWidth
+												required
+												inputProps={{
+													min: 1,
+													step: 1,
+												}}
+												id="seasonNumber"
+												type="number"
+												size="small"
+												label="Season"
+												value={seasonNumberField}
+												onChange={(e) => changeSeasonNumberField(e.target.value)}
+												className={fieldHasChanges("seasonNumberField") ? "changedField" : ""}
+											/>
+										</Item>
+									</Grid>
+
+									<Grid size={3}>
+										<Item>
+											<TextField
+												fullWidth
+												required
+												inputProps={{
+													min: 1,
+													step: 1,
+												}}
+												id="matchdayNumberField"
+												type="number"
+												size="small"
+												label="Matchday"
+												value={matchdayNumberField}
+												onChange={(e) => changeMatchdayNumberField(e.target.value)}
+												className={fieldHasChanges("matchdayNumberField") ? "changedField" : ""}
+											/>
+										</Item>
+									</Grid>
+
+									<Grid size={6}>
+										<Item>
+											<FormControl size="small" fullWidth>
+												<InputLabel id="tierFieldLabel" shrink>Tier</InputLabel>
+												<Select
+													notched
+													labelId="tierFieldLabel"
+													id="tierField"
+													disabled = {!Array.isArray(tierLists[leagueId]) || tierLists[leagueId].length < 1}
+													value={tierField}
+													required
+													label="Tier"
+													className={fieldHasChanges("tierField") ? "changedField" : ""}
+													onChange={(e) => changeTierField(e.target.value)}
+												>
+													{Array.isArray(tierLists[leagueId]) && tierLists[leagueId].length > 0 ?
+														tierLists[leagueId]
+															.sort((a,b) => Number(a.position) < Number(b.position) ? 1 : Number(a.position) > Number(b.position) ? -1 : 0)
+															.map(tier => (
+																<MenuItem key={tier.id} value={tier.id}>{tier.name}</MenuItem>
+														))
+													:
+														<MenuItem value="">Loading...</MenuItem>
+													}
+												</Select>
+											</FormControl>
+										</Item>
+									</Grid>
+
+									<div>{tierField}</div>
+
+								</>
+
+							:
+
+								<Grid size={{xs: 12, md: 9}}>
+									<Item>
+										<FormControl variant="outlined" size="small" fullWidth>
+											<InputLabel shrink htmlFor={`header`}>Header</InputLabel>
+											<OutlinedInput
+												notched
+												id="header"
+												label="Header"
+												onChange={(e) => changeHeaderField(e.target.value)}
+												value={headerField}
+												className={fieldHasChanges(`headerField`) ? "changedField" : ""}
+											/>
+										</FormControl>
+									</Item>
+								</Grid>
+
+							}
+
+						</Grid>
+
+						<Grid container size={12} spacing={0} className="gridRow">
+
 							{/* TODO: Handle custom series text */}
 
-							<Grid size={3}>
-								<Item>
-									<FormControl size="small" fullWidth>
-										<InputLabel id="showSeriesLabel" shrink>Show Series?</InputLabel>
-										<Select
-											notched
-											labelId="showSeriesLabel"
-											id="showSeries"
-											value={showSeriesOverride}
-											label="Show Series?"
-											className={fieldHasChanges("showSeriesOverride") ? "changedField" : ""}
-											onChange={(e) => changeShowSeriesOverride(e.target.value)}
-										>
-											<MenuItem value={true}>Yes</MenuItem>
-											<MenuItem value={false}>No</MenuItem>
+							{streamTypeField !== "RSC3-regular" && streamTypeField !== "RSC3-final" ?
 
-										</Select>
-									</FormControl>
-								</Item>
+								<>
 
+									<Grid size={3}>
+										<Item>
+											<FormControl size="small" fullWidth>
+												<InputLabel id="showSeriesLabel" shrink>Show Series?</InputLabel>
+												<Select
+													notched
+													labelId="showSeriesLabel"
+													id="showSeries"
+													value={showSeriesField}
+													label="Show Series?"
+													className={fieldHasChanges("showSeriesField") ? "changedField" : ""}
+													onChange={(e) => changeShowSeriesField(e.target.value)}
+												>
+													<MenuItem value={true}>Yes</MenuItem>
+													<MenuItem value={false}>No</MenuItem>
 
-{/* 								Show Series?
-								<Checkbox
-									value={showSeriesOverride}
-									className={fieldHasChanges("showSeriesOverride") ? "changedField" : ""}
-									onChange = {(e) => changeShowSeriesOverride(e.target.checked)}
-								>
+												</Select>
+											</FormControl>
+										</Item>
+									</Grid>
 
-								</Checkbox>
- */}
-							</Grid>
+									<Grid size={6}>
+										<Item>
+											<FormControl size="small" fullWidth>
+												<InputLabel id="seriesTypeLabel" shrink>Series Type</InputLabel>
+												<Select
+													notched
+													labelId="seriesTypeLabel"
+													id="seriesType"
+													value={seriesTypeField}
+													label="Series Type"
+													className={fieldHasChanges("seriesTypeField") ? "changedField" : ""}
+													onChange={(e) => changeSeriesTypeField(e.target.value)}
+												>
+													<MenuItem value="bestof">Best of</MenuItem>
+													<MenuItem value="set">Set number of games</MenuItem>
+													<MenuItem value="unlimited">Unlimited</MenuItem>
+												</Select>
+											</FormControl>
 
-							<Grid size={6}>
-								<Item>
-									<FormControl size="small" fullWidth>
-										<InputLabel id="seriesTypeLabel" shrink>Series Type</InputLabel>
-										<Select
-											notched
-											labelId="seriesTypeLabel"
-											id="seriesType"
-											value={seriesTypeOverride}
-											label="Series Type"
-											className={fieldHasChanges("seriesTypeOverride") ? "changedField" : ""}
-											onChange={(e) => changeSeriesTypeOverride(e.target.value)}
-										>
-											<MenuItem value="bestof">Best of</MenuItem>
-											<MenuItem value="set">Set number of games</MenuItem>
-											<MenuItem value="unlimited">Unlimited</MenuItem>
+										</Item>
+									</Grid>
 
-										</Select>
-									</FormControl>
+									<Grid size={3}>
+										<Item>
+											<TextField
+												fullWidth
+												required
+												inputProps={{
+													min: 1,
+													step: 1,
+												}}
+												id="seriesLength"
+												type="number"
+												size="small"
+												label="Games"
+												disabled={seriesTypeField === "unlimited"}
+												value={seriesLengthField}
+												onChange={(e) => changeSeriesLengthField(e.target.value)}
+												className={fieldHasChanges("seriesLengthField") ? "changedField" : ""}
+											/>
+										</Item>
+									</Grid>
 
-								</Item>
-							</Grid>
+								</>
 
-							<Grid size={3}>
-								<Item>
-									<TextField
-										fullWidth
-										required
-										inputProps={{
-											min: 1,
-											step: 1,
-										}}
-										id="seriesLength"
-										type="number"
-										size="small"
-										label="Games"
-										disabled={seriesTypeOverride === "unlimited"}
-										value={seriesLengthOverride}
-										onChange={(e) => changeSeriesLengthOverride(e.target.value)}
-										className={fieldHasChanges("seriesLengthOverride") ? "changedField" : ""}
-									/>
-								</Item>
-							</Grid>
+							: null}
 
 						</Grid>
 
@@ -650,36 +825,36 @@ const ControlPanel = () => {
 								<Grid size={9}>
 									<Item>
 										<FormControl variant="outlined" size="small" fullWidth>
-											<InputLabel shrink htmlFor={`teamNameOverride${teamnum}`}>Team Name</InputLabel>
+											<InputLabel shrink htmlFor={`teamNameField${teamnum}`}>Team Name</InputLabel>
 											<OutlinedInput
 												notched
-												id={`teamNameOverride${teamnum}`}
+												id={`teamNameField${teamnum}`}
 												label="Team Name"
-												onChange={(e) => changeTeamNameOverride(e.target.value, teamnum)}
-												value={teamNameOverride[teamnum]}
-												className={fieldHasChanges(`teamNameOverride${teamnum}`) ? "changedField" : ""}
+												onChange={(e) => changeTeamNameField(e.target.value, teamnum)}
+												value={teamNameField[teamnum]}
+												className={fieldHasChanges(`teamNameField${teamnum}`) ? "changedField" : ""}
 											/>
 										</FormControl><br />
 										<FormControl variant="outlined" size="small" fullWidth>
-											<InputLabel shrink htmlFor={`franchiseOverride${teamnum}`}>Franchise Name</InputLabel>
+											<InputLabel shrink htmlFor={`franchiseField${teamnum}`}>Franchise Name</InputLabel>
 											<OutlinedInput
 												notched
-												id={`franchiseOverride${teamnum}`}
+												id={`franchiseField${teamnum}`}
 												label="Franchise Name"
-												onChange={(e) => changeFranchiseOverride(e.target.value, teamnum)}
-												value={franchiseOverride[teamnum]}
-												className={fieldHasChanges(`franchiseOverride${teamnum}`) ? "changedField" : ""}
+												onChange={(e) => changeFranchiseField(e.target.value, teamnum)}
+												value={franchiseField[teamnum]}
+												className={fieldHasChanges(`franchiseField${teamnum}`) ? "changedField" : ""}
 											/>
 										</FormControl>
 										<FormControl variant="outlined" size="small" fullWidth>
-											<InputLabel shrink htmlFor={`teamLogoOverride${teamnum}`}>Team Logo</InputLabel>
+											<InputLabel shrink htmlFor={`teamLogoField${teamnum}`}>Team Logo</InputLabel>
 											<OutlinedInput
 												notched
-												id={`teamLogoOverride${teamnum}`}
+												id={`teamLogoField${teamnum}`}
 												label="Team Logo"
-												onChange={(e) => changeTeamLogoOverride(e.target.value, teamnum)}
-												value={teamLogoOverride[teamnum]}
-												className={fieldHasChanges(`teamLogoOverride${teamnum}`) ? "changedField" : ""}
+												onChange={(e) => changeTeamLogoField(e.target.value, teamnum)}
+												value={teamLogoField[teamnum]}
+												className={fieldHasChanges(`teamLogoField${teamnum}`) ? "changedField" : ""}
 											/>
 										</FormControl><br />
 									</Item>
@@ -693,13 +868,13 @@ const ControlPanel = () => {
 												min: 0,
 												step: 1,
 											}}
-											id={`seriesScoreOverride${teamnum}`}
+											id={`seriesScoreField${teamnum}`}
 											type="number"
 											size="small"
 											label="Games"
-											value={seriesScoreOverride[teamnum]}
-											onChange={(e) => changeSeriesScoreOverride(e.target.value, teamnum)}
-											className={fieldHasChanges(`seriesScoreOverride${teamnum}`) ? "changedField" : ""}
+											value={seriesScoreField[teamnum]}
+											onChange={(e) => changeSeriesScoreField(e.target.value, teamnum)}
+											className={fieldHasChanges(`seriesScoreField${teamnum}`) ? "changedField" : ""}
 										/>
 									</Item>
 								</Grid>
